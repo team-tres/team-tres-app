@@ -44,8 +44,6 @@ model Stuff {
   owner     String
 }
 
-
-
 model IncomeStatement {
   id                          Int       @id @default(autoincrement())
   // companyId                Int
@@ -61,6 +59,26 @@ model IncomeStatement {
   gainOnDisposalOfAssets      Float
   otherIncome                 Float
   incomeTaxes                 Float
+  
+  // company                  Company  @relation(fields: [companyId], references: [id])
+}
+
+model BalanceSheet {
+  id                          Int       @id @default(autoincrement())
+  // companyId                Int
+  year                        Int
+  cashAndCashEquivalents      Float
+  accountsReceivable          Float
+  inventory                   Float
+  propertyPlantAndEquipment   Float
+  investment                  Float
+  accountsPayable             Float
+  longDebtService             Float
+  taxesPayable                Float
+  currentDebtService          Float
+  loansPayable                Float
+  equityCapital               Float
+  retainedEarnings            Float
 
   // company                  Company  @relation(fields: [companyId], references: [id])
 }
