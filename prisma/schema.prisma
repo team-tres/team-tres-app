@@ -47,20 +47,20 @@ model Stuff {
 
 
 model IncomeStatement {
-  id                 Int       @id @default(autoincrement())
-  // companyId          Int
-  year               Int
-  revenue           Float
+  id                          Int       @id @default(autoincrement())
+  // companyId                Int
+  year                        Int
+  revenue                     Float
   costOfContracting           Float
-  overhead           Float
-  salariesAndBenefits           Float
-  rentAndOverhead           Float
-  depreciationAndAmortization           Float
-  interest           Float
-  interestIncome           Float
-  gainOnDisposalOfAssets           Float
-  otherIncome           Float
-  incomeTaxes           Float
+  overhead                    Float
+  salariesAndBenefits         Float
+  rentAndOverhead             Float
+  depreciationAndAmortization Float
+  interest                    Float
+  interestIncome              Float
+  gainOnDisposalOfAssets      Float
+  otherIncome                 Float
+  incomeTaxes                 Float
 
-  // company           Company  @relation(fields: [companyId], references: [id])
+  // company                  Company  @relation(fields: [companyId], references: [id])
 }
