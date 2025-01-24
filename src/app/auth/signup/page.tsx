@@ -1,23 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
-import { createUser } from '@/lib/dbActions';
+import { Card, Col, Container, Button, Form, Row, Alert } from 'react-bootstrap';
 
 type SignUpForm = {
   email: string;
   password: string;
   confirmPassword: string;
+  role: string; // User role (e.g., "user", "admin")
 };
 
-/** The sign up page. */
 const SignUp = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [signupSubmitted, setSignupSubmitted] = useState(false);
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email is invalid'),
@@ -27,7 +24,8 @@ const SignUp = () => {
       .max(40, 'Password must not exceed 40 characters'),
     confirmPassword: Yup.string()
       .required('Confirm Password is required')
-      .oneOf([Yup.ref('password'), ''], 'Confirm Password does not match with password inputed'),
+      .oneOf([Yup.ref('password'), ''], 'Confirm Password does not match with password inputted'),
+    role: Yup.string().required('Role is required'), // New validation for role
   });
 
   const {
@@ -39,9 +37,10 @@ const SignUp = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = async (data: SignUpForm) => {
-    await createUser(data);
-    await signIn('credentials', { callbackUrl: '/add', ...data });
+  const handleSignup = (data: SignUpForm) => {
+    console.log('Signup request sent:', data);
+    // Placeholder for back-end signup API call
+    setSignupSubmitted(true); // Simulate success message
   };
 
   return (
@@ -52,7 +51,12 @@ const SignUp = () => {
             <h1 className="text-center">Sign Up</h1>
             <Card>
               <Card.Body>
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                {signupSubmitted && (
+                  <Alert variant="info" className="text-center">
+                    Signup request submitted! Your account will need to be approved by an admin.
+                  </Alert>
+                )}
+                <Form onSubmit={handleSubmit(handleSignup)}>
                   <Form.Group className="form-group">
                     <Form.Label>Email</Form.Label>
                     <input
@@ -65,38 +69,35 @@ const SignUp = () => {
 
                   <Form.Group className="form-group">
                     <Form.Label>Password</Form.Label>
-                    <div className="input-group">
-                      <input
-                        type={showPassword ? 'text' : 'password'}
-                        {...register('password')}
-                        className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-                      />
-                      <Button
-                        variant="outline-secondary"
-                        onClick={() => setShowPassword(!showPassword)}
-                      >
-                        {showPassword ? 'Hide' : 'Show'}
-                      </Button>
-                    </div>
+                    <input
+                      type="password"
+                      {...register('password')}
+                      className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                    />
                     <div className="invalid-feedback">{errors.password?.message}</div>
                   </Form.Group>
 
                   <Form.Group className="form-group">
                     <Form.Label>Confirm Password</Form.Label>
-                    <div className="input-group">
-                      <input
-                        type={showConfirmPassword ? 'text' : 'password'}
-                        {...register('confirmPassword')}
-                        className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
-                      />
-                      <Button
-                        variant="outline-secondary"
-                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                      >
-                        {showConfirmPassword ? 'Hide' : 'Show'}
-                      </Button>
-                    </div>
+                    <input
+                      type="password"
+                      {...register('confirmPassword')}
+                      className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
+                    />
                     <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
+                  </Form.Group>
+
+                  <Form.Group className="form-group">
+                    <Form.Label>Role</Form.Label>
+                    <select
+                      {...register('role')}
+                      className={`form-control ${errors.role ? 'is-invalid' : ''}`}
+                    >
+                      <option value="">Select Role</option>
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </select>
+                    <div className="invalid-feedback">{errors.role?.message}</div>
                   </Form.Group>
 
                   <Form.Group className="form-group py-3">
@@ -107,7 +108,14 @@ const SignUp = () => {
                         </Button>
                       </Col>
                       <Col>
-                        <Button type="button" onClick={() => reset()} className="btn btn-warning float-right">
+                        <Button
+                          type="button"
+                          onClick={() => {
+                            reset();
+                            setSignupSubmitted(false); // Reset success message
+                          }}
+                          className="btn btn-warning float-right"
+                        >
                           Reset
                         </Button>
                       </Col>
