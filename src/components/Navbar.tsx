@@ -4,7 +4,7 @@
 
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 
 const NavBar: React.FC = () => {
@@ -14,10 +14,10 @@ const NavBar: React.FC = () => {
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
-    <Navbar expand="lg" style={{ backgroundColor: "#CFE1F3"}}>
+    <Navbar expand="lg" style={{ backgroundColor: '#CFE1F3' }}>
       <Container fluid>
         <Navbar.Brand href="/">
-        <img
+        <Image
           src="/logo.png"
           alt="Logo"
           style={{ position: 'absolute', height: '140px', width: 'auto', top: '-10px' }}
