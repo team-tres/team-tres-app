@@ -14,9 +14,15 @@ const NavBar: React.FC = () => {
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
   return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand href="/">Next.js Application Template</Navbar.Brand>
+    <Navbar expand="lg" style={{ backgroundColor: "#CFE1F3"}}>
+      <Container fluid>
+        <Navbar.Brand href="/">
+        <img
+          src="/logo.png"
+          alt="Logo"
+          style={{ position: 'absolute', height: '140px', width: 'auto', top: '-10px' }}
+        />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto justify-content-start">
@@ -38,7 +44,7 @@ const NavBar: React.FC = () => {
               ''
             )}
           </Nav>
-          <Nav>
+          <Nav style={{ paddingRight: '100px'}}>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
