@@ -83,6 +83,7 @@ model BalanceSheet {
   // company                  Company  @relation(fields: [companyId], references: [id])
 }
 
+
 model Company {
   id                          Int       @id @default(autoincrement())
   name                        String
