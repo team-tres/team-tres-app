@@ -43,6 +43,7 @@ const Home = () => (
           <br />
           <h3 style={{ fontFamily: 'Open sans', color: '#00243D', textAlign: 'center' }}>
             In cooperation with
+            {' '}
             <a
               href="https://www.spirehawaii.com/"
               target="_blank"
@@ -51,6 +52,7 @@ const Home = () => (
             >
               Spire
             </a>
+            {' '}
             we leverage Fiscal Sustainability Models (FSMs) to support
             organizations in making informed financial and strategic decisions. FSMs utilize historical
             financial data, incorporate relevant variables, and provide future-forward financial forecasts
