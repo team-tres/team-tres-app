@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { getServerSession } from 'next-auth';
 import { Col, Container, Row, Table, Button, ButtonGroup } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
@@ -22,13 +23,13 @@ const AdminPage = async () => {
             <h1>Admin Dashboard</h1>
             <ButtonGroup>
               <Link href="/admin/client-viewing" passHref>
-                <Button variant="primary">View Clients</Button>
+                <Button style={{ backgroundColor: '#F5F5DC', borderColor: 'Black', color: '#000' }}>View Clients</Button>
               </Link>
               <Link href="/admin/user-logs" passHref>
-                <Button variant="secondary">User Logs</Button>
+                <Button style={{ backgroundColor: '#F5F5DC', borderColor: 'Black', color: '#000' }}>User Logs</Button>
               </Link>
               <Link href="/admin/user-management" passHref>
-                <Button variant="success">Manage Users</Button>
+                <Button style={{ backgroundColor: '#F5F5DC', borderColor: 'Black', color: '#000' }}>Manage Users</Button>
               </Link>
             </ButtonGroup>
           </Col>
