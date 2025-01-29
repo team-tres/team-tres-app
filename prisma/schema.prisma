@@ -41,6 +41,7 @@ model Stuff {
   name      String
   quantity  Int
   condition Condition
+  income    Float
   owner     String
 }
 
