@@ -39,6 +39,9 @@ const NavBar: React.FC = () => {
                 <Nav.Link id="financial-stuff-nav" href="/financial" active={pathName === '/financial'}>
                   Input Financials
                 </Nav.Link>
+                <Nav.Link id="analyst-stuff-nav" href="/analyst" active={pathName === '/analyst'}>
+                  Analyst
+                </Nav.Link>
                 {role === 'ADMIN' && (
                   <Nav.Link id="admin-stuff-nav" href="/admin" active={pathName === '/admin'}>
                     Admin
