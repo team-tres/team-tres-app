@@ -89,7 +89,8 @@ const SignIn = () => {
           </button>
         </form>
         <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          Don&apos;t have an account?{' '}
+          Don&apos;t have an account?
+          {' '}
           <a href="/auth/signup" style={{ color: '#007bff', textDecoration: 'none' }}>
             Sign up
           </a>
