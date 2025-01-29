@@ -35,9 +35,14 @@ const Home = () => (
           </Col>
         </Row>
       </div>
-      <Row className="align-items-center justify-content-center" >
+      <Row className="align-items-center justify-content-center">
         <Col Col className="d-flex flex-column justify-content-center" style={{ padding: '200px' }}>
-          <h2 style={{ fontFamily: 'Open sans', color: '#00243D', textAlign: 'center' }}>
+          <h2 style={{ fontFamily: 'sans-serif',
+            fontSize: '2.5rem',
+            fontWeight: '900',
+            color: '#00243E',
+            textAlign: 'center' }}
+          >
             E komo mai! Welcome to FiscNav.
           </h2>
           <br />
