@@ -1,9 +1,9 @@
 import { getServerSession } from 'next-auth';
-import { Col, Container, Row, Table } from 'react-bootstrap';
-import StuffItemAdmin from '@/components/StuffItemAdmin';
+import { Col, Container, Row, Table, Button, ButtonGroup } from 'react-bootstrap';
 import { prisma } from '@/lib/prisma';
 import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
+import Link from 'next/link';
 
 const AdminPage = async () => {
   const session = await getServerSession(authOptions);
@@ -12,48 +12,54 @@ const AdminPage = async () => {
       user: { email: string; id: string; randomKey: string };
     } | null,
   );
-  const stuff = await prisma.stuff.findMany({});
-  const users = await prisma.user.findMany({});
+  const users = await prisma.user.findMany({ where: { status: 'pending' } });
 
   return (
     <main>
-      <Container id="list" fluid className="py-3">
-        <Row>
-          <Col>
-            <h1>List Stuff Admin</h1>
-            <Table striped bordered hover>
-              <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Quantity</th>
-                  <th>Condition</th>
-                  <th>Owner</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {stuff.map((item) => (
-                  <StuffItemAdmin key={item.id} {...item} />
-                ))}
-              </tbody>
-            </Table>
+      <Container id="dashboard" fluid className="py-3">
+        <Row className="mb-3">
+          <Col className="text-center">
+            <h1>Admin Dashboard</h1>
+            <ButtonGroup>
+              <Link href="/admin/client-viewing" passHref>
+                <Button variant="primary">View Clients</Button>
+              </Link>
+              <Link href="/admin/user-logs" passHref>
+                <Button variant="secondary">User Logs</Button>
+              </Link>
+              <Link href="/admin/user-management" passHref>
+                <Button variant="success">Manage Users</Button>
+              </Link>
+            </ButtonGroup>
           </Col>
         </Row>
         <Row>
           <Col>
-            <h1>List Users Admin</h1>
+            <h2>Pending Users</h2>
             <Table striped bordered hover>
               <thead>
                 <tr>
+                  <th>ID</th>
                   <th>Email</th>
-                  <th>Role</th>
+                  <th>Set Role</th>
+                  <th>Set Company</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users.map((user) => (
                   <tr key={user.id}>
+                    <td>{user.id}</td>
                     <td>{user.email}</td>
-                    <td>{user.role}</td>
+                    <td>__________</td>
+                    <td>__________</td>
+                    <td style={{ backgroundColor: '#FFF3CD' }}>Pending</td>
+                    <td>
+                      <Button variant="success" size="sm">Allow</Button>
+                      {' '}
+                      <Button variant="danger" size="sm">Deny</Button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
