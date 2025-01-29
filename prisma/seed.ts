@@ -41,6 +41,7 @@ async function main() {
         name: data.name,
         quantity: data.quantity,
         owner: data.owner,
+        income: 0,
         condition,
       },
     });
