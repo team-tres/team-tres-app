@@ -2,6 +2,7 @@
 
 import { signIn } from 'next-auth/react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
+import './page.css';
 
 /** The sign in page. */
 const SignIn = () => {
@@ -25,78 +26,37 @@ const SignIn = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: '#fff', // White background
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: '#d9eaf4', // Light sky blue
-          padding: '30px',
-          borderRadius: '10px',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          width: '700px', // Same width as the Sign Up box
-        }}
-      >
-        <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign In</h1>
-        <form method="post" onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Email</label>
-            <input
-              name="email"
-              type="text"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-            />
-          </div>
+    <div className="background">
+      <div className="sign-in-container">
+        <div className="left-section">
+          <h1>Sign In</h1>
+        </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Password</label>
-            <input
-              name="password"
-              type="password"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-            />
-          </div>
+        <div className="right-section">
+          <div className="form">
+            <form method="post" onSubmit={handleSubmit}>
+              <div className="input-group">
+                <label>Email</label>
+                <input name="email" type="text" />
+              </div>
 
-          <button
-            type="submit"
-            style={{
-              backgroundColor: '#007bff',
-              color: 'white',
-              padding: '10px',
-              border: 'none',
-              borderRadius: '5px',
-              width: '100%',
-              cursor: 'pointer',
-            }}
-          >
-            Sign In
-          </button>
-        </form>
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          Don&apos;t have an account?
-          {' '}
-          <a href="/auth/signup" style={{ color: '#007bff', textDecoration: 'none' }}>
-            Sign up
-          </a>
+              <div className="input-group">
+                <label htmlFor="password">Password</label>
+                <input id="password" name="password" type="password" />
+              </div>
+
+              <button type="submit">Sign In</button>
+            </form>
+
+            <div className="signup-link">
+              Don&apos;t have an account?
+              <a href="/auth/signup"> Sign up</a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+
   );
 };
 

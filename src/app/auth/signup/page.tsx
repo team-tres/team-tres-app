@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { createUser } from '@/lib/dbActions';
+import './page.css';
 
 type SignUpForm = {
   email: string;
@@ -45,105 +46,61 @@ const SignUp = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#fff', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div
-        style={{
-          backgroundColor: '#d9eaf4', // Light sky blue
-          padding: '30px',
-          borderRadius: '10px',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          width: '750px', // Increased width
-        }}
-      >
-        <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign Up</h1>
-        <form onSubmit={handleSubmit(handleSignup)}>
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Email</label>
-            <input
-              type="text"
-              {...register('email')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.email ? 'is-invalid' : ''}
-            />
-            <div style={{ color: 'red', fontSize: '12px' }}>{errors.email?.message}</div>
-          </div>
+    <div className="background">
+      <div className="sign-up-container">
+        <div className="left-section">
+          <h1>Sign Up</h1>
+        </div>
 
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Password</label>
-            <input
-              type="password"
-              {...register('password')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.password ? 'is-invalid' : ''}
-            />
-            <div style={{ color: 'red', fontSize: '12px' }}>{errors.password?.message}</div>
-          </div>
+        <div className="right-section">
+          <div className="form">
+            <form onSubmit={handleSubmit(handleSignup)}>
+              <div className="input-group">
+                <label>Email</label>
+                <input type="text" {...register('email')} className={errors.email ? 'is-invalid' : ''} />
+                <div className="error-message">{errors.email?.message}</div>
+              </div>
 
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Confirm Password</label>
-            <input
-              type="password"
-              {...register('confirmPassword')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.confirmPassword ? 'is-invalid' : ''}
-            />
-            <div style={{ color: 'red', fontSize: '12px' }}>{errors.confirmPassword?.message}</div>
-          </div>
+              <div className="input-group">
+                <label>Password</label>
+                <input type="password" {...register('password')} className={errors.password ? 'is-invalid' : ''} />
+                <div className="error-message">{errors.password?.message}</div>
+              </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Role</label>
-            <select
-              {...register('role')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.role ? 'is-invalid' : ''}
-            >
-              <option value="">Select Role</option>
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
-            <div style={{ color: 'red', fontSize: '12px' }}>{errors.role?.message}</div>
-          </div>
+              <div className="input-group">
+                <label>Confirm Password</label>
+                <input
+                  type="password"
+                  {...register('confirmPassword')}
+                  className={errors.confirmPassword ? 'is-invalid' : ''}
+                />
+                <div className="error-message">{errors.confirmPassword?.message}</div>
+              </div>
 
-          <button
-            type="submit"
-            style={{
-              backgroundColor: '#007bff',
-              color: 'white',
-              padding: '10px',
-              border: 'none',
-              borderRadius: '5px',
-              width: '100%',
-              cursor: 'pointer',
-            }}
-          >
-            Register
-          </button>
-        </form>
-        {signupSubmitted && (
-          <p style={{ marginTop: '15px', textAlign: 'center', color: 'green' }}>
-            Signup request submitted! Your account is pending admin approval.
-          </p>
-        )}
+              <div className="input-group">
+                <select {...register('role')} className={errors.role ? 'is-invalid' : ''}>
+                  <option value="">Select Role</option>
+                  <option value="user">User</option>
+                  <option value="admin">Admin</option>
+                </select>
+                <div className="error-message">{errors.role?.message}</div>
+              </div>
+
+              <button type="submit">Register</button>
+            </form>
+
+            {signupSubmitted && (
+              <p className="success-message">
+                Signup request submitted! Your account is pending admin approval.
+              </p>
+            )}
+
+            <div className="signup-link">
+              Already have an account?
+              <a href="/auth/signin"> Sign in</a>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
