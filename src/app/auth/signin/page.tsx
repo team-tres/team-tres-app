@@ -1,7 +1,6 @@
 'use client';
 
 import { signIn } from 'next-auth/react';
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 
 /** The sign in page. */
 const SignIn = () => {
@@ -46,31 +45,37 @@ const SignIn = () => {
         <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign In</h1>
         <form method="post" onSubmit={handleSubmit}>
           <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Email</label>
-            <input
-              name="email"
-              type="text"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-            />
+            <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>
+              Email
+              <input
+                id="email"
+                name="email"
+                type="text"
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                }}
+              />
+            </label>
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Password</label>
-            <input
-              name="password"
-              type="password"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-            />
+            <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>
+              Password
+              <input
+                id="password"
+                name="password"
+                type="password"
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                }}
+              />
+            </label>
           </div>
 
           <button

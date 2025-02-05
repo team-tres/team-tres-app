@@ -1,12 +1,12 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+// import { signIn } from 'next-auth/react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
-import { createUser } from '@/lib/dbActions';
+// import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
+// import { createUser } from '@/lib/dbActions';
 
 type SignUpForm = {
   email: string;
@@ -14,7 +14,7 @@ type SignUpForm = {
   confirmPassword: string;
   role: string; // User role
 };
-/**This is the sign up page */
+/** This is the sign up page */
 const SignUp = () => {
   const [signupSubmitted, setSignupSubmitted] = useState(false);
 
@@ -33,7 +33,7 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
-    reset,
+    // reset,
     formState: { errors },
   } = useForm<SignUpForm>({
     resolver: yupResolver(validationSchema),
@@ -45,7 +45,14 @@ const SignUp = () => {
   };
 
   return (
-    <div style={{ backgroundColor: '#fff', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+    <div style={{
+      backgroundColor: '#fff',
+      minHeight: '100vh',
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}
+    >
       <div
         style={{
           backgroundColor: '#d9eaf4', // Light sky blue
@@ -58,69 +65,80 @@ const SignUp = () => {
         <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign Up</h1>
         <form onSubmit={handleSubmit(handleSignup)}>
           <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Email</label>
-            <input
-              type="text"
-              {...register('email')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.email ? 'is-invalid' : ''}
-            />
+            <label htmlFor="email" style={{ display: 'block', marginBottom: '5px' }}>
+              Email
+
+              <input
+                type="text"
+                {...register('email')}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                }}
+                className={errors.email ? 'is-invalid' : ''}
+              />
+            </label>
             <div style={{ color: 'red', fontSize: '12px' }}>{errors.email?.message}</div>
           </div>
 
           <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Password</label>
-            <input
-              type="password"
-              {...register('password')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.password ? 'is-invalid' : ''}
-            />
+            <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>
+              Password
+
+              <input
+                type="password"
+                {...register('password')}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                }}
+                className={errors.password ? 'is-invalid' : ''}
+              />
+            </label>
             <div style={{ color: 'red', fontSize: '12px' }}>{errors.password?.message}</div>
           </div>
 
           <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Confirm Password</label>
-            <input
-              type="password"
-              {...register('confirmPassword')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.confirmPassword ? 'is-invalid' : ''}
-            />
+            <label htmlFor="password" style={{ display: 'block', marginBottom: '5px' }}>
+              Confirm Password
+              <input
+                type="password"
+                {...register('confirmPassword')}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                }}
+                className={errors.confirmPassword ? 'is-invalid' : ''}
+              />
+            </label>
             <div style={{ color: 'red', fontSize: '12px' }}>{errors.confirmPassword?.message}</div>
           </div>
 
           <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Role</label>
-            <select
-              {...register('role')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.role ? 'is-invalid' : ''}
-            >
-              <option value="">Select Role</option>
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
+            <label htmlFor="role" style={{ display: 'block', marginBottom: '5px' }}>
+              Role
+
+              <select
+                {...register('role')}
+                style={{
+                  width: '100%',
+                  padding: '10px',
+                  border: '1px solid #ccc',
+                  borderRadius: '5px',
+                }}
+                className={errors.role ? 'is-invalid' : ''}
+              >
+                <option value="">Select Role</option>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+              </select>
+            </label>
             <div style={{ color: 'red', fontSize: '12px' }}>{errors.role?.message}</div>
           </div>
 
