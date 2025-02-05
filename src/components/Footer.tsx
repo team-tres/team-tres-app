@@ -6,7 +6,7 @@ const Footer = () => (
   <footer className="mt-auto py-3" style={{ backgroundColor: '#CFE1F3' }}>
     <Container>
       <Col className="text-center">
-        <Link href="/about" passHref className="text-decoration-none text-dark">
+        <Link href="/about" passHref className="text-decoration-underline text-dark">
           About us
         </Link>
         <br />
