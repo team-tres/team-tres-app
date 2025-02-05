@@ -4,7 +4,6 @@ import { signIn } from 'next-auth/react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import './page.css';
 
-/** The sign in page. */
 const SignIn = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -26,37 +25,43 @@ const SignIn = () => {
   };
 
   return (
-    <div className="background">
-      <div className="sign-in-container">
-        <div className="left-section">
+    <Container fluid className="d-flex justify-content-center align-items-center background">
+      <Row className="sign-in-container">
+        <Col md={5} className="left-section d-flex align-items-center justify-content-center">
           <h1>Sign In</h1>
-        </div>
+        </Col>
 
-        <div className="right-section">
-          <div className="form">
-            <form method="post" onSubmit={handleSubmit}>
-              <div className="input-group">
-                <label>Email</label>
-                <input name="email" type="text" />
-              </div>
+        <Col md={8}>
+          <Card className="d-flex align-items-center">
+            <Card.Body>
+              <Form className="form" onSubmit={handleSubmit}>
 
-              <div className="input-group">
-                <label htmlFor="password">Password</label>
-                <input id="password" name="password" type="password" />
-              </div>
+                <Form.Group as={Row} controlId="email" className="mb-3">
+                  <Form.Label column sm={4}>Email</Form.Label>
+                  <Col md={8}>
+                    <Form.Control type="text" name="email" required />
+                  </Col>
+                </Form.Group>
 
-              <button type="submit">Sign In</button>
-            </form>
+                <Form.Group as={Row} controlId="password" className="mb-3">
+                  <Form.Label column sm={4}>Password</Form.Label>
+                  <Col md={8}>
+                    <Form.Control type="password" name="password" required />
+                  </Col>
+                </Form.Group>
 
-            <div className="signup-link">
+                <Button type="submit" className="w-100">Sign In</Button>
+              </Form>
+            </Card.Body>
+
+            <Card.Footer className="text-center">
               Don&apos;t have an account?
               <a href="/auth/signup"> Sign up</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 

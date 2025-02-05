@@ -1,12 +1,12 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+/* import { signIn } from 'next-auth/react'; */
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
-import { createUser } from '@/lib/dbActions';
+import { Card, Col, Container, Button, Form, Row, Alert } from 'react-bootstrap';
+/* import { createUser } from '@/lib/dbActions'; */
 import './page.css';
 
 type SignUpForm = {
@@ -15,7 +15,7 @@ type SignUpForm = {
   confirmPassword: string;
   role: string; // User role
 };
-/**This is the sign up page */
+
 const SignUp = () => {
   const [signupSubmitted, setSignupSubmitted] = useState(false);
 
@@ -43,66 +43,85 @@ const SignUp = () => {
   const handleSignup = (data: SignUpForm) => {
     console.log('Signup request sent:', data);
     setSignupSubmitted(true);
+    reset();
   };
 
   return (
-    <div className="background">
-      <div className="sign-up-container">
-        <div className="left-section">
+    <Container fluid className="d-flex justify-content-center align-items-center background">
+      <Row className="sign-up-container">
+        <Col md={5} className="left-section d-flex align-items-center justify-content-center">
           <h1>Sign Up</h1>
-        </div>
+        </Col>
+        <Col md={8}>
+          <Card className="dflex align-items-center">
+            <Card.Body>
+              <Form className="form" onSubmit={handleSubmit(handleSignup)}>
 
-        <div className="right-section">
-          <div className="form">
-            <form onSubmit={handleSubmit(handleSignup)}>
-              <div className="input-group">
-                <label>Email</label>
-                <input type="text" {...register('email')} className={errors.email ? 'is-invalid' : ''} />
-                <div className="error-message">{errors.email?.message}</div>
-              </div>
+                <Form.Group as={Row} controlId="email" className="mb-3">
+                  <Form.Label column md={4}>Email</Form.Label>
+                  <Col sm={8}>
+                    <Form.Control
+                      type="text"
+                      {...register('email')}
+                      isInvalid={!!errors.email}
+                    />
+                    <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
 
-              <div className="input-group">
-                <label>Password</label>
-                <input type="password" {...register('password')} className={errors.password ? 'is-invalid' : ''} />
-                <div className="error-message">{errors.password?.message}</div>
-              </div>
+                <Form.Group as={Row} controlId="password" className="mb-3">
+                  <Form.Label column md={4}>Password</Form.Label>
+                  <Col sm={8}>
+                    <Form.Control
+                      type="password"
+                      {...register('password')}
+                      isInvalid={!!errors.password}
+                    />
+                    <Form.Control.Feedback type="invalid">{errors.password?.message}</Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
 
-              <div className="input-group">
-                <label>Confirm Password</label>
-                <input
-                  type="password"
-                  {...register('confirmPassword')}
-                  className={errors.confirmPassword ? 'is-invalid' : ''}
-                />
-                <div className="error-message">{errors.confirmPassword?.message}</div>
-              </div>
+                <Form.Group as={Row} controlId="confirmPassword" className="mb-3">
+                  <Form.Label column md={4}>Confirm Password</Form.Label>
+                  <Col sm={8}>
+                    <Form.Control
+                      type="password"
+                      {...register('confirmPassword')}
+                      isInvalid={!!errors.confirmPassword}
+                    />
+                    <Form.Control.Feedback type="invalid">{errors.confirmPassword?.message}</Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
 
-              <div className="input-group">
-                <select {...register('role')} className={errors.role ? 'is-invalid' : ''}>
-                  <option value="">Select Role</option>
-                  <option value="user">User</option>
-                  <option value="admin">Admin</option>
-                </select>
-                <div className="error-message">{errors.role?.message}</div>
-              </div>
+                <Form.Group as={Row} controlId="role" className="mb-3">
+                  <Form.Label column md={4}>Role</Form.Label>
+                  <Col sm={8}>
+                    <Form.Select {...register('role')} isInvalid={!!errors.role}>
+                      <option value="">Select Role</option>
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </Form.Select>
+                    <Form.Control.Feedback type="invalid">{errors.role?.message}</Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
 
-              <button type="submit">Register</button>
-            </form>
+                <Button type="submit" className="w-100">Register</Button>
+              </Form>
 
-            {signupSubmitted && (
-              <p className="success-message">
-                Signup request submitted! Your account is pending admin approval.
-              </p>
-            )}
-
-            <div className="signup-link">
+              {signupSubmitted && (
+                <Alert variant="success" className="mt-3 text-center">
+                  Signup request submitted! Your account is pending admin approval.
+                </Alert>
+              )}
+            </Card.Body>
+            <Card.Footer>
               Already have an account?
               <a href="/auth/signin"> Sign in</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
