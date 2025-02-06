@@ -51,7 +51,7 @@ const NavBar: React.FC = () => {
             )}
           </Nav>
           {/* Move login section to the right */}
-          <Nav className="ms-auto">
+          <Nav className="ms-auto" style={{ paddingRight: '100px' }}>
             {session ? (
               <NavDropdown id="login-dropdown" title={currentUser}>
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">

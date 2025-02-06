@@ -2,8 +2,8 @@
 
 import { signIn } from 'next-auth/react';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
+import './page.css';
 
-/** The sign in page. */
 const SignIn = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -25,78 +25,43 @@ const SignIn = () => {
   };
 
   return (
-    <div
-      style={{
-        backgroundColor: '#fff', // White background
-        minHeight: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    >
-      <div
-        style={{
-          backgroundColor: '#d9eaf4', // Light sky blue
-          padding: '30px',
-          borderRadius: '10px',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          width: '700px', // Same width as the Sign Up box
-        }}
-      >
-        <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign In</h1>
-        <form method="post" onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Email</label>
-            <input
-              name="email"
-              type="text"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-            />
-          </div>
+    <Container fluid className="d-flex justify-content-center align-items-center background">
+      <Row className="sign-in-container">
+        <Col md={5} className="left-section d-flex align-items-center justify-content-center">
+          <h1>Sign In</h1>
+        </Col>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Password</label>
-            <input
-              name="password"
-              type="password"
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-            />
-          </div>
+        <Col md={8}>
+          <Card className="d-flex align-items-center">
+            <Card.Body>
+              <Form className="form" onSubmit={handleSubmit}>
 
-          <button
-            type="submit"
-            style={{
-              backgroundColor: '#007bff',
-              color: 'white',
-              padding: '10px',
-              border: 'none',
-              borderRadius: '5px',
-              width: '100%',
-              cursor: 'pointer',
-            }}
-          >
-            Sign In
-          </button>
-        </form>
-        <div style={{ marginTop: '20px', textAlign: 'center' }}>
-          Don&apos;t have an account?
-          {' '}
-          <a href="/auth/signup" style={{ color: '#007bff', textDecoration: 'none' }}>
-            Sign up
-          </a>
-        </div>
-      </div>
-    </div>
+                <Form.Group as={Row} controlId="email" className="mb-3">
+                  <Form.Label column sm={4}>Email</Form.Label>
+                  <Col md={8}>
+                    <Form.Control type="text" name="email" required />
+                  </Col>
+                </Form.Group>
+
+                <Form.Group as={Row} controlId="password" className="mb-3">
+                  <Form.Label column sm={4}>Password</Form.Label>
+                  <Col md={8}>
+                    <Form.Control type="password" name="password" required />
+                  </Col>
+                </Form.Group>
+
+                <Button type="submit" className="w-100">Sign In</Button>
+              </Form>
+            </Card.Body>
+
+            <Card.Footer className="text-center">
+              Don&apos;t have an account?
+              <a href="/auth/signup"> Sign up</a>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
