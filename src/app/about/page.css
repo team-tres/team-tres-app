@@ -1,0 +1,30 @@
+.fiscal-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .header-font {
+    font-family: sans-serif;
+    font-size: 3em;
+    font-weight: 900;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .sub-sec-font {
+    font-family: sans-serif;
+    font-size: 2em;
+    font-weight: 900;
+    color: black;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .text-font {
+    font-family: Open Sans;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }

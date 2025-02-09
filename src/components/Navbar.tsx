@@ -15,7 +15,7 @@ const NavBar: React.FC = () => {
   const pathName = usePathname();
 
   return (
-    <Navbar expand="sm" style={{ backgroundColor: '#CFE1F3' }}>
+    <Navbar expand="sm" style={{ backgroundColor: 'white' }}>
       <Container fluid>
         <Navbar.Brand href="/" className="me-auto">
           <Image
