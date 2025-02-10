@@ -15,8 +15,8 @@
 }
 
 .right-section {
-    background-color: white;
-    color: #00243E;
+    background-color: #F8F8F8;
+    color: black;
     display: flex;
     flex-direction: column;
     align-items: center;

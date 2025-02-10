@@ -28,3 +28,8 @@
     padding-top: 10px;
     padding-bottom: 10px;
   }
+
+  main.container {
+    background-color: #F8F8F8;
+    padding: 2rem; 
+  }
