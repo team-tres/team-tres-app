@@ -25,7 +25,7 @@ const SignIn = () => {
       console.error('Sign in failed: ', result.error);
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    // await new Promise((resolve) => setTimeout(resolve, 500));
 
     const res = await fetch('/api/auth/session', { cache: 'no-store' });
     const session = await res.json();
