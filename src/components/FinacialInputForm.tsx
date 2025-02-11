@@ -10,8 +10,7 @@ import { redirect } from 'next/navigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
 import { AddStuffSchema } from '@/lib/validationSchemas';
 
-
-const onSubmit = async (data: any) => {
+const onSubmit = async () => {
 //   await addStuff(data);
   swal('Success', 'Your item has been added', 'success', {
     timer: 2000,

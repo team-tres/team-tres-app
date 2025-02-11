@@ -12,7 +12,7 @@ const ClientViewingPage = async () => {
       user: { email: string; id: string; randomKey: string };
     } | null,
   );
-  // const stuff = await prisma.stuff.findMany({});
+  //   const stuff = await prisma.stuff.findMany({});
   const users = await prisma.user.findMany({});
 
   return (
