@@ -30,6 +30,13 @@ model User {
     username String @unique
     password String
     role     Role   @default(CLIENT)
+    companyId   Int?     // Foreign key to Company model
+    company     Company? @relation(fields: [companyId], references: [id]) // Connects User to a Company
+}
+
+model Company {
+    id   Int    @id @default(autoincrement())
+    name String @unique
 }
 
 enum Condition {

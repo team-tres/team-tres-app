@@ -13,7 +13,15 @@ const ClientViewingPage = async () => {
     } | null,
   );
   // const stuff = await prisma.stuff.findMany({});
-  const users = await prisma.user.findMany({});
+   // Fetch users with company name included
+   const users = await prisma.user.findMany({
+    select: {
+      id: true,
+      email: true,
+      role: true,
+      company: { select: { name: true } }, // Fetch related company name
+    },
+  });  
 
   return (
     <main>
@@ -36,6 +44,7 @@ const ClientViewingPage = async () => {
                   <tr key={user.id}>
                     <td>{user.email}</td>
                     <td>{user.role}</td>
+                    <td>{user.company?.name || 'N/A'}</td> {/* Show linked company */}
                   </tr>
                 ))}
               </tbody>

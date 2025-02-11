@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
@@ -18,7 +18,8 @@ type SignUpForm = {
 const SignUp = () => {
   const [signupSubmitted, setSignupSubmitted] = useState(false);
   const [companySuggestions, setCompanySuggestions] = useState<string[]>([]);
-  const [typedCompany, setTypedCompany] = useState(''); // Stores user input for autocomplete
+  const [typedCompany, setTypedCompany] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const validationSchema = Yup.object().shape({
     email: Yup.string().required('Email is required').email('Email is invalid'),
@@ -37,44 +38,73 @@ const SignUp = () => {
     register,
     handleSubmit,
     reset,
-    setValue, // Allows us to set value manually in React Hook Form
+    setValue,
     formState: { errors },
   } = useForm<SignUpForm>({
     resolver: yupResolver(validationSchema),
   });
 
-  // Simulated backend call for company suggestions
+  // Fetch existing company names from API
   const fetchCompanySuggestions = async (input: string) => {
     if (input.length < 2) {
       setCompanySuggestions([]);
       return;
     }
-    
-    const existingCompanies = ['Spire Hawaii', 'Tech Innovations', 'Aloha Solutions']; // Replace with API call later
-    const filtered = existingCompanies.filter((company) =>
-      company.toLowerCase().startsWith(input.toLowerCase())
-    );
-    setCompanySuggestions(filtered);
+
+    try {
+      const response = await fetch('/api/companies');
+      if (!response.ok) throw new Error('Failed to fetch companies');
+
+      const companies: string[] = await response.json();
+      const filtered = companies.filter((company) =>
+        company.toLowerCase().startsWith(input.toLowerCase())
+      );
+
+      setCompanySuggestions(filtered);
+    } catch (error) {
+      console.error('Error fetching company suggestions:', error);
+      setCompanySuggestions([]);
+    }
   };
 
   const handleCompanyChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const input = e.target.value;
-    setTypedCompany(input); // Updates state for display
-    setValue('companyName', input); // Updates form field value
+    setTypedCompany(input);
+    setValue('companyName', input);
     fetchCompanySuggestions(input);
   };
 
   const handleCompanySelect = (name: string) => {
     setTypedCompany(name);
-    setValue('companyName', name); // Sets the selected name in the form
-    setCompanySuggestions([]); // Hides suggestions
+    setValue('companyName', name);
+    setCompanySuggestions([]);
   };
 
-  const handleSignup = (data: SignUpForm) => {
-    console.log('Signup request sent:', data);
-    setSignupSubmitted(true);
-    reset();
-    setTypedCompany(''); // Reset typed company name
+  const handleSignup = async (data: SignUpForm) => {
+    try {
+      const response = await fetch('/api/companies', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: data.email,
+          role: data.role,
+          companyName: data.companyName,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Signup failed');
+      }
+
+      console.log('Signup request sent:', data);
+      setSignupSubmitted(true);
+      reset();
+      setTypedCompany('');
+    } catch (error) {
+      console.error('Signup error:', error);
+      setErrorMessage(error instanceof Error ? error.message : 'Signup failed');
+    }
   };
 
   return (
@@ -130,7 +160,7 @@ const SignUp = () => {
                   <Col sm={8}>
                     <Form.Control
                       type="text"
-                      value={typedCompany} // Ensure displayed value updates correctly
+                      value={typedCompany}
                       onChange={handleCompanyChange}
                       placeholder="Ex: Spire, Walmart, etc"
                       isInvalid={!!errors.companyName}
@@ -160,6 +190,12 @@ const SignUp = () => {
               {signupSubmitted && (
                 <Alert variant="success" className="mt-3 text-center">
                   Signup request submitted! Your account is pending admin approval.
+                </Alert>
+              )}
+
+              {errorMessage && (
+                <Alert variant="danger" className="mt-3 text-center">
+                  {errorMessage}
                 </Alert>
               )}
             </Card.Body>
