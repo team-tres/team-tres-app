@@ -3,9 +3,9 @@
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import swal from 'sweetalert';
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yupResolver } from '@hookform/resolvers/yup';
 import { Stuff } from '@prisma/client';
-import { EditStuffSchema } from '@/lib/validationSchemas';
+// import { EditStuffSchema } from '@/lib/validationSchemas';
 import { editStuff } from '@/lib/dbActions';
 
 const onSubmit = async (data: Stuff) => {
@@ -23,7 +23,7 @@ const EditStuffForm = ({ stuff }: { stuff: Stuff }) => {
     reset,
     formState: { errors },
   } = useForm<Stuff>({
-    resolver: yupResolver(EditStuffSchema),
+    // resolver: yupResolver(EditStuffSchema),
   });
   // console.log(stuff);
 
