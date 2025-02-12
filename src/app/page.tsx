@@ -14,9 +14,7 @@ const Home = () => (
             <br />
             <span> ka wā ma hope.</span>
           </h1>
-          <h2 className="heading-left">
-            The future is found in the past.
-          </h2>
+          <h2 className="heading-left">The future is found in the past.</h2>
           <h3 className="heading-left">
             – Molokaʻi: Future of a Hawaiian Island, Sustainability Conference, July 2009
           </h3>
@@ -35,24 +33,30 @@ const Home = () => (
                 rel="noopener noreferrer"
                 className="text-right-link"
               >
-                <strong>
-                  Spire
-                </strong>
+                <strong>Spire</strong>
               </a>
             </Link>
-            ,
-            we leverage Fiscal Sustainability Models (FSMs)
-            to support organizations in making informed financial and strategic decisions
-            FSMs utilize historical financial data, incorporate relevant variables, and provide
-            future-forward financial
-            forecasts and trend analyses. This integrated approach enables organizations to navigate today’s
-            evolving economic landscape, enhancing their ability to make sound management decisions.
+            , we leverage Fiscal Sustainability Models (FSMs) to support organizations in making informed
+            financial and strategic decisions. FSMs utilize historical financial data, incorporate relevant
+            variables, and provide future-forward financial forecasts and trend analyses. This integrated
+            approach enables organizations to navigate today’s evolving economic landscape, enhancing their
+            ability to make sound management decisions.
           </h2>
-          <Button className="custom-button">
-            <Link href="/about" passHref legacyBehavior>
-              <a href="/about">About us</a>
-            </Link>
-          </Button>
+
+          <div className="button-group">
+            <Button className="custom-button">
+              <Link href="/about" passHref legacyBehavior>
+                <a href="/about">About us</a>
+              </Link>
+            </Button>
+
+            <Button className="custom-button">
+              <Link href="/contact-us" passHref legacyBehavior>
+                <a href="/contact-us">Contact us</a>
+              </Link>
+            </Button>
+          </div>
+
           <div className="spire-logo">
             <Image src="/spire.png" alt="Spire Logo" width={180} height={80} />
           </div>
