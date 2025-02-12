@@ -13,7 +13,7 @@ const AdminPage = async () => {
       user: { email: string; id: string; randomKey: string };
     } | null,
   );
-  const users = await prisma.user.findMany({ where: { status: 'pending' } });
+  const users = await prisma.user.findMany();
 
   return (
     <main>

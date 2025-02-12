@@ -102,7 +102,7 @@ model FinancialCompilation {
     totalStockholdersEquity                    Int
     totalLiabilitiesAndEquity                  Int
 
-    company                                    Company  @relation(fields: [companyId], references: [id])
+    //company                                    Company  @relation(fields: [companyId], references: [id])
 }
 
 model Company {
