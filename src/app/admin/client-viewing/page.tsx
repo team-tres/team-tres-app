@@ -1,32 +1,14 @@
 /* eslint-disable max-len */
 
-'use client';
-
-import { useState } from 'react';
-import { Col, Container, Row, Table, Form, InputGroup } from 'react-bootstrap';
-import { Search } from 'react-bootstrap-icons';
-
-const ClientViewingPage = () => {
-  // Placeholder client data (no database)
-  const users = [
-    { id: 1, fullname: 'John Doe', company: 'Tech Corp', email: 'john@gmail.com', status: 'Active', role: 'CLIENT' },
-    { id: 2, fullname: 'Jane Smith', company: 'Business Ltd.', email: 'jane@gmail.com', status: 'Inactive', role: 'CLIENT' },
-    { id: 3, fullname: 'Alice Johnson', company: 'Marketing Inc.', email: 'alice@gmail.com', status: 'Active', role: 'CLIENT' },
-    { id: 4, fullname: 'Bob Brown', company: 'Finance LLC', email: 'bob@gmail.com', status: 'Pending', role: 'CLIENT' },
-    { id: 5, fullname: 'Charlie White', company: 'Healthcare Solutions', email: 'charlie@gmail.com', status: 'Active', role: 'ADMIN' }, // Not a CLIENT
-  ];
-
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Filter users: Only show CLIENT roles & match search query
-  const filteredUsers = users
-    .filter((user) => user.role === 'CLIENT')
-    .filter(
-      (user) => user.fullname.toLowerCase().includes(searchQuery.toLowerCase())
-        || user.company.toLowerCase().includes(searchQuery.toLowerCase())
-        || user.email.toLowerCase().includes(searchQuery.toLowerCase())
-        || user.status.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
+const ClientViewingPage = async () => {
+  const session = await getServerSession(authOptions);
+  adminProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+    } | null,
+  );
+  //   const stuff = await prisma.stuff.findMany({});
+  const users = await prisma.user.findMany({});
 
   return (
     <main style={{ backgroundColor: '#f5f5dc', minHeight: '100vh', paddingTop: '20px' }}>

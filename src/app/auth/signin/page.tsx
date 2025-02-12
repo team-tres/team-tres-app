@@ -25,16 +25,15 @@ const SignIn = () => {
       console.error('Sign in failed: ', result.error);
     }
 
-    await new Promise<void>((resolve) => {
-      setTimeout(() => resolve(), 500);
-    });
+    // await new Promise((resolve) => setTimeout(resolve, 500));
 
     const res = await fetch('/api/auth/session', { cache: 'no-store' });
     const session = await res.json();
 
     console.log(session?.user?.role); // Debugging
 
-    if (session?.user?.role === 'ADMIN') { // role is not working
+    if (session?.user?.role === 'admin') { // role is not working
+      
       await router.push('/clientDashboard');
     } else {
       await router.push('/clientDashboard');
