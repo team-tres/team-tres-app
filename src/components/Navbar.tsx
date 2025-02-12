@@ -1,5 +1,3 @@
-/* eslint-disable react/jsx-indent, @typescript-eslint/indent */
-
 'use client';
 
 import { useSession } from 'next-auth/react';
@@ -19,28 +17,44 @@ const NavBar: React.FC = () => {
     <Navbar expand="sm" style={{ backgroundColor: 'white' }}>
       <Container fluid>
         <Navbar.Brand href="/" className="me-auto">
-          <Image
-            src="/logo.png"
-            alt="Logo"
-            style={{ height: '100px', width: 'auto' }}
-          />
+          <Image src="/logo.png" alt="Logo" style={{ height: '100px', width: 'auto' }} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {currentUser && (
               <>
-                <Nav.Link id="client-dashboard" href="/clientDashboard" active={pathName === '/clientDashboard'} className="font-nav">
+                <Nav.Link
+                  id="client-dashboard"
+                  href="/clientDashboard"
+                  active={pathName === '/clientDashboard'}
+                  className="font-nav"
+                >
                   DASHBOARD
                 </Nav.Link>
-                <Nav.Link id="financial-stuff-nav" href="/financial" active={pathName === '/financial'} className="font-nav">
+                <Nav.Link
+                  id="financial-stuff-nav"
+                  href="/financial"
+                  active={pathName === '/financial'}
+                  className="font-nav"
+                >
                   INPUT FINANCIALS
                 </Nav.Link>
-                <Nav.Link id="analyst-stuff-nav" href="/analyst" active={pathName === '/analyst'} className="font-nav">
+                <Nav.Link
+                  id="analyst-stuff-nav"
+                  href="/analyst"
+                  active={pathName === '/analyst'}
+                  className="font-nav"
+                >
                   ANALYST
                 </Nav.Link>
                 {role === 'ADMIN' && (
-                  <Nav.Link id="admin-stuff-nav" href="/admin" active={pathName === '/admin' } className="font-nav">
+                  <Nav.Link
+                    id="admin-stuff-nav"
+                    href="/admin"
+                    active={pathName === '/admin'}
+                    className="font-nav"
+                  >
                     ADMIN
                   </Nav.Link>
                 )}
