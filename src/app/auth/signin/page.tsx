@@ -33,7 +33,6 @@ const SignIn = () => {
     console.log(session?.user?.role); // Debugging
 
     if (session?.user?.role === 'admin') { // role is not working
-      
       await router.push('/clientDashboard');
     } else {
       await router.push('/clientDashboard');
