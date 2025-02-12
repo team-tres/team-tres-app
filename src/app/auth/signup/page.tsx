@@ -49,11 +49,9 @@ const SignUp = () => {
       setCompanySuggestions([]);
       return;
     }
-    
+
     const existingCompanies = ['Spire Hawaii', 'Tech Innovations', 'Aloha Solutions']; // Replace with API call later
-    const filtered = existingCompanies.filter((company) =>
-      company.toLowerCase().startsWith(input.toLowerCase())
-    );
+    const filtered = existingCompanies.filter((company) => company.toLowerCase().startsWith(input.toLowerCase()));
     setCompanySuggestions(filtered);
   };
 
@@ -107,7 +105,11 @@ const SignUp = () => {
                 <Form.Group as={Row} controlId="confirmPassword" className="mb-3">
                   <Form.Label column md={4}>Confirm Password</Form.Label>
                   <Col sm={8}>
-                    <Form.Control type="password" {...register('confirmPassword')} isInvalid={!!errors.confirmPassword} />
+                    <Form.Control
+                      type="password"
+                      {...register('confirmPassword')}
+                      isInvalid={!!errors.confirmPassword}
+                    />
                     <Form.Control.Feedback type="invalid">{errors.confirmPassword?.message}</Form.Control.Feedback>
                   </Col>
                 </Form.Group>
@@ -136,13 +138,13 @@ const SignUp = () => {
                       isInvalid={!!errors.companyName}
                     />
                     <Form.Control.Feedback type="invalid">{errors.companyName?.message}</Form.Control.Feedback>
-                    
+
                     {/* Autocomplete Dropdown */}
                     {companySuggestions.length > 0 && (
                       <ListGroup className="autocomplete-dropdown">
-                        {companySuggestions.map((company, index) => (
+                        {companySuggestions.map((company) => (
                           <ListGroup.Item
-                            key={index}
+                            key={company} // Use company name as key
                             action
                             onClick={() => handleCompanySelect(company)}
                           >
