@@ -3,28 +3,28 @@
 'use client';
 
 import { useState } from 'react';
-import { Col, Container, Table, Form, InputGroup, Row, Button } from 'react-bootstrap';
+import { Col, Container, Row, Table, Form, InputGroup } from 'react-bootstrap';
 
-const AdminPage = () => {
-  // Placeholder user data (no database)
+const ClientViewingPage = () => {
+  // Placeholder client data (no database)
   const users = [
-    { id: 1, fullname: 'Alice Johnson', role: 'ADMIN', email: 'alice@company.com', approver: 'Yes' },
-    { id: 2, fullname: 'Bob Brown', role: 'ANALYST', email: 'bob@company.com', approver: 'No' },
-    { id: 3, fullname: 'Charlie White', role: 'AUDITOR', email: 'charlie@company.com', approver: 'Yes' },
-    { id: 4, fullname: 'David Green', role: 'ANALYST', email: 'david@company.com', approver: 'No' },
-    { id: 5, fullname: 'Emma Black', role: 'CLIENT', email: 'emma@company.com', approver: 'No' }, // Should not be displayed
+    { id: 1, fullname: 'John Doe', company: 'Tech Corp', email: 'john@example.com', status: 'Active', role: 'CLIENT' },
+    { id: 2, fullname: 'Jane Smith', company: 'Business Ltd.', email: 'jane@example.com', status: 'Inactive', role: 'CLIENT' },
+    { id: 3, fullname: 'Alice Johnson', company: 'Marketing Inc.', email: 'alice@example.com', status: 'Active', role: 'CLIENT' },
+    { id: 4, fullname: 'Bob Brown', company: 'Finance LLC', email: 'bob@example.com', status: 'Pending', role: 'CLIENT' },
+    { id: 5, fullname: 'Charlie White', company: 'Healthcare Solutions', email: 'charlie@example.com', status: 'Active', role: 'ADMIN' }, // Not a CLIENT
   ];
 
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter users: Only show ADMIN, ANALYST, and AUDITOR & match search query
+  // Filter users: Only show CLIENT roles & match search query
   const filteredUsers = users
-    .filter((user) => ['ADMIN', 'ANALYST', 'AUDITOR'].includes(user.role))
+    .filter((user) => user.role === 'CLIENT')
     .filter(
       (user) => user.fullname.toLowerCase().includes(searchQuery.toLowerCase())
-        || user.role.toLowerCase().includes(searchQuery.toLowerCase())
+        || user.company.toLowerCase().includes(searchQuery.toLowerCase())
         || user.email.toLowerCase().includes(searchQuery.toLowerCase())
-        || user.approver.toLowerCase().includes(searchQuery.toLowerCase()),
+        || user.status.toLowerCase().includes(searchQuery.toLowerCase()),
     );
 
   return (
@@ -33,7 +33,7 @@ const AdminPage = () => {
         <Row className="align-items-center mb-3">
           {/* Heading */}
           <Col md={6}>
-            <h1 className="text-dark">Users</h1>
+            <h1 className="text-dark">Clients</h1>
           </Col>
 
           {/* Search Bar */}
@@ -42,7 +42,7 @@ const AdminPage = () => {
               <InputGroup.Text>🔍</InputGroup.Text>
               <Form.Control
                 type="text"
-                placeholder="Search users..."
+                placeholder="Search clients..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -50,45 +50,41 @@ const AdminPage = () => {
           </Col>
         </Row>
 
-        <Col>
-          <Table striped bordered hover className="shadow bg-white">
-            <thead className="bg-secondary text-white">
-              <tr>
-                <th>Name</th>
-                <th>Role</th>
-                <th>Email</th>
-                <th>Approver</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredUsers.length > 0 ? (
-                filteredUsers.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.fullname}</td>
-                    <td>{user.role}</td>
-                    <td>{user.email}</td>
-                    <td>{user.approver}</td>
-                    <td>
-                      <Button className="btn btn-sm btn-primary">Edit</Button>
-                      {' '}
-                      <Button className="btn btn-sm btn-danger">Delete</Button>
+        <Row>
+          <Col>
+            <Table striped bordered hover className="shadow bg-white">
+              <thead className="bg-secondary text-white">
+                <tr>
+                  <th>Name</th>
+                  <th>Company</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {filteredUsers.length > 0 ? (
+                  filteredUsers.map((client) => (
+                    <tr key={client.id}>
+                      <td>{client.fullname}</td>
+                      <td>{client.company}</td>
+                      <td>{client.email}</td>
+                      <td>{client.status}</td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={4} className="text-center">
+                      No matching clients found.
                     </td>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={5} className="text-center">
-                    No matching users found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </Table>
-        </Col>
+                )}
+              </tbody>
+            </Table>
+          </Col>
+        </Row>
       </Container>
     </main>
   );
 };
 
-export default AdminPage;
+export default ClientViewingPage;
