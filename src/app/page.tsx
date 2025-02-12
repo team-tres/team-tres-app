@@ -24,6 +24,7 @@ const Home = () => (
 
         {/* Right Section - Full Height White Background */}
         <Col md={8} className="right-section">
+
           <h1 className="heading-right">E komo mai! Welcome to FiscNav.</h1>
           <h2 className="text-right">
             In cooperation with
