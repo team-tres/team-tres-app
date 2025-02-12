@@ -6,6 +6,7 @@ import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
+import './component.css';
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -26,37 +27,29 @@ const NavBar: React.FC = () => {
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          {/* Centering the Nav items */}
-          <Nav className="mx-auto justify-content-center">
+          <Nav className="ms-auto">
             {currentUser && (
               <>
-                <Nav.Link id="client-dashboard" href="/clientDashboard" active={pathName === '/clientDashboard'}>
-                  Dashboard
+                <Nav.Link id="client-dashboard" href="/clientDashboard" active={pathName === '/clientDashboard'} className="font-nav">
+                  DASHBOARD
                 </Nav.Link>
-                <Nav.Link id="add-stuff-nav" href="/add" active={pathName === '/add'}>
-                  Add Stuff
+                <Nav.Link id="financial-stuff-nav" href="/financial" active={pathName === '/financial'} className="font-nav">
+                  INPUT FINANCIALS
                 </Nav.Link>
-                <Nav.Link id="list-stuff-nav" href="/list" active={pathName === '/list'}>
-                  List Stuff
-                </Nav.Link>
-                <Nav.Link id="financial-stuff-nav" href="/financial" active={pathName === '/financial'}>
-                  Input Financials
-                </Nav.Link>
-                <Nav.Link id="analyst-stuff-nav" href="/analyst" active={pathName === '/analyst'}>
-                  Analyst
+                <Nav.Link id="analyst-stuff-nav" href="/analyst" active={pathName === '/analyst'} className="font-nav">
+                  ANALYST
                 </Nav.Link>
                 {role === 'ADMIN' && (
-                  <Nav.Link id="admin-stuff-nav" href="/admin" active={pathName === '/admin'}>
-                    Admin
+                  <Nav.Link id="admin-stuff-nav" href="/admin" active={pathName === '/admin' } className="font-nav">
+                    ADMIN
                   </Nav.Link>
                 )}
               </>
             )}
           </Nav>
-          {/* Move login section to the right */}
           <Nav className="ms-auto" style={{ paddingRight: '100px' }}>
             {session ? (
-              <NavDropdown id="login-dropdown" title={currentUser}>
+              <NavDropdown id="login-dropdown" title={currentUser} className="font-nav">
                 <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
                   <BoxArrowRight className="me-2" />
                   Sign Out
@@ -67,7 +60,7 @@ const NavBar: React.FC = () => {
                 </NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <NavDropdown id="login-dropdown" title="Login">
+              <NavDropdown id="login-dropdown" title="Login" className="font-nav">
                 <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin">
                   <PersonFill className="me-2" />
                   Sign in
