@@ -15,7 +15,7 @@ const NavBar: React.FC = () => {
   const pathName = usePathname();
 
   return (
-    <Navbar expand="sm" style={{ backgroundColor: '#CFE1F3' }}>
+    <Navbar expand="sm" style={{ backgroundColor: 'white' }}>
       <Container fluid>
         <Navbar.Brand href="/" className="me-auto">
           <Image
@@ -30,6 +30,9 @@ const NavBar: React.FC = () => {
           <Nav className="mx-auto justify-content-center">
             {currentUser && (
               <>
+                <Nav.Link id="client-dashboard" href="/clientDashboard" active={pathName === '/clientDashboard'}>
+                  Dashboard
+                </Nav.Link>
                 <Nav.Link id="add-stuff-nav" href="/add" active={pathName === '/add'}>
                   Add Stuff
                 </Nav.Link>

@@ -48,47 +48,67 @@ model Stuff {
     owner     String
 }
 
-model IncomeStatement {
-    id                          Int   @id @default(autoincrement())
-    // companyId                Int
-    year                        Int
-    revenue                     Float
-    costOfContracting           Float
-    overhead                    Float
-    salariesAndBenefits         Float
-    rentAndOverhead             Float
-    depreciationAndAmortization Float
-    interest                    Float
-    interestIncome              Float
-    gainOnDisposalOfAssets      Float
-    otherIncome                 Float
-    incomeTaxes                 Float
+model FinancialCompilation {
+    id        Int @id @default(autoincrement())
+    companyId Int
+    year      Int
 
-    // company                  Company  @relation(fields: [companyId], references: [id])
-}
+    // Income Statement
+    revenue                        Int
+    netSales                       Int
+    costOfContracting              Int
+    overhead                       Int
+    costOfGoodsSold                Int
+    grossProfit                    Int
+    grossMarginPercentage          Float
+    salariesAndBenefits            Int
+    rentAndOverhead                Int
+    depreciationAndAmortization    Int
+    interest                       Int
+    totalOperatingExpenses         Int
+    operatingExpensesPercentage    Float
+    profitFromOperations           Int
+    profitFromOperationsPercentage Float
+    interestIncome                 Int
+    interestExpense                Int
+    gainOnDisposalOfAssets         Int
+    otherIncome                    Int
+    totalOtherIncome               Int
+    totalOtherIncomePercentage     Float
+    incomeBeforeIncomeTaxes        Int
+    pretaxIncomePercentage         Float
+    incomeTaxes                    Int
+    netIncome                      Int
+    netIncomePercentage            Float
 
-model BalanceSheet {
-    id                        Int   @id @default(autoincrement())
-    // companyId                Int
-    year                      Int
-    cashAndCashEquivalents    Float
-    accountsReceivable        Float
-    inventory                 Float
-    propertyPlantAndEquipment Float
-    investment                Float
-    accountsPayable           Float
-    longDebtService           Float
-    taxesPayable              Float
-    currentDebtService        Float
-    loansPayable              Float
-    equityCapital             Float
-    retainedEarnings          Float
+    // BalanceSheet
+    cashAndCashEquivalents    Int
+    accountsReceivable        Int
+    inventory                 Int
+    totalCurrentAssets        Int
+    propertyPlantAndEquipment Int
+    investment                Int
+    totalLongTermAsset        Int
+    accountsPayable           Int
+    longDebtService           Int
+    taxesPayable              Int
+    totalCurrentLiabilities   Int
+    currentDebtService        Int
+    loansPayable              Int
+    totalLongTermLiabilities  Int
+    totalLiabilities          Int
+    equityCapital             Int
+    retainedEarnings          Int
+    totalStockholdersEquity   Int
+    totalLiabilitiesAndEquity Int
 
-    // company                  Company  @relation(fields: [companyId], references: [id])
+    company Company @relation(fields: [companyId], references: [id])
 }
 
 model Company {
     id    Int    @id @default(autoincrement())
     name  String
     email String
+
+    FinancialCompilation FinancialCompilation[]
 }
