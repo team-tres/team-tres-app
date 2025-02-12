@@ -107,7 +107,7 @@ model FinancialCompilation {
 
 model Company {
     id    Int    @id @default(autoincrement())
-    name  String
+    name  String @unique
     email String
 
     FinancialCompilation FinancialCompilation[]
