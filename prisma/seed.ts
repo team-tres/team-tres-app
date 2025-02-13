@@ -1,4 +1,3 @@
-
 import { PrismaClient, Role, Condition } from '@prisma/client';
 // import { hash } from 'bcrypt';
 import * as config from '../config/settings.development.json';
@@ -38,7 +37,7 @@ async function main() {
   //* * END  */
 
   console.log('Seeding the database');
-//   const password = await hash('changeme', 10);
+  // const password = await hash('changeme', 10);
   config.defaultAccounts.forEach(async (account) => {
     // let role: Role = 'USER';
     if (account.role === 'ADMIN') {

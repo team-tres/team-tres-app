@@ -1,37 +1,41 @@
-/* eslint-disable max-len */
-
-'use client';
-
-import { useState } from 'react';
+import { getServerSession } from 'next-auth';
 import { Col, Container, Row, Table, Form, InputGroup } from 'react-bootstrap';
+import { prisma } from '@/lib/prisma'; // Ensure your Prisma client is properly imported
+import authOptions from '@/lib/authOptions'; // Import auth options for session management
+import { adminProtectedPage } from '@/lib/page-protection';
+import { Search } from 'react-bootstrap-icons'; // Import Search icon from react-bootstrap-icons
+import { useState } from 'react';
 
-const ClientViewingPage = () => {
-  // Placeholder client data (no database)
-  const users = [
-    { id: 1, fullname: 'John Doe', company: 'Tech Corp', email: 'john@example.com', status: 'Active', role: 'CLIENT' },
-    { id: 2, fullname: 'Jane Smith', company: 'Business Ltd.', email: 'jane@example.com', status: 'Inactive', role: 'CLIENT' },
-    { id: 3, fullname: 'Alice Johnson', company: 'Marketing Inc.', email: 'alice@example.com', status: 'Active', role: 'CLIENT' },
-    { id: 4, fullname: 'Bob Brown', company: 'Finance LLC', email: 'bob@example.com', status: 'Pending', role: 'CLIENT' },
-    { id: 5, fullname: 'Charlie White', company: 'Healthcare Solutions', email: 'charlie@example.com', status: 'Active', role: 'ADMIN' }, // Not a CLIENT
-  ];
+const ClientViewingPage = async () => {
+  // Get session info
+  const session = await getServerSession(authOptions);
+  adminProtectedPage(
+    session as {
+      user: { email: string; id: string; randomKey: string };
+    } | null,
+  );
 
+  // Fetch clients with the 'CLIENT' role directly from the database
+  const clients = await prisma.user.findMany({
+    where: {
+      role: 'CLIENT', // Only fetch users with the 'CLIENT' role
+    },
+  });
+
+  // Handle the search functionality
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Filter users: Only show CLIENT roles & match search query
-  const filteredUsers = users
-    .filter((user) => user.role === 'CLIENT')
-    .filter(
-      (user) => user.fullname.toLowerCase().includes(searchQuery.toLowerCase())
-        || user.company.toLowerCase().includes(searchQuery.toLowerCase())
-        || user.email.toLowerCase().includes(searchQuery.toLowerCase())
-        || user.status.toLowerCase().includes(searchQuery.toLowerCase()),
-    );
+  // Filter clients based on search query
+  const filteredClients = clients.filter(
+    (client) => client.username.toLowerCase().includes(searchQuery.toLowerCase())
+               || client.email.toLowerCase().includes(searchQuery.toLowerCase())
+               || client.id.toString().includes(searchQuery),
+  );
 
   return (
     <main style={{ backgroundColor: '#f5f5dc', minHeight: '100vh', paddingTop: '20px' }}>
       <Container id="list" fluid className="py-3">
         <Row className="align-items-center mb-3">
-          {/* Heading */}
           <Col md={6}>
             <h1 className="text-dark">Clients</h1>
           </Col>
@@ -39,7 +43,9 @@ const ClientViewingPage = () => {
           {/* Search Bar */}
           <Col md={6}>
             <InputGroup>
-              <InputGroup.Text>🔍</InputGroup.Text>
+              <InputGroup.Text>
+                <Search />
+              </InputGroup.Text>
               <Form.Control
                 type="text"
                 placeholder="Search clients..."
@@ -52,34 +58,33 @@ const ClientViewingPage = () => {
 
         <Row>
           <Col>
-            <Table striped bordered hover className="shadow bg-white">
-              <thead className="bg-secondary text-white">
-                <tr>
-                  <th>Name</th>
-                  <th>Company</th>
-                  <th>Email</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredUsers.length > 0 ? (
-                  filteredUsers.map((client) => (
-                    <tr key={client.id}>
-                      <td>{client.fullname}</td>
-                      <td>{client.company}</td>
-                      <td>{client.email}</td>
-                      <td>{client.status}</td>
-                    </tr>
-                  ))
-                ) : (
+            {/* Show filtered clients in a table */}
+            {filteredClients.length === 0 ? (
+              <div className="text-center">
+                <p>No clients found.</p>
+              </div>
+            ) : (
+              <Table striped bordered hover className="shadow bg-white">
+                <thead className="bg-secondary text-white">
                   <tr>
-                    <td colSpan={4} className="text-center">
-                      No matching clients found.
-                    </td>
+                    <th>ID</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Name</th>
                   </tr>
-                )}
-              </tbody>
-            </Table>
+                </thead>
+                <tbody>
+                  {filteredClients.map((client) => (
+                    <tr key={client.id}>
+                      <td>{client.id}</td>
+                      <td>{client.email}</td>
+                      <td>{client.role}</td>
+                      <td>{client.username}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
           </Col>
         </Row>
       </Container>
