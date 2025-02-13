@@ -5,88 +5,110 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  // for local development
-  url      = env("DATABASE_URL")
-  // for Vercel
-  // url       = env("POSTGRES_PRISMA_URL")
-  // directUrl = env("POSTGRES_URL_NON_POOLING")
+    provider = "postgresql"
+    // for local development
+    url      = env("DATABASE_URL")
+    // for Vercel
+    // url       = env("POSTGRES_PRISMA_URL")
+    // directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 enum Role {
-  USER
-  ADMIN
+    CLIENT
+    ADMIN
+    ANALYST
+    AUDITOR
 }
 
 model User {
-  email    String @unique
-  username String @unique
-  password String
-
+    id       Int    @id @default(autoincrement())
+    email    String @unique
+    username String @unique
+    password String
+    role     Role   @default(CLIENT)
 }
 
 enum Condition {
-  excellent
-  good
-  fair
-  poor
+    excellent
+    good
+    fair
+    poor
 }
 
 model Stuff {
-  id        Int       @id @default(autoincrement())
-  name      String
-  quantity  Int
-  condition Condition
-  income    Float
-  owner     String
+    id        Int       @id @default(autoincrement())
+    name      String
+    quantity  Int
+    condition Condition
+    income    Float
+    owner     String
 }
 
-model IncomeStatement {
-  id                          Int       @id @default(autoincrement())
-  // companyId                Int
-  year                        Int
-  revenue                     Float
-  costOfContracting           Float
-  overhead                    Float
-  salariesAndBenefits         Float
-  rentAndOverhead             Float
-  depreciationAndAmortization Float
-  interest                    Float
-  interestIncome              Float
-  gainOnDisposalOfAssets      Float
-  otherIncome                 Float
-  incomeTaxes                 Float
-  
-  // company                  Company  @relation(fields: [companyId], references: [id])
+model FinancialCompilation {
+    id        Int @id @default(autoincrement())
+    companyId Int
+    year      Int
+
+    // Income Statement
+    revenue                        Int
+    netSales                       Int
+    costOfContracting              Int
+    overhead                       Int
+    costOfGoodsSold                Int
+    grossProfit                    Int
+    grossMarginPercentage          Float
+    salariesAndBenefits            Int
+    rentAndOverhead                Int
+    depreciationAndAmortization    Int
+    interest                       Int
+    totalOperatingExpenses         Int
+    operatingExpensesPercentage    Float
+    profitFromOperations           Int
+    profitFromOperationsPercentage Float
+    interestIncome                 Int
+    interestExpense                Int
+    gainOnDisposalOfAssets         Int
+    otherIncome                    Int
+    totalOtherIncome               Int
+    totalOtherIncomePercentage     Float
+    incomeBeforeIncomeTaxes        Int
+    pretaxIncomePercentage         Float
+    incomeTaxes                    Int
+    netIncome                      Int
+    netIncomePercentage            Float
+
+    // BalanceSheet
+    cashAndCashEquivalents    Int
+    accountsReceivable        Int
+    inventory                 Int
+    totalCurrentAssets        Int
+    propertyPlantAndEquipment Int
+    investment                Int
+    totalLongTermAsset        Int
+    accountsPayable           Int
+    longDebtService           Int
+    taxesPayable              Int
+    totalCurrentLiabilities   Int
+    currentDebtService        Int
+    loansPayable              Int
+    totalLongTermLiabilities  Int
+    totalLiabilities          Int
+    equityCapital             Int
+    retainedEarnings          Int
+    totalStockholdersEquity   Int
+    totalLiabilitiesAndEquity Int
+
+    company Company @relation(fields: [companyId], references: [id])
 }
-
-model BalanceSheet {
-  id                          Int       @id @default(autoincrement())
-  // companyId                Int
-  year                        Int
-  cashAndCashEquivalents      Float
-  accountsReceivable          Float
-  inventory                   Float
-  propertyPlantAndEquipment   Float
-  investment                  Float
-  accountsPayable             Float
-  longDebtService             Float
-  taxesPayable                Float
-  currentDebtService          Float
-  loansPayable                Float
-  equityCapital               Float
-  retainedEarnings            Float
-
-  // company                  Company  @relation(fields: [companyId], references: [id])
-}
-
 
 model Company {
-  id                          Int       @id @default(autoincrement())
-  name                        String
-  email                       String
+    id    Int    @id @default(autoincrement())
+    name  String @unique
+    email String
+
+    FinancialCompilation FinancialCompilation[]
 }

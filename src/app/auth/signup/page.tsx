@@ -1,12 +1,13 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+/* import { signIn } from 'next-auth/react'; */
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
-import { createUser } from '@/lib/dbActions';
+import { Card, Col, Container, Button, Form, Row, Alert } from 'react-bootstrap';
+/* import { createUser } from '@/lib/dbActions'; */
+import './page.css';
 
 type SignUpForm = {
   email: string;
@@ -14,7 +15,7 @@ type SignUpForm = {
   confirmPassword: string;
   role: string; // User role
 };
-/**This is the sign up page */
+
 const SignUp = () => {
   const [signupSubmitted, setSignupSubmitted] = useState(false);
 
@@ -42,110 +43,85 @@ const SignUp = () => {
   const handleSignup = (data: SignUpForm) => {
     console.log('Signup request sent:', data);
     setSignupSubmitted(true);
+    reset();
   };
 
   return (
-    <div style={{ backgroundColor: '#fff', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <div
-        style={{
-          backgroundColor: '#d9eaf4', // Light sky blue
-          padding: '30px',
-          borderRadius: '10px',
-          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          width: '750px', // Increased width
-        }}
-      >
-        <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>Sign Up</h1>
-        <form onSubmit={handleSubmit(handleSignup)}>
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Email</label>
-            <input
-              type="text"
-              {...register('email')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.email ? 'is-invalid' : ''}
-            />
-            <div style={{ color: 'red', fontSize: '12px' }}>{errors.email?.message}</div>
-          </div>
+    <Container fluid className="d-flex justify-content-center align-items-center background">
+      <Row className="sign-up-container">
+        <Col md={5} className="left-section d-flex align-items-center justify-content-center">
+          <h1>Sign Up</h1>
+        </Col>
+        <Col md={8}>
+          <Card className="dflex align-items-center">
+            <Card.Body>
+              <Form className="form" onSubmit={handleSubmit(handleSignup)}>
 
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Password</label>
-            <input
-              type="password"
-              {...register('password')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.password ? 'is-invalid' : ''}
-            />
-            <div style={{ color: 'red', fontSize: '12px' }}>{errors.password?.message}</div>
-          </div>
+                <Form.Group as={Row} controlId="email" className="mb-3">
+                  <Form.Label column md={4}>Email</Form.Label>
+                  <Col sm={8}>
+                    <Form.Control
+                      type="text"
+                      {...register('email')}
+                      isInvalid={!!errors.email}
+                    />
+                    <Form.Control.Feedback type="invalid">{errors.email?.message}</Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
 
-          <div style={{ marginBottom: '15px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Confirm Password</label>
-            <input
-              type="password"
-              {...register('confirmPassword')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.confirmPassword ? 'is-invalid' : ''}
-            />
-            <div style={{ color: 'red', fontSize: '12px' }}>{errors.confirmPassword?.message}</div>
-          </div>
+                <Form.Group as={Row} controlId="password" className="mb-3">
+                  <Form.Label column md={4}>Password</Form.Label>
+                  <Col sm={8}>
+                    <Form.Control
+                      type="password"
+                      {...register('password')}
+                      isInvalid={!!errors.password}
+                    />
+                    <Form.Control.Feedback type="invalid">{errors.password?.message}</Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '5px' }}>Role</label>
-            <select
-              {...register('role')}
-              style={{
-                width: '100%',
-                padding: '10px',
-                border: '1px solid #ccc',
-                borderRadius: '5px',
-              }}
-              className={errors.role ? 'is-invalid' : ''}
-            >
-              <option value="">Select Role</option>
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
-            <div style={{ color: 'red', fontSize: '12px' }}>{errors.role?.message}</div>
-          </div>
+                <Form.Group as={Row} controlId="confirmPassword" className="mb-3">
+                  <Form.Label column md={4}>Confirm Password</Form.Label>
+                  <Col sm={8}>
+                    <Form.Control
+                      type="password"
+                      {...register('confirmPassword')}
+                      isInvalid={!!errors.confirmPassword}
+                    />
+                    <Form.Control.Feedback type="invalid">{errors.confirmPassword?.message}</Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
 
-          <button
-            type="submit"
-            style={{
-              backgroundColor: '#007bff',
-              color: 'white',
-              padding: '10px',
-              border: 'none',
-              borderRadius: '5px',
-              width: '100%',
-              cursor: 'pointer',
-            }}
-          >
-            Register
-          </button>
-        </form>
-        {signupSubmitted && (
-          <p style={{ marginTop: '15px', textAlign: 'center', color: 'green' }}>
-            Signup request submitted! Your account is pending admin approval.
-          </p>
-        )}
-      </div>
-    </div>
+                <Form.Group as={Row} controlId="role" className="mb-3">
+                  <Form.Label column md={4}>Role</Form.Label>
+                  <Col sm={8}>
+                    <Form.Select {...register('role')} isInvalid={!!errors.role}>
+                      <option value="">Select Role</option>
+                      <option value="user">User</option>
+                      <option value="admin">Admin</option>
+                    </Form.Select>
+                    <Form.Control.Feedback type="invalid">{errors.role?.message}</Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+
+                <Button type="submit" className="w-100">Register</Button>
+              </Form>
+
+              {signupSubmitted && (
+                <Alert variant="success" className="mt-3 text-center">
+                  Signup request submitted! Your account is pending admin approval.
+                </Alert>
+              )}
+            </Card.Body>
+            <Card.Footer>
+              Already have an account?
+              <a href="/auth/signin"> Sign in</a>
+            </Card.Footer>
+          </Card>
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
