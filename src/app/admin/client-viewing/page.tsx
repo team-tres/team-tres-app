@@ -1,12 +1,12 @@
-import { getServerSession } from 'next-auth';
-import { Col, Container, Row, Table, Form, InputGroup } from 'react-bootstrap';
-import { prisma } from '@/lib/prisma'; // Ensure your Prisma client is properly imported
-import authOptions from '@/lib/authOptions'; // Import auth options for session management
+/* eslint-disable react/require-default-props */
+import SearchBar from '@/components/SearchBar';
+import authOptions from '@/lib/authOptions';
 import { adminProtectedPage } from '@/lib/page-protection';
-import { Search } from 'react-bootstrap-icons'; // Import Search icon from react-bootstrap-icons
-import { useState } from 'react';
+import { prisma } from '@/lib/prisma';
+import { getServerSession } from 'next-auth';
+import { Container, Row, Col, Table } from 'react-bootstrap';
 
-const ClientViewingPage = async () => {
+const ClientViewingPage = async ({ searchParams = {} }: { searchParams?: { query?: string } }) => {
   // Get session info
   const session = await getServerSession(authOptions);
   adminProtectedPage(
@@ -15,22 +15,22 @@ const ClientViewingPage = async () => {
     } | null,
   );
 
-  // Fetch clients with the 'CLIENT' role directly from the database
+  // Extract search query from URL parameters
+  const searchQuery = searchParams?.query?.toLowerCase() || '';
+
+  // Fetch clients with the 'CLIENT' role and apply search filter
   const clients = await prisma.user.findMany({
     where: {
-      role: 'CLIENT', // Only fetch users with the 'CLIENT' role
+      role: 'CLIENT',
+      OR: searchQuery
+        ? [
+          { username: { contains: searchQuery, mode: 'insensitive' } },
+          { email: { contains: searchQuery, mode: 'insensitive' } },
+          { id: Number.isNaN(Number(searchQuery)) ? undefined : Number(searchQuery) },
+        ]
+        : undefined,
     },
   });
-
-  // Handle the search functionality
-  const [searchQuery, setSearchQuery] = useState('');
-
-  // Filter clients based on search query
-  const filteredClients = clients.filter(
-    (client) => client.username.toLowerCase().includes(searchQuery.toLowerCase())
-               || client.email.toLowerCase().includes(searchQuery.toLowerCase())
-               || client.id.toString().includes(searchQuery),
-  );
 
   return (
     <main style={{ backgroundColor: '#f5f5dc', minHeight: '100vh', paddingTop: '20px' }}>
@@ -39,27 +39,15 @@ const ClientViewingPage = async () => {
           <Col md={6}>
             <h1 className="text-dark">Clients</h1>
           </Col>
-
-          {/* Search Bar */}
           <Col md={6}>
-            <InputGroup>
-              <InputGroup.Text>
-                <Search />
-              </InputGroup.Text>
-              <Form.Control
-                type="text"
-                placeholder="Search clients..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </InputGroup>
+            <SearchBar />
           </Col>
         </Row>
 
         <Row>
           <Col>
-            {/* Show filtered clients in a table */}
-            {filteredClients.length === 0 ? (
+            {/* Show clients in a table */}
+            {clients.length === 0 ? (
               <div className="text-center">
                 <p>No clients found.</p>
               </div>
@@ -74,7 +62,7 @@ const ClientViewingPage = async () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredClients.map((client) => (
+                  {clients.map((client) => (
                     <tr key={client.id}>
                       <td>{client.id}</td>
                       <td>{client.email}</td>
