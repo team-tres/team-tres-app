@@ -26,6 +26,15 @@ interface AuditorData {
   longDebtService: number;
   equityCapital: number;
   retainedEarnings: number;
+
+  // Needed for Stress Test 1 values
+  presentBalance: number;
+  interestRate: number;
+  term: number; // in years
+  monthlyContribution: number;
+  annualReturnRate: number;
+
+
 }
 
 // Function to calculate Financial Compilation data
@@ -57,6 +66,30 @@ const calculateFinancialCompilation = (data: AuditorData) => {
   const totalStockholdersEquity = data.equityCapital + data.retainedEarnings;
   const totalLiabilitiesAndEquity = totalLiabilities + totalStockholdersEquity;
 
+  // Calculating stress test 1 values;
+  const interestEarned = data.presentBalance * data.interestRate;
+  const newBalance = data.presentBalance + interestEarned;
+  const test1interest = data.interestRate * .7;
+  const test1interestEarned = test1interest * data.presentBalance;
+  const test1Balance = test1interestEarned + data.presentBalance;
+  const decreaseInRevenue = newBalance - test1Balance; // also principal
+
+  //year 1
+  const year1totalInterestLost = (decreaseInRevenue * (1 + data.annualReturnRate)) - decreaseInRevenue;
+  const year1sum1 = year1totalInterestLost;
+
+  // year 2
+  const year2sum1 = decreaseInRevenue *
+  const year2sum2 = 
+
+
+  // year 3
+  const year3sum1 = 
+  const year3sum2 =
+  const year3sum3 = 
+  
+
+
   return {
     // Income Statement values
     netSales,
@@ -83,6 +116,12 @@ const calculateFinancialCompilation = (data: AuditorData) => {
     totalLiabilities,
     totalStockholdersEquity,
     totalLiabilitiesAndEquity,
+
+    // Stress test 1 values
+    interestEarned,
+    newBalance,
+    decreaseInRevenue,
+    totalInterestLost,
   };
 };
 
