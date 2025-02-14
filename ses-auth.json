@@ -2,33 +2,34 @@
   "cookies": [
     {
       "name": "next-auth.csrf-token",
-      "value": "869d9589a9fb1c5003ff8fb539e6f3c00735aa5672e5cb01679bfe6ef27a15d1%7Ce5fad21ba8247e5567e24ef2bd621dc2154295b5ceb6ecf2d971079678d9a58a",
+      "value": "4a5a698806213194c93e7a4ed5aa4fa584982bdbb7bd788c45893b70772a3fd6%7Ca7f86ad96ca3938d1f0c807b11feb987c65c3e44cab1ee62aff634ab5864c089",
       "domain": "localhost",
       "path": "/",
-      "expires": -1,
+      "expires": 1773646828,
       "httpOnly": true,
       "secure": false,
-      "sameSite": "Lax"
+      "sameSite": "Strict"
     },
     {
       "name": "next-auth.callback-url",
-      "value": "http%3A%2F%2Flocalhost%3A3000%2Flist",
+      "value": "http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fsignin",
       "domain": "localhost",
       "path": "/",
-      "expires": -1,
+      "expires": 1773646828,
       "httpOnly": true,
       "secure": false,
-      "sameSite": "Lax"
+      "sameSite": "Strict"
     },
     {
       "name": "next-auth.session-token",
-      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..c2u_unTy8k-w4qse.sKCZNshrvN6C1falGGSf1D5kpKVJXkOVqeZGiG_r_gOUPSAfS4edJ4InA96LYyRbk9QnWCsLELpB0U5D3UjBKkDh_qM23Zt72zQ8vLgMgbTcYCVaiQOGZsyvBHZknnANgnCc8FY1Ksql2PkZZEqUigMUbOJ0XvsTlG98KWb9ISVUN-J7Qeqz6ycr8yfa.VNKepx5WAGc37gWhnJ0gKA",
+      "value": "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..d0VtwbFJwpUekak4.4FjUsMHCQeOiVHdSMJkntvKi5nBEX4lv6B4T4n68Qiba7X5b7_deYO4lOZ0BiLci5D_4wAZikYhN0uJ4rGKU8GtAGAcSVbna1Mzvrh4bwjyXN21uvoCSXSAh4UmdR7cQtZE0KSiQ9Ae44AWFNIt-8N_gUKdqHY_kNrGnRT7CZyxygeW9A9TceBGz-YZS.kOzohz2dLZOvmH4-hhGz_g",
       "domain": "localhost",
       "path": "/",
-      "expires": 1741677954,
+      "expires": 1773646828,
       "httpOnly": true,
       "secure": false,
-      "sameSite": "Lax"
+      "sameSite": "Strict",
+      "max-age": 3600
     }
   ],
   "origins": [
@@ -37,7 +38,7 @@
       "localStorage": [
         {
           "name": "nextauth.message",
-          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1739085954}"
+          "value": "{\"event\":\"session\",\"data\":{\"trigger\":\"getSession\"},\"timestamp\":1739518825}"
         }
       ]
     }
