@@ -72,21 +72,13 @@ const calculateFinancialCompilation = (data: AuditorData) => {
   const test1interest = data.interestRate * .7;
   const test1interestEarned = test1interest * data.presentBalance;
   const test1Balance = test1interestEarned + data.presentBalance;
-  const decreaseInRevenue = newBalance - test1Balance; // also principal
+  const principal = newBalance - test1Balance; 
 
   //year 1
-  const year1totalInterestLost = (decreaseInRevenue * (1 + data.annualReturnRate)) - decreaseInRevenue;
+  const year1totalInterestLost = (principal * (1 + data.annualReturnRate)) - principal;
   const year1sum1 = year1totalInterestLost;
 
-  // year 2
-  const year2sum1 = decreaseInRevenue *
-  const year2sum2 = 
-
-
-  // year 3
-  const year3sum1 = 
-  const year3sum2 =
-  const year3sum3 = 
+  
   
 
 
@@ -120,8 +112,10 @@ const calculateFinancialCompilation = (data: AuditorData) => {
     // Stress test 1 values
     interestEarned,
     newBalance,
-    decreaseInRevenue,
-    totalInterestLost,
+    test1interest,
+    test1interestEarned,
+    test1Balance,
+    principal
   };
 };
 
