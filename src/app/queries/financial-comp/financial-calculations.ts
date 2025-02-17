@@ -27,14 +27,6 @@ interface AuditorData {
   equityCapital: number;
   retainedEarnings: number;
 
-  // Needed for Stress Test 1 values
-  presentBalance: number;
-  interestRate: number;
-  term: number; // in years
-  monthlyContribution: number;
-  annualReturnRate: number;
-
-
 }
 
 // Function to calculate Financial Compilation data
@@ -66,17 +58,6 @@ const calculateFinancialCompilation = (data: AuditorData) => {
   const totalStockholdersEquity = data.equityCapital + data.retainedEarnings;
   const totalLiabilitiesAndEquity = totalLiabilities + totalStockholdersEquity;
 
-  // Calculating stress test 1 values;
-  const interestEarned = data.presentBalance * data.interestRate;
-  const newBalance = data.presentBalance + interestEarned;
-  const test1interest = data.interestRate * .7;
-  const test1interestEarned = test1interest * data.presentBalance;
-  const test1Balance = test1interestEarned + data.presentBalance;
-  const principal = newBalance - test1Balance; 
-
-  //year 1
-  const year1totalInterestLost = (principal * (1 + data.annualReturnRate)) - principal;
-  const year1sum1 = year1totalInterestLost;
 
   
   
@@ -110,12 +91,6 @@ const calculateFinancialCompilation = (data: AuditorData) => {
     totalLiabilitiesAndEquity,
 
     // Stress test 1 values
-    interestEarned,
-    newBalance,
-    test1interest,
-    test1interestEarned,
-    test1Balance,
-    principal
   };
 };
 
