@@ -25,11 +25,16 @@ enum Role {
 }
 
 model User {
-    id       Int    @id @default(autoincrement())
-    email    String @unique
-    username String @unique
-    password String
-    role     Role   @default(CLIENT)
+    id         Int     @id @default(autoincrement())
+    email      String  @unique
+    username   String  @unique
+    password   String
+    role       Role    @default(CLIENT)
+    companyId  Int?
+    status     Boolean
+    companyIni String?
+
+    company Company? @relation(fields: [companyId], references: [id])
 }
 
 enum Condition {
@@ -108,7 +113,7 @@ model FinancialCompilation {
 model Company {
     id    Int    @id @default(autoincrement())
     name  String @unique
-    email String
+    users User[]
 
     FinancialCompilation FinancialCompilation[]
 }
