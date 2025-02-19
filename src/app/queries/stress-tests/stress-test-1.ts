@@ -1,5 +1,5 @@
-import calculateFinancialCompilation from "../financial-comp/financial-calculations";
-interface AuditorData {
+
+interface StressData {
 
 
 // Needed for Stress Test 1 values
@@ -10,7 +10,7 @@ interface AuditorData {
   annualReturnRate: number;
 }
 
-const calculateStressTest = (data: AuditorData) => {
+const calculateStressTest = (data: StressData) => {
     const interestEarned = data.presentBalance * data.interestRate;
     const newBalance = data.presentBalance + interestEarned;
     const test1interest = data.interestRate * .7;
@@ -29,4 +29,4 @@ return{
 }
 };
 
-const printResults
+export default calculateStressTest;
