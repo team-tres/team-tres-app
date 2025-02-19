@@ -3,6 +3,7 @@
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import './page.css';
 
 const ClientDashboard = () => {
@@ -39,7 +40,9 @@ const ClientDashboard = () => {
           <Col md={8} className="right-section">
             <Button className="blue-button">View Sustainability Model</Button>
             <Button className="blue-button">View Stress Tests</Button>
-            <Button className="blue-button">View Forecasts</Button>
+            <Button className="blue-button" as="a" href="/clientForecasts">
+              View Forecasts
+            </Button>
           </Col>
         </Row>
       </Container>

@@ -71,3 +71,11 @@
 .blue-button:hover {
     background-color: #00223B;
 }
+
+.blue-button a {
+    color: white !important;
+    text-decoration: none !important;
+    display: block; 
+    width: 100%;
+    height: 100%;
+}
