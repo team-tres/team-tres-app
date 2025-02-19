@@ -14,7 +14,7 @@ interface ResidualEffectData {
         totalLoss += principals[i] * Math.pow((1 + annualReturnRate), (year - i)) - principals[i];
       }
       
-      totalInterestsLost.push(totalLoss);
+      totalInterestsLost.push(Math.round(totalLoss));
     }
   
     return totalInterestsLost;
