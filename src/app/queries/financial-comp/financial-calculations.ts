@@ -26,6 +26,7 @@ interface AuditorData {
   longDebtService: number;
   equityCapital: number;
   retainedEarnings: number;
+
 }
 
 // Function to calculate Financial Compilation data
@@ -83,6 +84,8 @@ const calculateFinancialCompilation = (data: AuditorData) => {
     totalLiabilities,
     totalStockholdersEquity,
     totalLiabilitiesAndEquity,
+
+    // Stress test 1 values
   };
 };
 
