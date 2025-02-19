@@ -1,6 +1,6 @@
 interface ResidualEffectData {
     principals: number[];  // Array of principal losses per year
-    annualReturnRate: number; // e.g., 0.0602 for 6.02%
+    annualReturnRate: number; // 0.0602 for 6.02%
   }
   
   const calculateResidualEffects = (data: ResidualEffectData) => {
