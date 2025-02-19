@@ -58,11 +58,6 @@ const calculateFinancialCompilation = (data: AuditorData) => {
   const totalStockholdersEquity = data.equityCapital + data.retainedEarnings;
   const totalLiabilitiesAndEquity = totalLiabilities + totalStockholdersEquity;
 
-
-  
-  
-
-
   return {
     // Income Statement values
     netSales,
