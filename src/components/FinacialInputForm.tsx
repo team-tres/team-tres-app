@@ -6,12 +6,23 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
 import { redirect } from 'next/navigation';
-// import { addStuff } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { AddStuffSchema } from '@/lib/validationSchemas';
+import { FinancialCompilationSchema } from '@/lib/validationSchemas';
 
-const onSubmit = async () => {
-//   await addStuff(data);
+const onSubmit = async (data: any) => {
+  const response = await fetch('/api/financial-compilation', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Failed to save financial data');
+  }
   swal('Success', 'Your item has been added', 'success', {
     timer: 2000,
   });
@@ -19,7 +30,9 @@ const onSubmit = async () => {
 
 const FinancialInputForm: React.FC = () => {
   const { data: session, status } = useSession();
-  const currentUser = session?.user?.email || '';
+  const currentUserId = session?.user?.id || '';
+  console.log('This is user Id', currentUserId);
+  console.log('This is compId', currentUserId);
 
   const {
     register,
@@ -27,7 +40,7 @@ const FinancialInputForm: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(AddStuffSchema),
+    resolver: yupResolver(FinancialCompilationSchema),
   });
 
   if (status === 'loading') {
@@ -49,15 +62,6 @@ const FinancialInputForm: React.FC = () => {
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
                 <Form.Group>
-                  <Form.Label>Company Name</Form.Label>
-                  <input
-                    type="text"
-                    {...register('name')}
-                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.name?.message}</div>
-                </Form.Group>
-                <Form.Group>
                   <Form.Label>Year</Form.Label>
                   <input
                     type="number"
@@ -66,6 +70,87 @@ const FinancialInputForm: React.FC = () => {
                   />
                   <div className="invalid-feedback">{errors.year?.message}</div>
                 </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>costOfContracting</Form.Label>
+                  <input
+                    type="number"
+                    {...register('costOfContracting')}
+                    className={`form-control ${errors.costOfContracting ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.costOfContracting?.message}</div>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>overhead</Form.Label>
+                  <input
+                    type="number"
+                    {...register('overhead')}
+                    className={`form-control ${errors.overhead ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.overhead?.message}</div>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>salariesAndBenefits</Form.Label>
+                  <input
+                    type="number"
+                    {...register('salariesAndBenefits')}
+                    className={`form-control ${errors.salariesAndBenefits ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.salariesAndBenefits?.message}</div>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>rentAndOverhead</Form.Label>
+                  <input
+                    type="number"
+                    {...register('rentAndOverhead')}
+                    className={`form-control ${errors.rentAndOverhead ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.rentAndOverhead?.message}</div>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>depreciationAndAmortization</Form.Label>
+                  <input
+                    type="number"
+                    {...register('depreciationAndAmortization')}
+                    className={`form-control ${errors.depreciationAndAmortization ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.depreciationAndAmortization?.message}</div>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Income</Form.Label>
+                  <input
+                    type="number"
+                    {...register('income')}
+                    className={`form-control ${errors.income ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.income?.message}</div>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Revenue</Form.Label>
+                  <input
+                    type="number"
+                    {...register('revenue')}
+                    className={`form-control ${errors.revenue ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.revenue?.message}</div>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>Expenses</Form.Label>
+                  <input
+                    type="number"
+                    {...register('expenses')}
+                    className={`form-control ${errors.expenses ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.expenses?.message}</div>
+                </Form.Group>
+
                 <Form.Group>
                   <Form.Label>Interest</Form.Label>
                   <input
@@ -94,6 +179,15 @@ const FinancialInputForm: React.FC = () => {
                   <div className="invalid-feedback">{errors.interestExpense?.message}</div>
                 </Form.Group>
                 <Form.Group>
+                  <Form.Label>gainOnDisposalOfAssets</Form.Label>
+                  <input
+                    type="number"
+                    {...register('gainOnDisposalOfAssets')}
+                    className={`form-control ${errors.gainOnDisposalOfAssets ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.gainOnDisposalOfAssets?.message}</div>
+                </Form.Group>
+                <Form.Group>
                   <Form.Label>Gain on Disposal of Assets</Form.Label>
                   <input
                     type="number"
@@ -111,6 +205,17 @@ const FinancialInputForm: React.FC = () => {
                   />
                   <div className="invalid-feedback">{errors.otherIncome?.message}</div>
                 </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>incomeTaxes</Form.Label>
+                  <input
+                    type="number"
+                    {...register('incomeTaxes')}
+                    className={`form-control ${errors.incomeTaxes ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.incomeTaxes?.message}</div>
+                </Form.Group>
+
                 <Form.Group>
                   <Form.Label>Cash and Cash Equivalents</Form.Label>
                   <input
@@ -157,6 +262,35 @@ const FinancialInputForm: React.FC = () => {
                   <div className="invalid-feedback">{errors.investment?.message}</div>
                 </Form.Group>
                 <Form.Group>
+                  <Form.Label>accountsPayable</Form.Label>
+                  <input
+                    type="number"
+                    {...register('accountsPayable')}
+                    className={`form-control ${errors.accountsPayable ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.accountsPayable?.message}</div>
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>taxesPayable</Form.Label>
+                  <input
+                    type="number"
+                    {...register('taxesPayable')}
+                    className={`form-control ${errors.taxesPayable ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.taxesPayable?.message}</div>
+                </Form.Group>
+
+                <Form.Group>
+                  <Form.Label>loansPayable</Form.Label>
+                  <input
+                    type="number"
+                    {...register('loansPayable')}
+                    className={`form-control ${errors.loansPayable ? 'is-invalid' : ''}`}
+                  />
+                  <div className="invalid-feedback">{errors.loansPayable?.message}</div>
+                </Form.Group>
+
+                <Form.Group>
                   <Form.Label>Long Debt Service</Form.Label>
                   <input
                     type="number"
@@ -201,7 +335,7 @@ const FinancialInputForm: React.FC = () => {
                   />
                   <div className="invalid-feedback">{errors.retainedEarnings?.message}</div>
                 </Form.Group>
-                <input type="hidden" {...register('owner')} value={currentUser} />
+                <input type="hidden" {...register('userId')} value={currentUserId} />
                 <Form.Group className="form-group">
                   <Row className="pt-3">
                     <Col>
@@ -221,6 +355,21 @@ const FinancialInputForm: React.FC = () => {
           </Card>
         </Col>
       </Row>
+      {Object.keys(errors).length > 0 && (
+      <div className="alert alert-danger mt-3">
+        <h5>Form Errors:</h5>
+        <ul>
+          {Object.entries(errors).map(([fieldName, error]) => (
+            <li key={fieldName}>
+              {fieldName}
+              :
+              {' '}
+              {error.message}
+            </li>
+          ))}
+        </ul>
+      </div>
+      )}
     </Container>
   );
 };

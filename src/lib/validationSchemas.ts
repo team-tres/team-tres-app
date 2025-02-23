@@ -1,21 +1,17 @@
 import * as Yup from 'yup';
 
-export const AddStuffSchema = Yup.object({
-  name: Yup.string()
-    .required('Company name is required'),
+export const FinancialCompilationSchema = Yup.object({
 
-  quantity: Yup.number()
-    .positive('Quantity must be a positive number')
-    .required('Quantity is required'),
+  year: Yup.number()
+    .positive('Year must be a positive number')
+    .required('Year is required'),
+  userId: Yup.number()
+    .positive('User Id must be a positive number')
+    .required('User ID is required'),
 
-  condition: Yup.string()
-    .oneOf(['excellent', 'good', 'fair', 'poor'], 'Invalid condition')
-    .required('Condition is required'),
-
-  owner: Yup.string()
-    .required('Owner is required'),
-
-  year: Yup.number().positive('Year must be a positive number').required('Year is required'),
+  gainOnDisposalOfAssets: Yup.number()
+    .positive('gainOnDisposalOfAssets must be a positive number')
+    .required('gainOnDisposalOfAssets is required'),
 
   income: Yup.number()
     .positive('Income must be a positive number')
@@ -65,13 +61,17 @@ export const AddStuffSchema = Yup.object({
     .positive('Gain on disposal of assets must be a positive number')
     .required('Gain on disposal of assets is required'),
 
+  incomeTaxes: Yup.number()
+    .positive('incomeTaxes of assets must be a positive number')
+    .required('incomeTaxes of assets is required'),
+
+  cashAndCashEquivalents: Yup.number()
+    .positive('cashAndCashEquivalents of assets must be a positive number')
+    .required('cashAndCashEquivalents of assets is required'),
+
   otherIncome: Yup.number()
     .positive('Other income must be a positive number')
     .required('Other income is required'),
-
-  cashAndCashEquivalents: Yup.number()
-    .positive('Cash and cash equivalents must be a positive number')
-    .required('Cash and cash equivalents is required'),
 
   accountsReceivable: Yup.number()
     .positive('Accounts receivable must be a positive number')
@@ -89,9 +89,21 @@ export const AddStuffSchema = Yup.object({
     .positive('Investment must be a positive number')
     .required('Investment is required'),
 
+  accountsPayable: Yup.number()
+    .positive('accountsPayable must be a positive number')
+    .required('accountsPayable is required'),
+
+  taxesPayable: Yup.number()
+    .positive('taxesPayable must be a positive number')
+    .required('taxesPayable is required'),
+
   longDebtService: Yup.number()
     .positive('Long debt service must be a positive number')
     .required('Long debt service is required'),
+
+  loansPayable: Yup.number()
+    .positive('loansPayable service must be a positive number')
+    .required('loansPayable service is required'),
 
   currentDebtService: Yup.number()
     .positive('Current debt service must be a positive number')

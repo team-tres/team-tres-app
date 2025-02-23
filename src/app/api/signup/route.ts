@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 import { hash } from 'bcrypt';
 import { Role, PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
@@ -20,12 +22,7 @@ export async function POST(request: Request) {
     });
     return NextResponse.json({ username: user.username });
   } catch (error) {
-    console.error('Error when signup for users', error);
-    return NextResponse.error();
+    console.error('Error when signing up users', error);
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
-
-// Adding a default export to satisfy ESLint's prefer-default-export rule.
-// Next.js will still use the named export (POST) to handle the request.
-const handler = { POST };
-export default handler;
