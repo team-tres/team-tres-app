@@ -10,7 +10,7 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 85vh;
+    height: flex;
     padding: 20px;
     box-sizing: border-box;
 }
@@ -52,18 +52,18 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 85vh;
+    height: flex;
 }
 
 .blue-button {
     background-color: #76AFD4;
     color: white;
-    font-size: 2rem;
-    padding: 30px 50px;
+    font-size: 1.5rem;
+    padding: 20px 40px;
     border-radius: 10px;
     border: none;
-    margin: 50px 0;
-    width: 60%;
+    margin: 40px 0;
+    width: 50%;
     text-align: center;
     transition: 0.3s ease-in-out;
 }
