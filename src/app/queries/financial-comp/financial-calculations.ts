@@ -1,4 +1,5 @@
 export interface AuditorData {
+  year: number;
   // Basic Income Statement values
   revenue: number;
   costOfContracting: number;
@@ -13,6 +14,7 @@ export interface AuditorData {
   otherIncome: number;
   incomeTaxes: number;
 
+  // Basic Balance Sheet values
   // Basic Balance Sheet values
   cashAndCashEquivalents: number;
   accountsReceivable: number;
@@ -29,6 +31,7 @@ export interface AuditorData {
 }
 
 export interface FinancialCompilation {
+  year: number;
   // Income Statement values
   revenue: number;
   costOfContracting: number;
@@ -71,7 +74,7 @@ export interface FinancialCompilation {
   equityCapital: number;
   retainedEarnings: number;
   totalCurrentAssets: number;
-  totalLongTermAsset: number;
+  totalLongTermAssets: number;
   totalAssets: number;
   totalCurrentLiabilities: number;
   totalLongTermLiabilities: number;
@@ -101,8 +104,8 @@ export const calculateFinancialCompilation = (data: AuditorData): FinancialCompi
 
   // Calculating Balance Sheet values
   const totalCurrentAssets = data.cashAndCashEquivalents + data.accountsReceivable + data.inventory;
-  const totalLongTermAsset = data.propertyPlantAndEquipment + data.investment;
-  const totalAssets = totalCurrentAssets + totalLongTermAsset;
+  const totalLongTermAssets = data.propertyPlantAndEquipment + data.investment;
+  const totalAssets = totalCurrentAssets + totalLongTermAssets;
   const totalCurrentLiabilities = data.accountsPayable + data.currentDebtService + data.taxesPayable;
   const totalLongTermLiabilities = data.longDebtService + data.loansPayable;
   const totalLiabilities = totalCurrentLiabilities + totalLongTermLiabilities;
@@ -110,6 +113,7 @@ export const calculateFinancialCompilation = (data: AuditorData): FinancialCompi
   const totalLiabilitiesAndEquity = totalLiabilities + totalStockholdersEquity;
 
   const FinComp: FinancialCompilation = {
+    year: data.year,
     // Income Statement Values
     revenue: data.revenue,
     costOfContracting: data.costOfContracting,
@@ -152,7 +156,7 @@ export const calculateFinancialCompilation = (data: AuditorData): FinancialCompi
     equityCapital: data.equityCapital,
     retainedEarnings: data.retainedEarnings,
     totalCurrentAssets,
-    totalLongTermAsset,
+    totalLongTermAssets,
     totalAssets,
     totalCurrentLiabilities,
     totalLongTermLiabilities,
