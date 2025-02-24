@@ -1,47 +1,63 @@
 import './page.css';
 
 const data = [
-  { name: 'Other income (expense):', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Interest income', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Interest expense', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Gain (loss) on disposal of assets', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Other income (expense)', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Total other income (expense)', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Total other income (expense) %', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Income (loss) before income taxes', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Pre-tax income %', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Income taxes', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Net income (loss)', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Net income (loss) %', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'check', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'BALANCE SHEET', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'ASSETS', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Current Assets', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Cash and cash equivalents', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Accounts receivable', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Inventory', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Total Current Assets', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Long-term Asset', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Property, plant, and equipment', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Investment', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Total long-term asset', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'TOTAL ASSETS', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'LIABILITIES AND EQUITY', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Current Liabilities (due within 1 year)', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Accounts payable', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Debt service', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Taxes payable', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Total Current Liabilities', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Long-term Liabilities (due after one year)', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Debt service', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Loans payable', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Total Long-term Liabilities', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Total Liabilities', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Stockholder\'s Equity', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Equity Capital', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Retained earnings', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'Total Stockholder\'s Equity', type: '', mult: '', values: Array(12).fill('') },
-  { name: 'TOTAL LIABILITIES AND EQUITY', type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>INCOME STATEMENT</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Revenue', type: 'MULTIPLIER', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Cost of goods sold:</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Cost of Contracting', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Overhead', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Cost of goods sold:</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Gross profit</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Gross margin %</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Operating expenses</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Salaries and wages', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Rent and Overhead', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Depreciation and Amortization', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Interest', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Total operating expenses</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Operating expenses %</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Profit (loss) from operations</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Profit (loss) from operations %</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Other income (expense):</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Interest income', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Interest expense', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Gain (loss) on disposal of assets', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Other income (expense)', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Total other income (expense)</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Total other income (expense) %</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Income (loss) before income taxes</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Pre-tax income %</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Income taxes', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Net income (loss)</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Net income (loss) %</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>BALANCE SHEET</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>ASSETS</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Current Assets</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Cash and cash equivalents', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Accounts receivable', type: 'AVREAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Inventory', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Total Current Assets</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Long-term Asset</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Property, plant, and equipment', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Investment', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Total long-term asset</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>TOTAL ASSETS</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>LIABILITIES AND EQUITY</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Current Liabilities (due within 1 year)</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Accounts payable', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Debt service', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Taxes payable', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Total Current Liabilities</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Long-term Liabilities (due after one year)</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Debt service', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Loans payable', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Total Long-term Liabilities</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Total Liabilities</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>Stockholder&apos;s Equity</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: 'Equity Capital', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: 'Retained earnings', type: 'AVERAGE', mult: '1.5%', values: Array(12).fill('') },
+  { name: <strong>Total Stockholder&apos;s Equity</strong>, type: '', mult: '', values: Array(12).fill('') },
+  { name: <strong>TOTAL LIABILITIES AND EQUITY</strong>, type: '', mult: '', values: Array(12).fill('') },
 ];
 
 const Forecasts = () => (
@@ -66,15 +82,21 @@ const Forecasts = () => (
         </tr>
       </thead>
       <tbody>
-        {data.map((dat) => (
-          <tr key={dat.name}>
-            <td>
-              {dat.name}
+        {data.map((row) => (
+          <tr key={row.name.toString()}>
+            <td
+              className={
+                typeof row.name !== 'string' && row.name.props?.children?.includes('%')
+                  ? 'right-align'
+                  : ''
+              }
+            >
+              {row.name}
             </td>
-            <td>{dat.type}</td>
-            <td>{dat.mult}</td>
-            {dat.values.map((val) => (
-              <td key={`${dat.name}-${val}`}>{val}</td>
+            <td>{row.type}</td>
+            <td>{row.mult}</td>
+            {row.values.map((value) => (
+              <td key={`${row.name}-${value}`} className="right-align">{value}</td>
             ))}
           </tr>
         ))}
