@@ -84,19 +84,26 @@ const Forecasts = () => (
       <tbody>
         {data.map((row) => (
           <tr key={row.name.toString()}>
-            <td
-              className={
-                typeof row.name !== 'string' && row.name.props?.children?.includes('%')
-                  ? 'right-align'
-                  : ''
-              }
-            >
-              {row.name}
+            <td>{row.name}</td>
+            <td>
+              {row.type ? (
+                <select defaultValue={row.type}>
+                  <option value="AVERAGE">AVERAGE</option>
+                  <option value="MULTIPLIER">MULTIPLIER</option>
+                </select>
+              ) : (
+                ''
+              )}
             </td>
-            <td>{row.type}</td>
-            <td>{row.mult}</td>
+            <td>
+              {row.type ? (
+                <input type="text" defaultValue={row.mult} placeholder="1.5%" />
+              ) : (
+                ''
+              )}
+            </td>
             {row.values.map((value) => (
-              <td key={`${row.name}-${value}`} className="right-align">{value}</td>
+              <td key={`${row.name.toString()}-${value}`}>{value}</td>
             ))}
           </tr>
         ))}
