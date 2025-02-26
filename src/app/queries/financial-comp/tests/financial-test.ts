@@ -143,34 +143,34 @@ const AuditorData2024 = {
 const printResults = (result: any, year: string) => {
   console.log(`\nResults for ${year}:`);
   console.log('Income Statement:');
-  console.log(`Net Sales: ${result.netSales}`);
+  console.log(`netSales: ${result.netSales}`);
 
-  console.log(`Cost of Goods Sold: ${result.costOfGoodsSold}`);
-  console.log(`Gross Profit: ${result.grossProfit}`);
-  console.log(`Gross Margin Percentage: ${result.grossMarginPercentage}`);
+  console.log(`costOfGoodsSold: ${result.costOfGoodsSold}`);
+  console.log(`prossProfit: ${result.grossProfit}`);
+  console.log(`grossMarginPercentage: ${result.grossMarginPercentage}`);
 
-  console.log(`Total Operating Expenses: ${result.totalOperatingExpenses}`);
-  console.log(`Operating Expenses Percentage: ${result.operatingExpensesPercentage}`);
-  console.log(`Profit From Operations: ${result.profitFromOperations}`);
-  console.log(`Profit From Operations Percentage: ${result.profitFromOperationsPercentage}`);
+  console.log(`totalOperatingExpenses: ${result.totalOperatingExpenses}`);
+  console.log(`operatingExpensesPercentage: ${result.operatingExpensesPercentage}`);
+  console.log(`profitFromOperations: ${result.profitFromOperations}`);
+  console.log(`profitFromOperationsPercentage: ${result.profitFromOperationsPercentage}`);
 
-  console.log(`Total Other Income: ${result.totalOtherIncome}`);
-  console.log(`Total Other Income Percentage: ${result.totalOtherIncomePercentage}`);
-  console.log(`Income Before Income Taxes: ${result.incomeBeforeIncomeTaxes}`);
-  console.log(`Pre-tax Income Percentage: ${result.pretaxIncomePercentage}`);
+  console.log(`totalOtherIncome: ${result.totalOtherIncome}`);
+  console.log(`totalOtherIncomePercentage: ${result.totalOtherIncomePercentage}`);
+  console.log(`incomeBeforeIncomeTaxes: ${result.incomeBeforeIncomeTaxes}`);
+  console.log(`pre-taxIncomePercentage: ${result.pretaxIncomePercentage}`);
 
-  console.log(`Net Income: ${result.netIncome}`);
-  console.log(`Net Income Percentage: ${result.netIncomePercentage}`);
+  console.log(`netIncome: ${result.netIncome}`);
+  console.log(`netIncomePercentage: ${result.netIncomePercentage}`);
 
   console.log('\nBalance Sheet:');
-  console.log(`Total Current Assets: ${result.totalCurrentAssets}`);
-  console.log(`Total Long-Term Asset: ${result.totalLongTermAssets}`);
-  console.log(`Total Assets: ${result.totalAssets}`);
-  console.log(`Total Current Liabilities: ${result.totalCurrentLiabilities}`);
-  console.log(`Total Long-Term Liabilities: ${result.totalLongTermLiabilities}`);
-  console.log(`Total Liabilities: ${result.totalLiabilities}`);
-  console.log(`Total Stockholders Equity: ${result.totalStockholdersEquity}`);
-  console.log(`Total Liabilities and Equity: ${result.totalLiabilitiesAndEquity}`);
+  console.log(`totalCurrentAssets: ${result.totalCurrentAssets}`);
+  console.log(`totalLong-TermAsset: ${result.totalLongTermAssets}`);
+  console.log(`totalAssets: ${result.totalAssets}`);
+  console.log(`totalCurrentLiabilities: ${result.totalCurrentLiabilities}`);
+  console.log(`totalLong-TermLiabilities: ${result.totalLongTermLiabilities}`);
+  console.log(`totalLiabilities: ${result.totalLiabilities}`);
+  console.log(`totalStockholdersEquity: ${result.totalStockholdersEquity}`);
+  console.log(`totalLiabilitiesAndEquity: ${result.totalLiabilitiesAndEquity}`);
 };
 
 const runMultiForecastTests = (): FinancialCompilation => {
