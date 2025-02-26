@@ -40,12 +40,10 @@ async function addTestData() {
     throw new Error('No user created.');
   }
 
-  // Example Test Companies
   const testCompanies = [
     { name: 'Kimoriya' },
   ];
 
-  // Add test companies and get the created company id
   let createdCompanyId: number | null = null;
   for (const company of testCompanies) {
     const createdCompany = await prisma.company.create({
@@ -59,11 +57,10 @@ async function addTestData() {
     throw new Error('No company created.');
   }
 
-  // Example Test Financial Data
   const financialTestData = [
     {
-      companyId: createdCompanyId, // Use the created companyId
-      userId: createdUserId, // Use the created userId
+      companyId: createdCompanyId,
+      userId: createdUserId,
       year: 2022,
       revenue: 131345,
       netSales: 131345,
@@ -113,8 +110,8 @@ async function addTestData() {
       totalLiabilitiesAndEquity: 240252,
     },
     {
-      companyId: createdCompanyId, // Use the created companyId
-      userId: createdUserId, // Use the created userId
+      companyId: createdCompanyId,
+      userId: createdUserId,
       year: 2023,
       revenue: 142341,
       costOfContracting: 52587,
@@ -164,8 +161,8 @@ async function addTestData() {
       totalLiabilitiesAndEquity: 267319,
     },
     {
-      companyId: createdCompanyId, // Use the created companyId
-      userId: createdUserId, // Use the created userId
+      companyId: createdCompanyId,
+      userId: createdUserId,
       year: 2024,
       revenue: 150772,
       costOfContracting: 56643,

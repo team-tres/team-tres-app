@@ -7,19 +7,28 @@ import { FinancialCompilation } from '@prisma/client';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { settings, multipliers } = body;
+    const { settings, multipliers, companyId } = body;
 
+    // Validate settings, multipliers, and companyId
     if (
-      !settings
-      || typeof settings !== 'object'
-      || !multipliers
-      || typeof multipliers !== 'object'
+      !settings || typeof settings !== 'object'
+      || !multipliers || typeof multipliers !== 'object'
+      || !companyId || typeof companyId !== 'string'
     ) {
-      return NextResponse.json({ error: 'Invalid settings or multipliers format' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid settings, multipliers, or companyId format' }, { status: 400 });
     }
 
-    // Fetch the last 3 years of financial data in ASCENDING order (earliest first)
+    // Convert companyId to a number
+    const companyIdNumber = Number(companyId);
+    if (Number.isNaN(companyIdNumber)) {
+      return NextResponse.json({ error: 'Invalid companyId' }, { status: 400 });
+    }
+
+    // Fetch the last 3 years of financial data for the specific company
     const pastData: FinancialCompilation[] = await prisma.financialCompilation.findMany({
+      where: {
+        companyId: companyIdNumber,
+      },
       orderBy: { year: 'asc' },
       take: 3,
     });

@@ -189,5 +189,5 @@ const runFinCompTests = () => {
 };
 
 export default runMultiForecastTests;
-// runTests()
+
 runFinCompTests();
