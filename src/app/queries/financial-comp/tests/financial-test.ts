@@ -1,13 +1,69 @@
-import calculateFinancialCompilation from '../financial-calculations';
+import { calculateFinancialCompilation } from '../financial-calculations';
+
+interface FinancialCompilation {
+  year: number;
+  // Needed for Income Statement values
+  revenue: number;
+  costOfContracting: number;
+  overhead: number;
+  salariesAndBenefits: number;
+  rentAndOverhead: number;
+  depreciationAndAmortization: number;
+  interest: number;
+  interestIncome: number;
+  interestExpense: number;
+  gainOnDisposalOfAssets: number;
+  otherIncome: number;
+  incomeTaxes: number;
+
+  // Needed for Balance Sheet values
+  cashAndCashEquivalents: number;
+  accountsReceivable: number;
+  inventory: number;
+  propertyPlantAndEquipment: number;
+  investment: number;
+  accountsPayable: number;
+  taxesPayable: number;
+  currentDebtService: number;
+  loansPayable: number;
+  longDebtService: number;
+  equityCapital: number;
+  retainedEarnings: number;
+
+  netSales: number;
+  costOfGoodsSold: number;
+  totalOperatingExpenses: number;
+  totalOtherIncome: number;
+  grossProfit: number;
+  grossMarginPercentage: number;
+  operatingExpensesPercentage: number;
+  totalOtherIncomePercentage: number;
+  profitFromOperations: number;
+  incomeBeforeIncomeTaxes: number;
+  pretaxIncomePercentage : number;
+  netIncome: number;
+  profitFromOperationsPercentage: number;
+  netIncomePercentage: number;
+
+  totalCurrentAssets: number;
+  totalLongTermAssets: number;
+  totalAssets: number;
+  totalCurrentLiabilities: number;
+  totalLongTermLiabilities: number;
+  totalLiabilities: number;
+  totalStockholdersEquity: number;
+  totalLiabilitiesAndEquity: number;
+}
 
 // Data from the spreadsheet
 const AuditorData2022 = {
+  year: 2022,
   revenue: 131345,
   costOfContracting: 48456,
   overhead: 667,
   salariesAndBenefits: 23872,
   rentAndOverhead: 10087,
-  depreciationAndAmortizattion: 17205,
+  depreciationAndAmortization: 17205,
   interest: 1500,
   interestIncome: 0,
   interestExpense: 0,
@@ -29,12 +85,13 @@ const AuditorData2022 = {
 };
 
 const AuditorData2023 = {
+  year: 2023,
   revenue: 142341,
   costOfContracting: 52587,
   overhead: 667,
   salariesAndBenefits: 23002,
   rentAndOverhead: 10020,
-  depreciationAndAmortizattion: 16544,
+  depreciationAndAmortization: 16544,
   interest: 900,
   interestIncome: 0,
   interestExpense: 0,
@@ -56,12 +113,13 @@ const AuditorData2023 = {
 };
 
 const AuditorData2024 = {
+  year: 2024,
   revenue: 150772,
   costOfContracting: 7539,
   overhead: 11342,
   salariesAndBenefits: 56643,
   rentAndOverhead: 667,
-  depreciationAndAmortizattion: 25245,
+  depreciationAndAmortization: 25245,
   interest: 11412,
   interestIncome: 16080,
   interestExpense: 900,
@@ -115,7 +173,12 @@ const printResults = (result: any, year: string) => {
   console.log(`Total Liabilities and Equity: ${result.totalLiabilitiesAndEquity}`);
 };
 
-const runTests = () => {
+const runMultiForecastTests = (): FinancialCompilation => {
+  const result2024 = calculateFinancialCompilation(AuditorData2024);
+  return result2024;
+};
+
+const runFinCompTests = () => {
   const result2022 = calculateFinancialCompilation(AuditorData2022);
   const result2023 = calculateFinancialCompilation(AuditorData2023);
   const result2024 = calculateFinancialCompilation(AuditorData2024);
@@ -125,4 +188,6 @@ const runTests = () => {
   printResults(result2024, '2024');
 };
 
-runTests();
+export default runMultiForecastTests;
+// runTests()
+runFinCompTests();
