@@ -96,7 +96,7 @@ model FinancialCompilation {
     totalCurrentAssets        Int
     propertyPlantAndEquipment Int
     investment                Int
-    totalLongTermAsset        Int
+    totalLongTermAssets        Int
     accountsPayable           Int
     longDebtService           Int
     taxesPayable              Int
