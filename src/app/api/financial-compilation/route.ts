@@ -32,7 +32,6 @@ export async function POST(req: Request) {
 
     const dbData = {
       companyId: user.companyId,
-      year,
       userId,
       ...calculated,
     };
