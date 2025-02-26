@@ -24,6 +24,7 @@ const NavBar: React.FC = () => {
           <Nav className="ms-auto">
             {currentUser && (
               <>
+                {role === 'CLIENT' && (
                 <Nav.Link
                   id="client-dashboard"
                   href="/clientDashboard"
@@ -32,6 +33,8 @@ const NavBar: React.FC = () => {
                 >
                   DASHBOARD
                 </Nav.Link>
+                )}
+                {role === 'AUDITOR' && (
                 <Nav.Link
                   id="financial-stuff-nav"
                   href="/financial"
@@ -40,6 +43,8 @@ const NavBar: React.FC = () => {
                 >
                   INPUT FINANCIALS
                 </Nav.Link>
+                )}
+                { role === 'ANALYST' && (
                 <Nav.Link
                   id="analyst-stuff-nav"
                   href="/analyst"
@@ -48,6 +53,7 @@ const NavBar: React.FC = () => {
                 >
                   ANALYST
                 </Nav.Link>
+                )}
                 {role === 'ADMIN' && (
                   <Nav.Link
                     id="admin-stuff-nav"

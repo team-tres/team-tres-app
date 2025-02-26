@@ -44,7 +44,11 @@ const ClientDashboard = () => {
                 <a href="/clientStressTests">View Stress Tests</a>
               </Link>
             </Button>
-            <Button className="blue-button">View Forecasts</Button>
+            <Button className="blue-button">
+              <Link href="/clientForecasts" passHref legacyBehavior>
+                <a href="/clientForecasts">View Forecasts</a>
+              </Link>
+            </Button>
           </Col>
         </Row>
       </Container>
