@@ -1,6 +1,6 @@
 import { calculateAverageForecast, calculateMultiplierForecast } from './calculate-forecast';
 
-export type FinancialData = {
+type FinancialData = {
   year: number;
   revenue: number;
   costOfContracting: number;
@@ -35,7 +35,7 @@ type ForecastSettings = Record<keyof Omit<FinancialData, 'year'>, ForecastMethod
 
 type ForecastResult = FinancialData[];
 
-export function generateForecast(
+export default function generateForecast(
   pastData: FinancialData[],
   settings: ForecastSettings,
   multiplierValues: Record<keyof Omit<FinancialData, 'year'>, number>,
@@ -68,5 +68,3 @@ export function generateForecast(
 
   return forecast;
 }
-
-export default { generateForecast };

@@ -1,4 +1,4 @@
-import { generateForecast } from '../forecast';
+import generateForecast from '../forecast';
 
 const FinancialData2022 = {
   revenue: 131345,
