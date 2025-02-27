@@ -1,44 +1,78 @@
 'use server';
 
-// import { Stuff, Condition } from '@prisma/client';
-import { Stuff } from '@prisma/client';
-
+import { Stuff, FinancialCompilation } from '@prisma/client';
 import { hash } from 'bcrypt';
 import { redirect } from 'next/navigation';
 import { prisma } from './prisma';
 
-/**
- * Adds a new stuff to the database.
- * @param stuff, an object with the following properties: name, quantity, owner, condition.
- */
-// export async function addStuff(stuff: { name: string; quantity: number; owner: string; condition: string }) {
-//   // console.log(`addStuff data: ${JSON.stringify(stuff, null, 2)}`);
-//   let condition: Condition = 'good';
-//   if (stuff.condition === 'poor') {
-//     condition = 'poor';
-//   } else if (stuff.condition === 'excellent') {
-//     condition = 'excellent';
-//   } else {
-//     condition = 'fair';
-//   }
-//   await prisma.stuff.create({
-//     data: {
-//       name: stuff.name,
-//       quantity: stuff.quantity,
-//       owner: stuff.owner,
-//       condition,
-//     },
-//   });
-//   // After adding, redirect to the list page
-//   redirect('/list');
-// }
+export async function addFinancialCompilation(data: {
+  companyId: number;
+  year: number;
+  revenue: number;
+  netSales: number;
+  costOfContracting: number;
+  overhead: number;
+  costOfGoodsSold: number;
+  grossProfit: number;
+  grossMarginPercentage: number;
+  salariesAndBenefits: number;
+  rentAndOverhead: number;
+  depreciationAndAmortization: number;
+  interest: number;
+  totalOperatingExpenses: number;
+  operatingExpensesPercentage: number;
+  profitFromOperations: number;
+  profitFromOperationsPercentage: number;
+  interestIncome: number;
+  interestExpense: number;
+  gainOnDisposalOfAssets: number;
+  otherIncome: number;
+  totalOtherIncome: number;
+  totalOtherIncomePercentage: number;
+  incomeBeforeIncomeTaxes: number;
+  pretaxIncomePercentage: number;
+  incomeTaxes: number;
+  netIncome: number;
+  netIncomePercentage: number;
+  cashAndCashEquivalents: number;
+  accountsReceivable: number;
+  inventory: number;
+  totalCurrentAssets: number;
+  propertyPlantAndEquipment: number;
+  investment: number;
+  totalLongTermAsset: number;
+  accountsPayable: number;
+  longDebtService: number;
+  taxesPayable: number;
+  totalCurrentLiabilities: number;
+  currentDebtService: number;
+  loansPayable: number;
+  totalLongTermLiabilities: number;
+  totalLiabilities: number;
+  equityCapital: number;
+  retainedEarnings: number;
+  totalStockholdersEquity: number;
+  totalLiabilitiesAndEquity: number;
+}) {
+  try {
+    await prisma.financialCompilation.create({
+      data: {
+        ...data,
+        // Convert all number fields to integers as per your schema
+        revenue: Math.round(data.revenue),
+        netSales: Math.round(data.netSales),
+        // ... add all other number fields with Math.round()
+      },
+    });
 
-/**
- * Edits an existing stuff in the database.
- * @param stuff, an object with the following properties: id, name, quantity, owner, condition.
- */
+    redirect('/financials');
+  } catch (error) {
+    console.error('Error adding financial compilation:', error);
+    throw new Error('Failed to add financial compilation');
+  }
+}
+
 export async function editStuff(stuff: Stuff) {
-  // console.log(`editStuff data: ${JSON.stringify(stuff, null, 2)}`);
   await prisma.stuff.update({
     where: { id: stuff.id },
     data: {
@@ -48,44 +82,17 @@ export async function editStuff(stuff: Stuff) {
       condition: stuff.condition,
     },
   });
-  // After updating, redirect to the list page
   redirect('/list');
 }
 
-/**
- * Deletes an existing stuff from the database.
- * @param id, the id of the stuff to delete.
- */
 export async function deleteStuff(id: number) {
-  // console.log(`deleteStuff id: ${id}`);
   await prisma.stuff.delete({
     where: { id },
   });
-  // After deleting, redirect to the list page
   redirect('/list');
 }
 
-/**
- * Creates a new user in the database.
- * @param credentials, an object with the following properties: email, password.
- */
-// export async function createUser(credentials: { email: string; password: string }) {
-//   // console.log(`createUser data: ${JSON.stringify(credentials, null, 2)}`);
-//   const password = await hash(credentials.password, 10);
-//   await prisma.user.create({
-//     data: {
-//       email: credentials.email,
-//       password,
-//     },
-//   });
-// }
-
-/**
- * Changes the password of an existing user in the database.
- * @param credentials, an object with the following properties: email, password.
- */
 export async function changePassword(credentials: { email: string; password: string }) {
-  // console.log(`changePassword data: ${JSON.stringify(credentials, null, 2)}`);
   const password = await hash(credentials.password, 10);
   await prisma.user.update({
     where: { email: credentials.email },

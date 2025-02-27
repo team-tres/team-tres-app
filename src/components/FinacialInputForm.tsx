@@ -6,29 +6,93 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import swal from 'sweetalert';
 import { redirect } from 'next/navigation';
-// import { addStuff } from '@/lib/dbActions';
 import LoadingSpinner from '@/components/LoadingSpinner';
-import { AddStuffSchema } from '@/lib/validationSchemas';
+import { AddFinancialCompilationSchema } from '@/lib/validationSchemas';
+import { addFinancialCompilation } from '@/lib/dbActions';
 
-const onSubmit = async () => {
-//   await addStuff(data);
-  swal('Success', 'Your item has been added', 'success', {
-    timer: 2000,
-  });
-};
+interface FinancialFormData {
+  companyId: number;
+  year: number;
+  revenue: number;
+  netSales: number;
+  costOfContracting: number;
+  overhead: number;
+  costOfGoodsSold: number;
+  grossProfit: number;
+  grossMarginPercentage: number;
+  salariesAndBenefits: number;
+  rentAndOverhead: number;
+  depreciationAndAmortization: number;
+  interest: number;
+  totalOperatingExpenses: number;
+  operatingExpensesPercentage: number;
+  profitFromOperations: number;
+  profitFromOperationsPercentage: number;
+  interestIncome: number;
+  interestExpense: number;
+  gainOnDisposalOfAssets: number;
+  otherIncome: number;
+  totalOtherIncome: number;
+  totalOtherIncomePercentage: number;
+  incomeBeforeIncomeTaxes: number;
+  pretaxIncomePercentage: number;
+  incomeTaxes: number;
+  netIncome: number;
+  netIncomePercentage: number;
+  cashAndCashEquivalents: number;
+  accountsReceivable: number;
+  inventory: number;
+  totalCurrentAssets: number;
+  propertyPlantAndEquipment: number;
+  investment: number;
+  totalLongTermAsset: number;
+  accountsPayable: number;
+  longDebtService: number;
+  taxesPayable: number;
+  totalCurrentLiabilities: number;
+  currentDebtService: number;
+  loansPayable: number;
+  totalLongTermLiabilities: number;
+  totalLiabilities: number;
+  equityCapital: number;
+  retainedEarnings: number;
+  totalStockholdersEquity: number;
+  totalLiabilitiesAndEquity: number;
+}
 
 const FinancialInputForm: React.FC = () => {
   const { data: session, status } = useSession();
-  const currentUser = session?.user?.email || '';
+  const user = session?.user as { companyId?: number } | undefined;
+  const companyId = user?.companyId;
 
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(AddStuffSchema),
+  } = useForm<FinancialFormData>({
+    resolver: yupResolver(AddFinancialCompilationSchema),
   });
+
+  const onSubmit = async (data: FinancialFormData) => {
+    if (!companyId) {
+      swal('Error', 'No company associated with user', 'error');
+      return;
+    }
+
+    try {
+      await addFinancialCompilation({
+        ...data,
+        companyId,
+      });
+      swal('Success', 'Financial data has been added', 'success', {
+        timer: 2000,
+      });
+      reset();
+    } catch (error) {
+      swal('Error', 'Failed to add financial data', 'error');
+    }
+  };
 
   if (status === 'loading') {
     return <LoadingSpinner />;
@@ -38,25 +102,28 @@ const FinancialInputForm: React.FC = () => {
     redirect('/auth/signin');
   }
 
+  if (!companyId) {
+    return (
+      <Container className="py-3">
+        <div className="text-center">
+          <h2>No Company Associated</h2>
+          <p>Please contact an administrator to associate your account with a company.</p>
+        </div>
+      </Container>
+    );
+  }
+
   return (
     <Container className="py-3">
       <Row className="justify-content-center">
         <Col xs={10}>
           <Col className="text-center">
-            <h2>Input Financials</h2>
+            <h2>Input Financial Data</h2>
           </Col>
           <Card>
             <Card.Body>
               <Form onSubmit={handleSubmit(onSubmit)}>
-                <Form.Group>
-                  <Form.Label>Company Name</Form.Label>
-                  <input
-                    type="text"
-                    {...register('name')}
-                    className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.name?.message}</div>
-                </Form.Group>
+                {/* Year */}
                 <Form.Group>
                   <Form.Label>Year</Form.Label>
                   <input
@@ -66,51 +133,27 @@ const FinancialInputForm: React.FC = () => {
                   />
                   <div className="invalid-feedback">{errors.year?.message}</div>
                 </Form.Group>
+
+                {/* Income Statement Section */}
+                <h4 className="mt-4">Income Statement</h4>
+
+                {/* Add form fields for all income statement items */}
+                {/* Example of one field - repeat for all fields */}
                 <Form.Group>
-                  <Form.Label>Interest</Form.Label>
+                  <Form.Label>Revenue</Form.Label>
                   <input
                     type="number"
-                    {...register('interest')}
-                    className={`form-control ${errors.interest ? 'is-invalid' : ''}`}
+                    {...register('revenue')}
+                    className={`form-control ${errors.revenue ? 'is-invalid' : ''}`}
                   />
-                  <div className="invalid-feedback">{errors.interest?.message}</div>
+                  <div className="invalid-feedback">{errors.revenue?.message}</div>
                 </Form.Group>
-                <Form.Group>
-                  <Form.Label>Interest Income</Form.Label>
-                  <input
-                    type="number"
-                    {...register('interestIncome')}
-                    className={`form-control ${errors.interestIncome ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.interestIncome?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Interest Expense</Form.Label>
-                  <input
-                    type="number"
-                    {...register('interestExpense')}
-                    className={`form-control ${errors.interestExpense ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.interestExpense?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Gain on Disposal of Assets</Form.Label>
-                  <input
-                    type="number"
-                    {...register('gainOnDisposalAssets')}
-                    className={`form-control ${errors.gainOnDisposalAssets ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.gainOnDisposalAssets?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Other Income</Form.Label>
-                  <input
-                    type="number"
-                    {...register('otherIncome')}
-                    className={`form-control ${errors.otherIncome ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.otherIncome?.message}</div>
-                </Form.Group>
+
+                {/* Balance Sheet Section */}
+                <h4 className="mt-4">Balance Sheet</h4>
+
+                {/* Add form fields for all balance sheet items */}
+                {/* Example of one field - repeat for all fields */}
                 <Form.Group>
                   <Form.Label>Cash and Cash Equivalents</Form.Label>
                   <input
@@ -120,88 +163,7 @@ const FinancialInputForm: React.FC = () => {
                   />
                   <div className="invalid-feedback">{errors.cashAndCashEquivalents?.message}</div>
                 </Form.Group>
-                <Form.Group>
-                  <Form.Label>Accounts Receivable</Form.Label>
-                  <input
-                    type="number"
-                    {...register('accountsReceivable')}
-                    className={`form-control ${errors.accountsReceivable ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.accountsReceivable?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Inventory</Form.Label>
-                  <input
-                    type="number"
-                    {...register('inventory')}
-                    className={`form-control ${errors.inventory ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.inventory?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Property, Plant, and Equipment</Form.Label>
-                  <input
-                    type="number"
-                    {...register('propertyPlantAndEquipment')}
-                    className={`form-control ${errors.propertyPlantAndEquipment ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.propertyPlantAndEquipment?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Investment</Form.Label>
-                  <input
-                    type="number"
-                    {...register('investment')}
-                    className={`form-control ${errors.investment ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.investment?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Long Debt Service</Form.Label>
-                  <input
-                    type="number"
-                    {...register('longDebtService')}
-                    className={`form-control ${errors.longDebtService ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.longDebtService?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Current Debt Service</Form.Label>
-                  <input
-                    type="number"
-                    {...register('currentDebtService')}
-                    className={`form-control ${errors.currentDebtService ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.currentDebtService?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Loan Payable</Form.Label>
-                  <input
-                    type="number"
-                    {...register('loanPayable')}
-                    className={`form-control ${errors.loanPayable ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.loanPayable?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Equity Capital</Form.Label>
-                  <input
-                    type="number"
-                    {...register('equityCapital')}
-                    className={`form-control ${errors.equityCapital ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.equityCapital?.message}</div>
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Retained Earnings</Form.Label>
-                  <input
-                    type="number"
-                    {...register('retainedEarnings')}
-                    className={`form-control ${errors.retainedEarnings ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.retainedEarnings?.message}</div>
-                </Form.Group>
-                <input type="hidden" {...register('owner')} value={currentUser} />
+
                 <Form.Group className="form-group">
                   <Row className="pt-3">
                     <Col>
