@@ -2,60 +2,54 @@ import { calculateFinancialCompilation } from '../financial-calculations';
 
 interface FinancialCompilation {
   year: number;
-  // Needed for Income Statement values
-  revenue: number;
-  costOfContracting: number;
-  overhead: number;
-  salariesAndBenefits: number;
-  rentAndOverhead: number;
-  depreciationAndAmortization: number;
-  interest: number;
-  interestIncome: number;
-  interestExpense: number;
-  gainOnDisposalOfAssets: number;
-  otherIncome: number;
-  incomeTaxes: number;
-
-  // Needed for Balance Sheet values
-  cashAndCashEquivalents: number;
-  accountsReceivable: number;
-  inventory: number;
-  propertyPlantAndEquipment: number;
-  investment: number;
-  accountsPayable: number;
-  taxesPayable: number;
-  currentDebtService: number;
-  loansPayable: number;
-  longDebtService: number;
-  equityCapital: number;
-  retainedEarnings: number;
-
-  netSales: number;
-  costOfGoodsSold: number;
-  totalOperatingExpenses: number;
-  totalOtherIncome: number;
-  grossProfit: number;
-  grossMarginPercentage: number;
-  operatingExpensesPercentage: number;
-  totalOtherIncomePercentage: number;
-  profitFromOperations: number;
-  incomeBeforeIncomeTaxes: number;
-  pretaxIncomePercentage : number;
-  netIncome: number;
-  profitFromOperationsPercentage: number;
-  netIncomePercentage: number;
-
-  totalCurrentAssets: number;
-  totalLongTermAssets: number;
-  totalAssets: number;
-  totalCurrentLiabilities: number;
-  totalLongTermLiabilities: number;
-  totalLiabilities: number;
-  totalStockholdersEquity: number;
-  totalLiabilitiesAndEquity: number;
+  revenue: number,
+  netSales: number,
+  costOfContracting: number,
+  overhead: number,
+  costOfGoodsSold: number,
+  grossProfit: number,
+  grossMarginPercentage: number,
+  salariesAndBenefits: number,
+  rentAndOverhead: number,
+  depreciationAndAmortization: number,
+  interest: number,
+  totalOperatingExpenses: number,
+  operatingExpensesPercentage: number,
+  profitFromOperations: number,
+  profitFromOperationsPercentage: number,
+  interestIncome: number,
+  interestExpense: number,
+  gainOnDisposalOfAssets: number,
+  otherIncome: number,
+  totalOtherIncome: number,
+  totalOtherIncomePercentage: number,
+  incomeBeforeIncomeTaxes: number,
+  pretaxIncomePercentage: number,
+  incomeTaxes: number,
+  netIncome: number,
+  netIncomePercentage: number,
+  cashAndCashEquivalents: number,
+  accountsReceivable: number,
+  inventory: number,
+  totalCurrentAssets: number,
+  propertyPlantAndEquipment: number,
+  investment: number,
+  totalLongTermAssets: number,
+  totalAssets: number,
+  accountsPayable: number,
+  currentDebtService: number,
+  taxesPayable: number,
+  totalCurrentLiabilities: number,
+  longDebtService: number,
+  loansPayable: number,
+  totalLongTermLiabilities: number,
+  totalLiabilities: number,
+  equityCapital: number,
+  retainedEarnings: number,
+  totalStockholdersEquity: number,
+  totalLiabilitiesAndEquity: number,
 }
 
-// Data from the spreadsheet
 const AuditorData2022 = {
   year: 2022,
   revenue: 131345,
