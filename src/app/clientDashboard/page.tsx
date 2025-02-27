@@ -39,7 +39,11 @@ const ClientDashboard = () => {
 
           <Col md={8} className="right-section">
             <Button className="blue-button">View Sustainability Model</Button>
-            <Button className="blue-button">View Stress Tests</Button>
+            <Button className="blue-button">
+              <Link href="/clientStressTests" passHref legacyBehavior>
+                <a href="/clientStressTests">View Stress Tests</a>
+              </Link>
+            </Button>
             <Button className="blue-button">
               <Link href="/clientForecasts" passHref legacyBehavior>
                 <a href="/clientForecasts">View Forecasts</a>
