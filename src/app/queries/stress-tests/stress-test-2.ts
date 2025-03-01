@@ -28,5 +28,3 @@ console.log(CalculateStressTest2(sampleData2026));
 console.log(CalculateStressTest2(sampleData2027));
 
 export default CalculateStressTest2;
-
-
