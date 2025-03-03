@@ -79,6 +79,12 @@ export interface FinancialCompilation {
 }
 
 export const calculateFinancialCompilation = (data: AuditorData): FinancialCompilation => {
+  let grossMarginPercentage = 0;
+  let operatingExpensesPercentage = 0;
+  let totalOtherIncomePercentage = 0;
+  let pretaxIncomePercentage = 0;
+  let profitFromOperationsPercentage = 0;
+  let netIncomePercentage = 0;
   const netSales = data.revenue;
   const costOfGoodsSold = data.costOfContracting + data.overhead;
   const totalOperatingExpenses = data.salariesAndBenefits + data.rentAndOverhead
@@ -86,15 +92,9 @@ export const calculateFinancialCompilation = (data: AuditorData): FinancialCompi
   const totalOtherIncome = data.interestIncome + data.interestExpense
     + data.gainOnDisposalOfAssets + data.otherIncome;
   const grossProfit = netSales - costOfGoodsSold;
-  const grossMarginPercentage = grossProfit / netSales;
-  const operatingExpensesPercentage = totalOperatingExpenses / netSales;
-  const totalOtherIncomePercentage = totalOtherIncome / netSales;
   const profitFromOperations = grossProfit - totalOperatingExpenses;
   const incomeBeforeIncomeTaxes = profitFromOperations + totalOtherIncome;
-  const pretaxIncomePercentage = incomeBeforeIncomeTaxes / netSales;
   const netIncome = incomeBeforeIncomeTaxes - data.incomeTaxes;
-  const profitFromOperationsPercentage = profitFromOperations / netSales;
-  const netIncomePercentage = netIncome / netSales;
   const totalCurrentAssets = data.cashAndCashEquivalents + data.accountsReceivable + data.inventory;
   const totalLongTermAssets = data.propertyPlantAndEquipment + data.investment;
   const totalAssets = totalCurrentAssets + totalLongTermAssets;
@@ -103,6 +103,14 @@ export const calculateFinancialCompilation = (data: AuditorData): FinancialCompi
   const totalLiabilities = totalCurrentLiabilities + totalLongTermLiabilities;
   const totalStockholdersEquity = data.equityCapital + data.retainedEarnings;
   const totalLiabilitiesAndEquity = totalLiabilities + totalStockholdersEquity;
+  if (netSales !== 0) {
+    grossMarginPercentage = grossProfit / netSales;
+    operatingExpensesPercentage = totalOperatingExpenses / netSales;
+    totalOtherIncomePercentage = totalOtherIncome / netSales;
+    pretaxIncomePercentage = incomeBeforeIncomeTaxes / netSales;
+    profitFromOperationsPercentage = profitFromOperations / netSales;
+    netIncomePercentage = netIncome / netSales;
+  }
 
   const FinComp: FinancialCompilation = {
     year: data.year,
@@ -159,19 +167,19 @@ export const calculateFinancialCompilation = (data: AuditorData): FinancialCompi
 
 export const processForecast = (forecast: FinancialData[]): FinancialCompilation[] => forecast.map((data) => {
   const netSales = data.revenue;
+  let grossMarginPercentage = 0;
+  let operatingExpensesPercentage = 0;
+  let totalOtherIncomePercentage = 0;
+  let pretaxIncomePercentage = 0;
+  let profitFromOperationsPercentage = 0;
+  let netIncomePercentage = 0;
   const costOfGoodsSold = data.costOfContracting + data.overhead;
   const totalOperatingExpenses = data.salariesAndBenefits + data.rentAndOverhead
       + data.depreciationAndAmortization + data.interest;
   const totalOtherIncome = data.interestIncome + data.interestExpense + data.gainOnDisposalOfAssets + data.otherIncome;
   const grossProfit = netSales - costOfGoodsSold;
-  const grossMarginPercentage = grossProfit / netSales;
-  const operatingExpensesPercentage = totalOperatingExpenses / netSales;
-  const totalOtherIncomePercentage = totalOtherIncome / netSales;
   const incomeBeforeIncomeTaxes = data.profitFromOperations + totalOtherIncome;
-  const pretaxIncomePercentage = incomeBeforeIncomeTaxes / netSales;
   const netIncome = incomeBeforeIncomeTaxes - data.incomeTaxes;
-  const profitFromOperationsPercentage = data.profitFromOperations / netSales;
-  const netIncomePercentage = netIncome / netSales;
   const totalCurrentAssets = data.cashAndCashEquivalents + data.accountsReceivable + data.inventory;
   const totalLongTermAssets = data.propertyPlantAndEquipment + data.investment;
   const totalAssets = totalCurrentAssets + totalLongTermAssets;
@@ -180,7 +188,14 @@ export const processForecast = (forecast: FinancialData[]): FinancialCompilation
   const totalLiabilities = totalCurrentLiabilities + totalLongTermLiabilities;
   const totalStockholdersEquity = data.equityCapital + data.retainedEarnings;
   const totalLiabilitiesAndEquity = totalLiabilities + totalStockholdersEquity;
-
+  if (netSales !== 0) {
+    grossMarginPercentage = grossProfit / netSales;
+    operatingExpensesPercentage = totalOperatingExpenses / netSales;
+    totalOtherIncomePercentage = totalOtherIncome / netSales;
+    pretaxIncomePercentage = incomeBeforeIncomeTaxes / netSales;
+    profitFromOperationsPercentage = data.profitFromOperations / netSales;
+    netIncomePercentage = netIncome / netSales;
+  }
   const processedData: FinancialCompilation = {
     year: data.year,
     revenue: data.revenue,
