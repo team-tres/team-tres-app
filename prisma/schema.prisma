@@ -34,7 +34,8 @@ model User {
     status     Boolean
     companyIni String?
 
-    company Company? @relation(fields: [companyId], references: [id])
+    company               Company?               @relation(fields: [companyId], references: [id])
+    financialCompilations FinancialCompilation[]
 }
 
 enum Condition {
@@ -57,6 +58,7 @@ model FinancialCompilation {
     id        Int @id @default(autoincrement())
     companyId Int
     year      Int
+    userId    Int
 
     // Income Statement
     revenue                        Int
@@ -87,13 +89,14 @@ model FinancialCompilation {
     netIncomePercentage            Float
 
     // BalanceSheet
+    totalAssets               Int
     cashAndCashEquivalents    Int
     accountsReceivable        Int
     inventory                 Int
     totalCurrentAssets        Int
     propertyPlantAndEquipment Int
     investment                Int
-    totalLongTermAsset        Int
+    totalLongTermAssets        Int
     accountsPayable           Int
     longDebtService           Int
     taxesPayable              Int
@@ -108,6 +111,7 @@ model FinancialCompilation {
     totalLiabilitiesAndEquity Int
 
     company Company @relation(fields: [companyId], references: [id])
+    user    User    @relation(fields: [userId], references: [id])
 }
 
 model Company {
