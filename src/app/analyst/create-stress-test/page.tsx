@@ -1,13 +1,13 @@
 /* eslint-disable max-len */
 import { getServerSession } from 'next-auth';
 import { Container, Row, Col, Button } from 'react-bootstrap';
-import { adminProtectedPage } from '@/lib/page-protection';
+import { loggedInProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import Link from 'next/link';
 
 const CreateStressTestPage = async () => {
   const session = await getServerSession(authOptions);
-  adminProtectedPage(
+  loggedInProtectedPage(
     session as {
       user: { email: string; id: string; randomKey: string };
     } | null,
