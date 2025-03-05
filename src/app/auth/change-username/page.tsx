@@ -1,4 +1,4 @@
-// change-password/page.tsx
+// change-username/page.tsx
 
 'use client';
 
@@ -9,26 +9,24 @@ import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
-import { hash } from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
 const prisma = new PrismaClient();
 
-const ChangePassword = () => {
+const ChangeUsername = () => {
   const { data: session, status } = useSession();
   const router = useRouter();
   const email = session?.user?.email || '';
 
   const validationSchema = Yup.object().shape({
-    oldpassword: Yup.string().required('Old password is required'),
-    password: Yup.string()
-      .required('New password is required')
-      .min(6, 'Password must be at least 6 characters')
-      .max(40, 'Password must not exceed 40 characters'),
-    confirmPassword: Yup.string()
-      .required('Confirm Password is required')
-      .oneOf([Yup.ref('password'), ''], 'Passwords do not match'),
+    newUsername: Yup.string()
+      .required('Username is required')
+      .min(3, 'Username must be at least 3 characters')
+      .max(20, 'Username must not exceed 20 characters'),
+    confirmUsername: Yup.string()
+      .required('Confirm Username is required')
+      .oneOf([Yup.ref('newUsername'), ''], 'Usernames do not match'),
   });
 
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
@@ -36,12 +34,11 @@ const ChangePassword = () => {
   });
 
   const onSubmit = async (data) => {
-    const hashedPassword = await hash(data.password, 10);
     await prisma.user.update({
       where: { email },
-      data: { password: hashedPassword },
+      data: { username: data.newUsername },
     });
-    await swal('Password Changed', 'Your password has been updated', 'success', { timer: 2000 });
+    await swal('Username Changed', 'Your username has been updated', 'success', { timer: 2000 });
     reset();
     router.push('/account-settings');
   };
@@ -55,38 +52,28 @@ const ChangePassword = () => {
       <Container>
         <Row className="justify-content-center">
           <Col xs={5}>
-            <h1 className="text-center">Change Password</h1>
+            <h1 className="text-center">Change Username</h1>
             <Card>
               <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                   <Form.Group>
-                    <Form.Label>Old Password</Form.Label>
+                    <Form.Label>New Username</Form.Label>
                     <input
-                      type="password"
-                      {...register('oldpassword')}
-                      className={`form-control ${errors.oldpassword ? 'is-invalid' : ''}`}
+                      type="text"
+                      {...register('newUsername')}
+                      className={`form-control ${errors.newUsername ? 'is-invalid' : ''}`}
                     />
-                    <div className="invalid-feedback">{errors.oldpassword?.message}</div>
+                    <div className="invalid-feedback">{errors.newUsername?.message}</div>
                   </Form.Group>
 
                   <Form.Group>
-                    <Form.Label>New Password</Form.Label>
+                    <Form.Label>Confirm Username</Form.Label>
                     <input
-                      type="password"
-                      {...register('password')}
-                      className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+                      type="text"
+                      {...register('confirmUsername')}
+                      className={`form-control ${errors.confirmUsername ? 'is-invalid' : ''}`}
                     />
-                    <div className="invalid-feedback">{errors.password?.message}</div>
-                  </Form.Group>
-
-                  <Form.Group>
-                    <Form.Label>Confirm Password</Form.Label>
-                    <input
-                      type="password"
-                      {...register('confirmPassword')}
-                      className={`form-control ${errors.confirmPassword ? 'is-invalid' : ''}`}
-                    />
-                    <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
+                    <div className="invalid-feedback">{errors.confirmUsername?.message}</div>
                   </Form.Group>
 
                   <Form.Group className="form-group py-3">
@@ -115,4 +102,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default ChangeUsername;
