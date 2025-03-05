@@ -15,12 +15,12 @@ export async function POST(req: NextRequest) {
       || !multipliers || typeof multipliers !== 'object'
       || !companyId || typeof companyId !== 'string'
     ) {
-      return NextResponse.json({ error: 'Invalid settings, multipliers, or companyId format' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid settings, multipliers, or companyId format' }, { status: 100 });
     }
 
     const companyIdNumber = Number(companyId);
     if (Number.isNaN(companyIdNumber)) {
-      return NextResponse.json({ error: 'Invalid companyId' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid companyId' }, { status: 300 });
     }
 
     // Fetch last three years
@@ -33,7 +33,7 @@ export async function POST(req: NextRequest) {
     });
 
     if (pastData.length < 3) {
-      return NextResponse.json({ error: 'Not enough historical data (need at least 3 years)' }, { status: 400 });
+      return NextResponse.json({ error: 'Not enough historical data (need at least 3 years)' }, { status: 300 });
     }
 
     const forecast = generateForecast(pastData, settings, multipliers);
