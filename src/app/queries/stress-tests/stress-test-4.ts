@@ -1,18 +1,18 @@
-import { FinancialCompilation } from "../financial-comp/financial-calculations";
+import { FinancialCompilation } from '../financial-comp/financial-calculations';
 
-interface StressTestParams {
-  percentageIncrease: number; 
-  currentAssetsChange: number; 
+interface StressData4 {
+  percentageIncrease: number;
+  currentAssetsChange: number;
 }
 
-export interface StressTestResult extends FinancialCompilation {
+export interface StressTestResult4 extends FinancialCompilation {
   increaseInExpenses: number;
   newTotalOperatingExpenses: number;
   changeInCurrentAssets: number;
   newTotalCurrentAssets: number;
 }
 
-export const applyStressTest = (financialData: FinancialCompilation[], params: StressTestParams): StressTestResult[] => {
+export const calculateStressTest4 = (financialData: FinancialCompilation[], params: StressData4): StressTestResult4[] => {
   return financialData.map((data) => {
     const increaseInExpenses = data.totalOperatingExpenses * (params.percentageIncrease / 100);
     const newTotalOperatingExpenses = data.totalOperatingExpenses + increaseInExpenses;
