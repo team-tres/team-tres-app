@@ -2,7 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Container, Table, Spinner } from 'react-bootstrap';
-import Chart from 'chart.js/auto'
+import Carousel from 'react-bootstrap/Carousel';
+import Chart, { plugins } from 'chart.js/auto'
 import './page.css';
 
 const Forecast = () => {
@@ -154,44 +155,280 @@ const Forecast = () => {
     fetchForecastData();
   }, [settings, multipliers]);
 
+  const [index, setIndex] = useState(0);
+
+  const handleSelect = (selectedIndex: number): void => {
+    setIndex(selectedIndex);
+  };
+
+  const chartRefs = [useRef(null), useRef(null), useRef(null)];
+  const chartInstances = useRef<Array<Chart | null>>([null, null, null]);
+
   useEffect(() => {
-    if (forecast.length === 0 || !chartRef.current) return;
-
-    if (chartInstance.current) {
-      chartInstance.current.destroy();
-    }
-
-    chartInstance.current = new Chart(chartRef.current, {
-      type: 'line',
-      data: {
-        labels: forecast.map((item) => item.year.toString()),
-        datasets: [
-          {
-            label: 'Revenue',
-            data: forecast.map((item) => item.revenue),
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1,
-            pointHoverBackgroundColor: '#05AFCA',
+    const chartConfigs = [
+      {
+        type: 'line' as const,
+        data: {
+          labels: forecast.map((item) => item.year),
+          datasets: [
+            {
+              label: 'Revenue',
+              data: forecast.map((item) => item.revenue),
+              fill: false,
+              borderColor: '#2252FE',
+              tension: 0.1,
+              pointHoverBackgroundColor: '#05AFCA',
+            },
+            {
+              label: 'Cost of Goods Sold',
+              data: forecast.map((item) => item.costOfGoodsSold),
+              fill: false,
+              borderColor: '#FE5F55',
+              tension: 0.1,
+              pointHoverBackgroundColor: '#FFAF00',
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Revenue vs. Cost of Goods Sold',
+              font: { size: 25, weight: 700 },
+              color: 'white',
+            },
+            legend: {
+              display: true,
+              position: "bottom" as "bottom",
+              labels: {
+                color: 'white',
+                font: { size: 18 },
+              },
+            },
+            tooltip: {
+              bodyColor: 'white',
+              titleColor: 'white',
+            },
           },
-        ],
-      },
-      options: {
-        responsive: true,
-        scales: {
-          y: {
-            beginAtZero: true,
+          scales: {
+            x: {
+              ticks: {
+                color: 'white',
+              },
+              title: {
+                display: true,
+                text: 'Year',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+            y: {
+              ticks: {
+                color: 'white',
+              },
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Revenue ($)',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
           },
         },
       },
+      {
+        type: 'bar' as const,
+        data: {
+          labels: forecast.map((item) => item.year), 
+          datasets: [
+            {
+              label: 'Salaries and Benefits',
+              data: forecast.map((item) => item.salariesAndBenefits),
+              backgroundColor: '#F6861E',
+            },
+            {
+              label: 'Rent and Overhead',
+              data: forecast.map((item) => item.rentAndOverhead),
+              backgroundColor: '#B01E8C',
+            },
+            {
+              label: 'Depreciation and Amortization',
+              data: forecast.map((item) => item.depreciationAndAmortization),
+              backgroundColor: '#6360AA',
+            },
+            {
+              label: 'Interest',
+              data: forecast.map((item) => item.interest),
+              backgroundColor: '#2252FE',
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Operating Expenses Over Time',
+              font: { size: 25, weight: 700 },
+              color: 'white',
+            },
+            legend: {
+              display: true,
+              position: "bottom" as "bottom",
+              labels: {
+                color: 'white',
+                font: {
+                  size: 18,
+                },
+              },
+            },
+            tooltip: {
+              bodyColor: 'white',
+              titleColor: 'white',
+            },
+          },
+          scales: {
+            x: {
+              stacked: true,
+              ticks: {
+                color: 'white',
+              },
+              title: {
+                display: true,
+                text: 'Year',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+            y: {
+              stacked: true,
+              ticks: {
+                color: 'white',
+              },
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Operating Expenses ($)',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+          },
+        },
+      },
+      {
+        type: 'line' as const,
+        data: {
+          labels: forecast.map((item) => item.year),
+          datasets: [
+            {
+              label: 'Net Income',
+              data: forecast.map((item) => item.netIncome),
+              fill: false,
+              borderColor: '#2252FE',
+              tension: 0.1,
+              pointHoverBackgroundColor: '#05AFCA',
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Net Income Over Time',
+              font: { size: 25, weight: 700 },
+              color: 'white',
+            },
+            legend: {
+              display: true,
+              position: "bottom" as "bottom",
+              labels: {
+                color: 'white',
+                font: {
+                  size: 18,
+                },
+              },
+            },
+            tooltip: {
+              bodyColor: 'white',
+              titleColor: 'white',
+            },
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'white',
+              },
+              title: {
+                display: true,
+                text: 'Year',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+            y: {
+              ticks: {
+                color: 'white',
+              },
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Net Income ($)',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+          },
+        },
+      },
+    ];
+
+    chartRefs.forEach((ref, index) => {
+      if (ref.current) {
+        if (chartInstances.current[index]) {
+          chartInstances.current[index]?.destroy();
+        }
+        chartInstances.current[index] = new Chart(ref.current, chartConfigs[index]);
+      }
     });
+
+    return () => {
+      chartInstances.current.forEach((chart) => chart?.destroy());
+    };
   }, [forecast]);
 
   return (
     <main>
-      <Container id="dashboard" fluid className="py-3 text-center">
+      <Container id="dashboard" fluid className="text-center">
         <h1>Financial Forecast</h1>
-        <canvas ref={chartRef} />
+        <Carousel activeIndex={index} onSelect={handleSelect} className="dark-background">
+          {chartRefs.map((ref, index) => (
+            <Carousel.Item key={index}>
+              <canvas ref={ref} />
+            </Carousel.Item>
+          ))}
+        </Carousel>
         <h2 className="left">12-YEAR FORECAST</h2>
         <Table borderless responsive>
           <thead>
@@ -217,12 +454,8 @@ const Forecast = () => {
                 <br />
                 12 Year Forecast Output
               </td>
-              {forecast.map((data, i) => (
-                <td className="bold" key={i}>
-                  Forecast
-                  <br />
-                  {i + 1}
-                  <br />
+              {forecast.map((data) => (
+                <td className="bold">
                   {data.year}
                 </td>
               ))}
@@ -260,7 +493,7 @@ const Forecast = () => {
             <tr className="bold">
               <td className="left">Net Sales</td>
               {forecast.map((data) => (
-                <td className="bottom-border">
+                <td>
                   {data.netSales
                     ? data.netSales.toLocaleString('en-US', {
                       minimumFractionDigits: 0,
@@ -671,7 +904,7 @@ const Forecast = () => {
             <tr className="bold">
               <td className="left">Total Current Assets</td>
               {forecast.map((data) => (
-                <td className="bottom-border">
+                <td>
                   {data.totalCurrentAssets
                     ? data.totalCurrentAssets.toLocaleString('en-US', {
                       minimumFractionDigits: 0,
@@ -716,7 +949,7 @@ const Forecast = () => {
             <tr className="bold">
               <td className="left">Total long-term asset</td>
               {forecast.map((data) => (
-                <td className="bottom-border">
+                <td>
                   {data.totalLongTermAssets
                     ? data.totalLongTermAssets.toLocaleString('en-US', {
                       minimumFractionDigits: 0,
@@ -728,14 +961,14 @@ const Forecast = () => {
             </tr>
             <tr>
               <td colSpan={3} aria-label="Empty cell">&nbsp;</td>
-              <td colSpan={12} className="bottom-border" aria-label="Empty cell">&nbsp;</td>
+              <td colSpan={12} aria-label="Empty cell">&nbsp;</td>
             </tr>
             <tr>
               <th className="bold underline font left">
                 TOTAL ASSETS
               </th>
               {forecast.map((data) => (
-                <td className="bottom-border underline bold">
+                <td className="underline bold">
                   {data.totalAssets
                     ? data.totalAssets.toLocaleString('en-US', {
                       minimumFractionDigits: 0,
@@ -800,7 +1033,7 @@ const Forecast = () => {
             <tr className="bold">
               <td className="left">Total Current Liabilities</td>
               {forecast.map((data) => (
-                <td className="bottom-border">
+                <td>
                   {data.totalCurrentLiabilities
                     ? data.totalCurrentLiabilities.toLocaleString('en-US', {
                       minimumFractionDigits: 0,
@@ -845,7 +1078,7 @@ const Forecast = () => {
             <tr className="bold">
               <td className="left">Total long-term liabilities</td>
               {forecast.map((data) => (
-                <td className="bottom-border">
+                <td>
                   {data.totalLongTermLiabilities
                     ? data.totalLongTermLiabilities.toLocaleString('en-US', {
                       minimumFractionDigits: 0,
@@ -858,7 +1091,7 @@ const Forecast = () => {
             <tr className="bold">
               <td className="left">Total Liabilities</td>
               {forecast.map((data) => (
-                <td className="bottom-border">
+                <td>
                   {data.totalLiabilities
                     ? data.totalLiabilities.toLocaleString('en-US', {
                       minimumFractionDigits: 0,
@@ -903,7 +1136,7 @@ const Forecast = () => {
             <tr className="bold">
               <td className="left">Total Stockholder&apos;s Equity</td>
               {forecast.map((data) => (
-                <td className="bottom-border">
+                <td>
                   {data.totalStockholdersEquity
                     ? data.totalStockholdersEquity.toLocaleString('en-US', {
                       minimumFractionDigits: 0,
@@ -922,7 +1155,7 @@ const Forecast = () => {
                 TOTAL LIABILITIES AND EQUITY
               </th>
               {forecast.map((data) => (
-                <td className="bottom-border underline bold">
+                <td className="underline bold">
                   {data.totalLiabilitiesAndEquity
                     ? data.totalLiabilitiesAndEquity.toLocaleString('en-US', {
                       minimumFractionDigits: 0,
