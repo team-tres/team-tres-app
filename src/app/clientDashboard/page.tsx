@@ -3,12 +3,14 @@
 import { Col, Container, Row, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import './page.css';
 
 const ClientDashboard = () => {
   const { data: session } = useSession();
   const [currentDate, setCurrentDate] = useState('');
+  const router = useRouter();
 
   useEffect(() => {
     const today = new Date();
@@ -28,11 +30,12 @@ const ClientDashboard = () => {
           <Col md={4} className="left-section">
             <h1 className="heading-left">
               Welcome
-              {' '}
-              {session?.user?.email }
+              {session?.user?.email}
             </h1>
             <p className="date-text">{currentDate}</p>
-            <Button className="white-button">Manage Account</Button>
+            <Button className="white-button" onClick={() => router.push('/account-settings')}>
+              Manage Account
+            </Button>
             <br />
             <Button className="white-button">Account Summary</Button>
           </Col>
@@ -41,8 +44,8 @@ const ClientDashboard = () => {
             <Button className="blue-button">View Sustainability Model</Button>
             <Button className="blue-button">View Stress Tests</Button>
             <Button className="blue-button">
-              <Link href="/clientForecasts" passHref legacyBehavior>
-                <a href="/clientForecasts">View Forecasts</a>
+              <Link href="/clientForecasts" passHref>
+                View Forecasts
               </Link>
             </Button>
           </Col>
