@@ -1,19 +1,19 @@
-interface AuditorData {
-  // Needed for Income Statement values
+import { FinancialData } from '@/app/queries/forecasts/forecast';
+
+export interface AuditorData {
+  year: number;
   revenue: number;
   costOfContracting: number;
   overhead: number;
   salariesAndBenefits: number;
   rentAndOverhead: number;
-  depreciationAndAmortizattion: number;
+  depreciationAndAmortization: number;
   interest: number;
   interestIncome: number;
   interestExpense: number;
   gainOnDisposalOfAssets: number;
   otherIncome: number;
   incomeTaxes: number;
-
-  // Needed for Balance Sheet values
   cashAndCashEquivalents: number;
   accountsReceivable: number;
   inventory: number;
@@ -28,14 +28,63 @@ interface AuditorData {
   retainedEarnings: number;
 }
 
-// Function to calculate Financial Compilation data
-const calculateFinancialCompilation = (data: AuditorData) => {
-  // Calculating Income Statement values
+export interface FinancialCompilation {
+  year: number;
+  revenue: number,
+  netSales: number,
+  costOfContracting: number,
+  overhead: number,
+  costOfGoodsSold: number,
+  grossProfit: number,
+  grossMarginPercentage: number,
+  salariesAndBenefits: number,
+  rentAndOverhead: number,
+  depreciationAndAmortization: number,
+  interest: number,
+  totalOperatingExpenses: number,
+  operatingExpensesPercentage: number,
+  profitFromOperations: number,
+  profitFromOperationsPercentage: number,
+  interestIncome: number,
+  interestExpense: number,
+  gainOnDisposalOfAssets: number,
+  otherIncome: number,
+  totalOtherIncome: number,
+  totalOtherIncomePercentage: number,
+  incomeBeforeIncomeTaxes: number,
+  pretaxIncomePercentage: number,
+  incomeTaxes: number,
+  netIncome: number,
+  netIncomePercentage: number,
+  cashAndCashEquivalents: number,
+  accountsReceivable: number,
+  inventory: number,
+  totalCurrentAssets: number,
+  propertyPlantAndEquipment: number,
+  investment: number,
+  totalLongTermAssets: number,
+  totalAssets: number,
+  accountsPayable: number,
+  currentDebtService: number,
+  taxesPayable: number,
+  totalCurrentLiabilities: number,
+  longDebtService: number,
+  loansPayable: number,
+  totalLongTermLiabilities: number,
+  totalLiabilities: number,
+  equityCapital: number,
+  retainedEarnings: number,
+  totalStockholdersEquity: number,
+  totalLiabilitiesAndEquity: number,
+}
+
+export const calculateFinancialCompilation = (data: AuditorData): FinancialCompilation => {
   const netSales = data.revenue;
   const costOfGoodsSold = data.costOfContracting + data.overhead;
   const totalOperatingExpenses = data.salariesAndBenefits + data.rentAndOverhead
-  + data.depreciationAndAmortizattion + data.interest;
-  const totalOtherIncome = data.interestIncome + data.interestExpense + data.gainOnDisposalOfAssets + data.otherIncome;
+  + data.depreciationAndAmortization + data.interest;
+  const totalOtherIncome = data.interestIncome + data.interestExpense
+    + data.gainOnDisposalOfAssets + data.otherIncome;
   const grossProfit = netSales - costOfGoodsSold;
   const grossMarginPercentage = grossProfit / netSales;
   const operatingExpensesPercentage = totalOperatingExpenses / netSales;
@@ -46,8 +95,6 @@ const calculateFinancialCompilation = (data: AuditorData) => {
   const netIncome = incomeBeforeIncomeTaxes - data.incomeTaxes;
   const profitFromOperationsPercentage = profitFromOperations / netSales;
   const netIncomePercentage = netIncome / netSales;
-
-  // Calculating Balance Sheet values
   const totalCurrentAssets = data.cashAndCashEquivalents + data.accountsReceivable + data.inventory;
   const totalLongTermAssets = data.propertyPlantAndEquipment + data.investment;
   const totalAssets = totalCurrentAssets + totalLongTermAssets;
@@ -57,33 +104,132 @@ const calculateFinancialCompilation = (data: AuditorData) => {
   const totalStockholdersEquity = data.equityCapital + data.retainedEarnings;
   const totalLiabilitiesAndEquity = totalLiabilities + totalStockholdersEquity;
 
-  return {
-    // Income Statement values
+  const FinComp: FinancialCompilation = {
+    year: data.year,
+    revenue: data.revenue,
     netSales,
+    costOfContracting: data.costOfContracting,
+    overhead: data.overhead,
     costOfGoodsSold,
-    totalOperatingExpenses,
-    totalOtherIncome,
     grossProfit,
     grossMarginPercentage,
+    salariesAndBenefits: data.salariesAndBenefits,
+    rentAndOverhead: data.rentAndOverhead,
+    depreciationAndAmortization: data.depreciationAndAmortization,
+    interest: data.interest,
+    totalOperatingExpenses,
     operatingExpensesPercentage,
-    totalOtherIncomePercentage,
     profitFromOperations,
+    profitFromOperationsPercentage,
+    interestIncome: data.interestIncome,
+    interestExpense: data.interestExpense,
+    gainOnDisposalOfAssets: data.gainOnDisposalOfAssets,
+    otherIncome: data.otherIncome,
+    totalOtherIncome,
+    totalOtherIncomePercentage,
     incomeBeforeIncomeTaxes,
     pretaxIncomePercentage,
+    incomeTaxes: data.incomeTaxes,
     netIncome,
-    profitFromOperationsPercentage,
     netIncomePercentage,
-
-    // Balance Sheet values
+    cashAndCashEquivalents: data.cashAndCashEquivalents,
+    accountsReceivable: data.accountsReceivable,
+    inventory: data.inventory,
     totalCurrentAssets,
+    propertyPlantAndEquipment: data.propertyPlantAndEquipment,
+    investment: data.investment,
     totalLongTermAssets,
     totalAssets,
+    accountsPayable: data.accountsPayable,
+    currentDebtService: data.currentDebtService,
+    taxesPayable: data.taxesPayable,
     totalCurrentLiabilities,
+    longDebtService: data.longDebtService,
+    loansPayable: data.loansPayable,
     totalLongTermLiabilities,
     totalLiabilities,
+    equityCapital: data.equityCapital,
+    retainedEarnings: data.retainedEarnings,
     totalStockholdersEquity,
     totalLiabilitiesAndEquity,
   };
+
+  return FinComp;
 };
 
-export default calculateFinancialCompilation;
+export const processForecast = (forecast: FinancialData[]): FinancialCompilation[] => forecast.map((data) => {
+  const netSales = data.revenue;
+  const costOfGoodsSold = data.costOfContracting + data.overhead;
+  const totalOperatingExpenses = data.salariesAndBenefits + data.rentAndOverhead
+      + data.depreciationAndAmortization + data.interest;
+  const totalOtherIncome = data.interestIncome + data.interestExpense + data.gainOnDisposalOfAssets + data.otherIncome;
+  const grossProfit = netSales - costOfGoodsSold;
+  const grossMarginPercentage = grossProfit / netSales;
+  const operatingExpensesPercentage = totalOperatingExpenses / netSales;
+  const totalOtherIncomePercentage = totalOtherIncome / netSales;
+  const incomeBeforeIncomeTaxes = data.profitFromOperations + totalOtherIncome;
+  const pretaxIncomePercentage = incomeBeforeIncomeTaxes / netSales;
+  const netIncome = incomeBeforeIncomeTaxes - data.incomeTaxes;
+  const profitFromOperationsPercentage = data.profitFromOperations / netSales;
+  const netIncomePercentage = netIncome / netSales;
+  const totalCurrentAssets = data.cashAndCashEquivalents + data.accountsReceivable + data.inventory;
+  const totalLongTermAssets = data.propertyPlantAndEquipment + data.investment;
+  const totalAssets = totalCurrentAssets + totalLongTermAssets;
+  const totalCurrentLiabilities = data.accountsPayable + data.currentDebtService + data.taxesPayable;
+  const totalLongTermLiabilities = data.longDebtService + data.loansPayable;
+  const totalLiabilities = totalCurrentLiabilities + totalLongTermLiabilities;
+  const totalStockholdersEquity = data.equityCapital + data.retainedEarnings;
+  const totalLiabilitiesAndEquity = totalLiabilities + totalStockholdersEquity;
+
+  const processedData: FinancialCompilation = {
+    year: data.year,
+    revenue: data.revenue,
+    netSales,
+    costOfContracting: data.costOfContracting,
+    overhead: data.overhead,
+    costOfGoodsSold,
+    grossProfit,
+    grossMarginPercentage,
+    salariesAndBenefits: data.salariesAndBenefits,
+    rentAndOverhead: data.rentAndOverhead,
+    depreciationAndAmortization: data.depreciationAndAmortization,
+    interest: data.interest,
+    totalOperatingExpenses,
+    operatingExpensesPercentage,
+    profitFromOperations: data.profitFromOperations,
+    profitFromOperationsPercentage,
+    interestIncome: data.interestIncome,
+    interestExpense: data.interestExpense,
+    gainOnDisposalOfAssets: data.gainOnDisposalOfAssets,
+    otherIncome: data.otherIncome,
+    totalOtherIncome,
+    totalOtherIncomePercentage,
+    incomeBeforeIncomeTaxes,
+    pretaxIncomePercentage,
+    incomeTaxes: data.incomeTaxes,
+    netIncome,
+    netIncomePercentage,
+    cashAndCashEquivalents: data.cashAndCashEquivalents,
+    accountsReceivable: data.accountsReceivable,
+    inventory: data.inventory,
+    totalCurrentAssets,
+    propertyPlantAndEquipment: data.propertyPlantAndEquipment,
+    investment: data.investment,
+    totalLongTermAssets,
+    totalAssets,
+    accountsPayable: data.accountsPayable,
+    currentDebtService: data.currentDebtService,
+    taxesPayable: data.taxesPayable,
+    totalCurrentLiabilities,
+    longDebtService: data.longDebtService,
+    loansPayable: data.loansPayable,
+    totalLongTermLiabilities,
+    totalLiabilities,
+    equityCapital: data.equityCapital,
+    retainedEarnings: data.retainedEarnings,
+    totalStockholdersEquity,
+    totalLiabilitiesAndEquity,
+  };
+
+  return processedData;
+});

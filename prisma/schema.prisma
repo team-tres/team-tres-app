@@ -25,11 +25,17 @@ enum Role {
 }
 
 model User {
-    id       Int    @id @default(autoincrement())
-    email    String @unique
-    username String @unique
-    password String
-    role     Role   @default(CLIENT)
+    id         Int     @id @default(autoincrement())
+    email      String  @unique
+    username   String  @unique
+    password   String
+    role       Role    @default(CLIENT)
+    companyId  Int?
+    status     Boolean
+    companyIni String?
+
+    company               Company?               @relation(fields: [companyId], references: [id])
+    financialCompilations FinancialCompilation[]
 }
 
 enum Condition {
@@ -52,6 +58,7 @@ model FinancialCompilation {
     id        Int @id @default(autoincrement())
     companyId Int
     year      Int
+    userId    Int
 
     // Income Statement
     revenue                        Int
@@ -82,13 +89,14 @@ model FinancialCompilation {
     netIncomePercentage            Float
 
     // BalanceSheet
+    totalAssets               Int
     cashAndCashEquivalents    Int
     accountsReceivable        Int
     inventory                 Int
     totalCurrentAssets        Int
     propertyPlantAndEquipment Int
     investment                Int
-    totalLongTermAsset        Int
+    totalLongTermAssets        Int
     accountsPayable           Int
     longDebtService           Int
     taxesPayable              Int
@@ -103,12 +111,13 @@ model FinancialCompilation {
     totalLiabilitiesAndEquity Int
 
     company Company @relation(fields: [companyId], references: [id])
+    user    User    @relation(fields: [userId], references: [id])
 }
 
 model Company {
     id    Int    @id @default(autoincrement())
     name  String @unique
-    email String
+    users User[]
 
     FinancialCompilation FinancialCompilation[]
 }

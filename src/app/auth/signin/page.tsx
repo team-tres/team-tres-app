@@ -1,18 +1,24 @@
 'use client';
 
-import { signIn } from 'next-auth/react';
+import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import './page.css';
 
 const SignIn = () => {
+  const { data: session } = useSession();
+  const currentUser = session?.user?.email;
+  const userWithRole = session?.user as { email: string; randomKey: string };
+  const role = userWithRole?.randomKey;
   const router = useRouter();
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const target = e.target as typeof e.target & {
       email: { value: string };
       password: { value: string };
     };
+
     const email = target.email.value;
     const password = target.password.value;
     const result = await signIn('credentials', {
@@ -25,17 +31,23 @@ const SignIn = () => {
       console.error('Sign in failed: ', result.error);
     }
 
-    // await new Promise((resolve) => setTimeout(resolve, 500));
-
-    const res = await fetch('/api/auth/session', { cache: 'no-store' });
-    const session = await res.json();
-
-    console.log(session?.user?.role); // Debugging
-
-    if (session?.user?.role === 'admin') { // role is not working
-      await router.push('/clientDashboard');
-    } else {
-      await router.push('/clientDashboard');
+    if (currentUser) {
+      switch (role) {
+        case 'CLIENT':
+          await router.push('/clientDashboard');
+          break;
+        case 'AUDITOR':
+          await router.push('/financial');
+          break;
+        case 'ANALYST':
+          await router.push('/analyst');
+          break;
+        case 'ADMIN':
+          await router.push('/admin');
+          break;
+        default:
+          router.push('/clientDashboard');
+      }
     }
   };
 

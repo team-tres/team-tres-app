@@ -9,6 +9,7 @@ const getUsers = async () => {
         email: true,
         username: true,
         role: true,
+        status: true,
       },
     });
     return data;
