@@ -1,5 +1,3 @@
-// change-username/page.tsx
-
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -29,7 +27,12 @@ const ChangeUsername = () => {
       .oneOf([Yup.ref('newUsername'), ''], 'Usernames do not match'),
   });
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(validationSchema),
   });
 

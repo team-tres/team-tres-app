@@ -1,23 +1,16 @@
-// change-password/page.tsx
-
-'use client';
-
 import { useForm } from 'react-hook-form';
-import { useSession } from 'next-auth/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
 import { hash } from 'bcrypt';
-import { PrismaClient } from '@prisma/client';
-import LoadingSpinner from '@/components/LoadingSpinner';
-
-const prisma = new PrismaClient();
+import { useSession } from 'next-auth/react';
+import { prisma } from '@/lib/prisma';
 
 const ChangePassword = () => {
-  const { data: session, status } = useSession();
   const router = useRouter();
+  const { data: session } = useSession();
   const email = session?.user?.email || '';
 
   const validationSchema = Yup.object().shape({
@@ -27,28 +20,27 @@ const ChangePassword = () => {
       .min(6, 'Password must be at least 6 characters')
       .max(40, 'Password must not exceed 40 characters'),
     confirmPassword: Yup.string()
-      .required('Confirm Password is required')
-      .oneOf([Yup.ref('password'), ''], 'Passwords do not match'),
+      .required('Confirm new password is required')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
   });
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm({
-    resolver: yupResolver(validationSchema),
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (data) => {
     const hashedPassword = await hash(data.password, 10);
     await prisma.user.update({
-      where: { email },
+      where: { email: session.data.user.email },
       data: { password: hashedPassword },
     });
-    await swal('Password Changed', 'Your password has been updated', 'success', { timer: 2000 });
-    reset();
-    router.push('/account-settings');
+    await swal('Success!', 'Your password has been updated.', 'success');
   };
 
-  if (status === 'loading') {
-    return <LoadingSpinner />;
-  }
+  const { data: session, status } = useSession();
+  const email = session?.user?.email || '';
 
   return (
     <main>
@@ -80,7 +72,7 @@ const ChangePassword = () => {
                   </Form.Group>
 
                   <Form.Group>
-                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Label>Confirm New Password</Form.Label>
                     <input
                       type="password"
                       {...register('confirmPassword')}
@@ -89,19 +81,10 @@ const ChangePassword = () => {
                     <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
                   </Form.Group>
 
-                  <Form.Group className="form-group py-3">
+                  <Form.Group className="py-3">
                     <Row>
                       <Col>
-                        <Button type="submit" className="btn btn-primary">Change</Button>
-                      </Col>
-                      <Col>
-                        <Button
-                          type="button"
-                          onClick={() => reset()}
-                          className="btn btn-warning float-right"
-                        >
-                          Reset
-                        </Button>
+                        <Button type="submit">Change Password</Button>
                       </Col>
                     </Row>
                   </Form.Group>
