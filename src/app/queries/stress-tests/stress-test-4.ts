@@ -12,20 +12,20 @@ export interface StressTestResult4 extends FinancialCompilation {
   newTotalCurrentAssets: number;
 }
 
-export const calculateStressTest4 = (financialData: FinancialCompilation[], params: StressData4): StressTestResult4[] => {
-  return financialData.map((data) => {
-    const increaseInExpenses = data.totalOperatingExpenses * (params.percentageIncrease / 100);
-    const newTotalOperatingExpenses = data.totalOperatingExpenses + increaseInExpenses;
+export const calculateStressTest4 = (
+  financialData: FinancialCompilation[],
+  params: StressData4,
+): StressTestResult4[] => financialData.map((data) => {
+  const increaseInExpenses = data.totalOperatingExpenses * (params.percentageIncrease / 100);
+  const newTotalOperatingExpenses = data.totalOperatingExpenses + increaseInExpenses;
+  const changeInCurrentAssets = params.currentAssetsChange;
+  const newTotalCurrentAssets = data.totalCurrentAssets + changeInCurrentAssets;
 
-    const changeInCurrentAssets = params.currentAssetsChange; // Apply stress change
-    const newTotalCurrentAssets = data.totalCurrentAssets + changeInCurrentAssets;
-
-    return {
-      ...data,
-      increaseInExpenses,
-      newTotalOperatingExpenses,
-      changeInCurrentAssets,
-      newTotalCurrentAssets,
-    };
-  });
-};
+  return {
+    ...data,
+    increaseInExpenses,
+    newTotalOperatingExpenses,
+    changeInCurrentAssets,
+    newTotalCurrentAssets,
+  };
+});
