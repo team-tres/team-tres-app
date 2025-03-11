@@ -18,7 +18,7 @@ function calculatePrincipal(baselineBalances: number[], stressTestBalances: numb
  * Compares the baseline scenario with the decreased interest rate to assess the impact with principal and
  * residual effects.
  *
- * @param loanAmount The total loan amount
+ * @param loanAmount The total loan amount. also known as the currentDebtService
  * @param loanPeriod The loan period in years
  * @param baselineInterestRate The interest rate for the baseline scenario, represeted as a decimal
  * (e.g., 6% is 0.06)

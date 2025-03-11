@@ -6,7 +6,7 @@ import calculateInterestPayment from './ipmt-utils';
  * Generates an array of loan balances by year, based on the loan amount, interest rate, and loan period.
  * Calculates the yearly loan balances by taking into account the interest accumulated and the yearly payments.
  *
- * @param loanAmount The total loan amount, also known as currentDebtService
+ * @param loanAmount The total loan amount
  * @param interestRate The annual interest rate of the loan, represented as a decimal (e.g., 6% is 0.06)
  * @param loanPeriod The loan period in years
  * @returns An array of loan balances for each year, including interest accumulation and payments
