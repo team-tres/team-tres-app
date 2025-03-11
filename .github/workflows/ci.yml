@@ -23,6 +23,8 @@ jobs:
         run: npx playwright test Fisc-Nav-Non-logged-In-test.spec.ts Fisc-Nav-Admin-test.spec.ts Fisc-Nav-Analyst.spec.ts Fisc-Nav-Auidtor-test.spec.ts Fisc-Nav-Client-test.spec.ts --workers=3
         env: 
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET || 'default_secret' }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL || 'http://localhost:3000' }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
     # - uses: actions/upload-artifact@v4
     # if: always()
     # with:
