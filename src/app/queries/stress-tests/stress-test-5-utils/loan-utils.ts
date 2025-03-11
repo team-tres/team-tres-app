@@ -1,8 +1,9 @@
+import { MONTHS_IN_YEAR } from '@config/constants';
+
 export interface LoanCalculatorInput {
   loanAmount: number;
-  AnnualInterestRate: number;
-  loanPeriod: number; // years
-  startDate: Date;
+  interestRate: number;
+  loanPeriod: number;
 }
 
 export interface LoanCalculatorOutput {
@@ -11,30 +12,27 @@ export interface LoanCalculatorOutput {
   interestPerPayment: number[];
 }
 
-// calc montly payment
-export const calculateMonthlyPayment = (loanAmount: number, AnnualInterestRate: number, months: number): number => {
-  const monthlyRate = AnnualInterestRate / 100 / 12;
-  if (monthlyRate === 0) return loanAmount / months;
+export const calculateMonthlyPayment = (loanAmount: number, interestRate: number, numberOfPayments: number): number => {
+  const monthlyRate = interestRate / MONTHS_IN_YEAR;
+  if (monthlyRate === 0) return loanAmount / numberOfPayments;
   const numerator = monthlyRate * loanAmount;
-  const denominator = 1 - (1 + monthlyRate) ** -months;
+  const denominator = 1 - (1 + monthlyRate) ** -numberOfPayments;
   return numerator / denominator;
 };
 
-// calc loan details
 export const calculateLoan = (input: LoanCalculatorInput): LoanCalculatorOutput => {
-  const { loanAmount, AnnualInterestRate, loanPeriod } = input;
+  const { loanAmount, interestRate, loanPeriod } = input;
 
-  const monthsYear = 12;
-  const numberOfPayments = loanPeriod * monthsYear;
+  const numberOfPayments = loanPeriod * MONTHS_IN_YEAR;
 
-  const monthlyPayment = calculateMonthlyPayment(loanAmount, AnnualInterestRate, numberOfPayments);
+  const monthlyPayment = calculateMonthlyPayment(loanAmount, interestRate, numberOfPayments);
 
   const interestPerPayment: number[] = [];
 
   let remainingBalance = loanAmount;
 
   for (let month = 1; month <= numberOfPayments; month++) {
-    const monthlyInterest = remainingBalance * (AnnualInterestRate / 100 / monthsYear);
+    const monthlyInterest = remainingBalance * (interestRate / MONTHS_IN_YEAR);
     interestPerPayment.push(monthlyInterest);
 
     remainingBalance -= (monthlyPayment - monthlyInterest);

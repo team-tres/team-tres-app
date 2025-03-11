@@ -1,6 +1,8 @@
-export default function calculateInterestPayment(loanAmount: number, annualInterestRate: number): number {
-  const monthlyRate = annualInterestRate / 100 / 12;
+import { MONTHS_IN_YEAR } from '@config/constants';
 
-  const interestPayment = loanAmount * monthlyRate;
+export default function calculateInterestPayment(loanAmount: number, annualInterestRate: number): number {
+  const monthlyInterestRate = annualInterestRate / MONTHS_IN_YEAR;
+
+  const interestPayment = loanAmount * monthlyInterestRate;
   return interestPayment;
 }
