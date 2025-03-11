@@ -12,7 +12,7 @@
 
 .font {
     font-size: large;
-    padding: 20px;
+    padding: 5%;
 }
 
 .left {
@@ -44,29 +44,29 @@ canvas {
     height: auto !important;
     display: block;
     margin: auto;
-    padding-top: 100px;
-    padding-bottom: 50px;
+    padding-top: 10%;
+    padding-bottom: 5%;
 }
 
 h1 {
     font-family: 'Times New Roman';
     font-weight: bold;
     font-size: 4rem;
-    padding-bottom: 100px;
-    padding-top: 50px;
+    padding-bottom: 10%;
+    padding-top: 5%;
 }
 
 h2 {
-    padding-top: 200px;
-    padding-bottom: 100px;
+    padding-top: 12%;
+    padding-bottom: 6%;
     font-family: 'Times New Roman';
     font-weight: bold;
     font-size: 3rem;
 }
 
 .buttons {
-    padding-bottom: 200px !important;
-    padding: 10px !important;
+    padding-bottom: 20% !important;
+    padding:  2.5%!important;
 }
 
 td {
@@ -78,11 +78,11 @@ td {
 }
 
 tr {
-    padding: 20px;
+    padding: 7%;
 }
 
 th {
-    padding: 20px;
+    padding: 5%;
     font-size: x-large;
     font-family: 'Times New Roman';
 }

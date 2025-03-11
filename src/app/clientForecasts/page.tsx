@@ -1,9 +1,12 @@
+/* eslint-disable react/no-array-index-key */
+/* elint-disable react/no-shadow */
+
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { Container, Table, Spinner } from 'react-bootstrap';
 import Carousel from 'react-bootstrap/Carousel';
-import Chart, { plugins } from 'chart.js/auto'
+import { Chart } from 'chart.js/auto';
 import './page.css';
 
 const Forecast = () => {
@@ -64,10 +67,6 @@ const Forecast = () => {
   const [forecast, setForecast] = useState<ForecastData[]>([]);
 
   const [loading, setLoading] = useState(true);
-
-  const chartRef = useRef<HTMLCanvasElement>(null);
-
-  const chartInstance = useRef<Chart>();
 
   const [multipliers] = useState({
     revenue: 0.015,
@@ -134,7 +133,7 @@ const Forecast = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            companyId: '1', // Company ID is set to 1
+            companyId: '1',
             settings,
             multipliers,
           }),
@@ -200,7 +199,7 @@ const Forecast = () => {
             },
             legend: {
               display: true,
-              position: "bottom" as "bottom",
+              position: 'bottom' as 'bottom',
               labels: {
                 color: 'white',
                 font: { size: 18 },
@@ -247,7 +246,7 @@ const Forecast = () => {
       {
         type: 'bar' as const,
         data: {
-          labels: forecast.map((item) => item.year), 
+          labels: forecast.map((item) => item.year),
           datasets: [
             {
               label: 'Salaries and Benefits',
@@ -282,7 +281,7 @@ const Forecast = () => {
             },
             legend: {
               display: true,
-              position: "bottom" as "bottom",
+              position: 'bottom' as 'bottom',
               labels: {
                 color: 'white',
                 font: {
@@ -356,7 +355,7 @@ const Forecast = () => {
             },
             legend: {
               display: true,
-              position: "bottom" as "bottom",
+              position: 'bottom' as 'bottom',
               labels: {
                 color: 'white',
                 font: {
@@ -404,12 +403,12 @@ const Forecast = () => {
       },
     ];
 
-    chartRefs.forEach((ref, index) => {
+    chartRefs.forEach((ref, chartIndex) => {
       if (ref.current) {
-        if (chartInstances.current[index]) {
-          chartInstances.current[index]?.destroy();
+        if (chartInstances.current[chartIndex]) {
+          chartInstances.current[chartIndex]?.destroy();
         }
-        chartInstances.current[index] = new Chart(ref.current, chartConfigs[index]);
+        chartInstances.current[chartIndex] = new Chart(ref.current, chartConfigs[chartIndex]);
       }
     });
 
@@ -423,8 +422,8 @@ const Forecast = () => {
       <Container id="dashboard" fluid className="text-center">
         <h1>Financial Forecast</h1>
         <Carousel activeIndex={index} onSelect={handleSelect} className="dark-background">
-          {chartRefs.map((ref, index) => (
-            <Carousel.Item key={index}>
+          {chartRefs.map((ref, cIndex) => (
+            <Carousel.Item key={cIndex}>
               <canvas ref={ref} />
             </Carousel.Item>
           ))}
