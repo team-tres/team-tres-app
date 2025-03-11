@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test.only('Setup client session', async ({ page }) => {
+test('Setup client session', async ({ page }) => {
   await page.goto('http://localhost:3000/');
   await page.getByRole('button', { name: 'Login' }).click();
   await page.getByRole('link', { name: 'Sign in' }).click();
@@ -28,7 +28,7 @@ test('Setup admin session', async ({ page }) => {
   await page.context().storageState({ path: 'admin-auth.json' });
 });
 
-test.only('Setup analyst session', async ({ page }) => {
+test('Setup analyst session', async ({ page }) => {
   await page.goto('http://localhost:3000/');
   await page.getByRole('button', { name: 'Login' }).click();
   await page.getByRole('link', { name: 'Sign in' }).click();
@@ -42,7 +42,7 @@ test.only('Setup analyst session', async ({ page }) => {
   await page.context().storageState({ path: 'analyst-auth.json' });
 });
 
-test.only('Setup auditor session', async ({ page }) => {
+test('Setup auditor session', async ({ page }) => {
   await page.goto('http://localhost:3000/');
   await page.getByRole('button', { name: 'Login' }).click();
   await page.getByRole('link', { name: 'Sign in' }).click();
