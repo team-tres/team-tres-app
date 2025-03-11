@@ -8,6 +8,10 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET || 'default_secret' }}
+      NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL || 'http://localhost:3000' }}
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -20,9 +24,7 @@ jobs:
       - name: Run ESLint
         run: npm run lint
       - name: Run Playwright tests
-        run: npx playwright test Fisc-Nav-Non-logged-In-test.spec.ts Fisc-Nav-Admin-test.spec.ts Fisc-Nav-Analyst.spec.ts Fisc-Nav-Auidtor-test.spec.ts Fisc-Nav-Client-test.spec.ts --workers 2
-        env: 
-          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET || 'default_secret' }}
+        run: npx playwright test Fisc-Nav-Non-logged-In-test.spec.ts Fisc-Nav-Admin-test.spec.ts Fisc-Nav-Analyst.spec.ts Fisc-Nav-Auidtor-test.spec.ts Fisc-Nav-Client-test.spec.ts 
     # - uses: actions/upload-artifact@v4
     # if: always()
     # with:
