@@ -20,7 +20,7 @@ jobs:
       - name: Run ESLint
         run: npm run lint
       - name: Run Playwright tests
-        run: npx playwright test Fisc-Nav-Non-logged-In-test.spec.ts Fisc-Nav-Admin-test.spec.ts Fisc-Nav-Analyst.spec.ts Fisc-Nav-Auidtor-test.spec.ts Fisc-Nav-Client-test.spec.ts --workers 3
+        run: npx playwright test Fisc-Nav-Non-logged-In-test.spec.ts Fisc-Nav-Admin-test.spec.ts Fisc-Nav-Analyst.spec.ts Fisc-Nav-Auidtor-test.spec.ts Fisc-Nav-Client-test.spec.ts --workers 2
         env: 
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET || 'default_secret' }}
     # - uses: actions/upload-artifact@v4
