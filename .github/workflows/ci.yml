@@ -8,9 +8,6 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    env:
-      NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET || 'default_secret' }}
-      DATABASE_URL: ${{ secrets.DATABASE_URL || 'default_database_url' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -24,7 +21,10 @@ jobs:
         run: npm run lint
       - name: Run Playwright tests
         run: npx playwright test Fisc-Nav-Non-logged-In-test.spec.ts Fisc-Nav-AdminV2-test.spec.ts Fisc-Nav-Analyst.spec.ts Fisc-Nav-Auidtor-test.spec.ts Fisc-Nav-Client-test.spec.ts --workers=3
-    # - uses: actions/upload-artifact@v4
+        env:
+          NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET || 'default_secret' }}
+          DATABASE_URL: ${{ 'postgresql://postgres:root@localhost:5432/Team-Tres-DB?schema=public' }}
+        # - uses: actions/upload-artifact@v4
     # if: always()
     # with:
     # name: playwright-report
