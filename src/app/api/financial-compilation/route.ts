@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     const body = await req.json();
     console.log(body);
     const { year, userId, ...financialData } = body;
-
+    financialData.year = year;
     if (!userId) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
     }
