@@ -26,7 +26,7 @@ const AdminPage = async () => {
               <Button style={{ backgroundColor: '#F5F5DC', borderColor: 'Black', color: '#000' }}>Create Scenario</Button>
             </Link>
             <Link href="/analyst/create-forecast" passHref>
-              <Button style={{ backgroundColor: '#F5F5DC', borderColor: 'Black', color: '#000' }}>Create Forecast</Button>
+              <Button style={{ backgroundColor: '#00008B', borderColor: 'Black', color: 'white' }}>Create Forecast</Button>
             </Link>
             <Link href="/analyst/create-stress-test" passHref>
               <Button style={{ backgroundColor: '#F5F5DC', borderColor: 'Black', color: '#000' }}>Create Stress Test</Button>
