@@ -21,6 +21,18 @@ const ClientDashboard = () => {
     setCurrentDate(formattedDate);
   }, []);
 
+  useEffect(() => {
+    const handlePopState = () => {
+      window.location.reload(); // Reload on back navigation
+    };
+
+    window.addEventListener('popstate', handlePopState);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState);
+    };
+  }, []);
+
   return (
     <main>
       <Container fluid id="client-dashboard">
@@ -39,7 +51,11 @@ const ClientDashboard = () => {
 
           <Col md={8} className="right-section">
             <Button className="orange-button">View Sustainability Model</Button>
-            <Button className="pink-button">View Stress Tests</Button>
+            <Button className="purple-button">
+              <Link href="/clientStressTests" passHref legacyBehavior>
+                <a href="/clientStressTests">View Stress Tests</a>
+              </Link>
+            </Button>
             <Button className="purple-button">
               <Link href="/clientForecasts" passHref legacyBehavior>
                 <a href="/clientForecasts">View Forecasts</a>
