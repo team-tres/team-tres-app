@@ -1,15 +1,14 @@
-/* eslint-disable react/no-array-index-key */
-/* elint-disable react/no-shadow */
-
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { Container, Table, Spinner } from 'react-bootstrap';
-import Carousel from 'react-bootstrap/Carousel';
 import { Chart } from 'chart.js/auto';
 import './page.css';
+import zoomPlugin from 'chartjs-plugin-zoom';
 
 const Forecast = () => {
+  const { data: session } = useSession();
   interface ForecastData {
     year: number;
     revenue: number;
@@ -124,6 +123,8 @@ const Forecast = () => {
     retainedEarnings: 'average',
   });
 
+  Chart.register(zoomPlugin);
+
   useEffect(() => {
     const fetchForecastData = async () => {
       try {
@@ -163,90 +164,32 @@ const Forecast = () => {
   const chartRefs = [useRef(null), useRef(null), useRef(null)];
   const chartInstances = useRef<Array<Chart | null>>([null, null, null]);
 
+  
+
   useEffect(() => {
-    const chartConfigs = [
-      {
-        type: 'line' as const,
-        data: {
-          labels: forecast.map((item) => item.year),
+    const data1 = {
+      labels: forecast.map((item) => item.year),
           datasets: [
             {
               label: 'Revenue',
               data: forecast.map((item) => item.revenue),
               fill: false,
-              borderColor: '#2252FE',
+              borderColor: '#B01E8C',
               tension: 0.1,
-              pointHoverBackgroundColor: '#05AFCA',
+              pointHoverBackgroundColor: '#B01E8C',
             },
             {
-              label: 'Cost of Goods Sold',
-              data: forecast.map((item) => item.costOfGoodsSold),
+              label: 'Net Sales',
+              data: forecast.map((item) => item.netSales),
               fill: false,
-              borderColor: '#FE5F55',
+              borderColor: '#FFAF00',
               tension: 0.1,
               pointHoverBackgroundColor: '#FFAF00',
             },
           ],
-        },
-        options: {
-          responsive: true,
-          plugins: {
-            title: {
-              display: true,
-              text: 'Revenue vs. Cost of Goods Sold',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: { size: 18 },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              ticks: {
-                color: 'white',
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              ticks: {
-                color: 'white',
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Revenue ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'bar' as const,
-        data: {
-          labels: forecast.map((item) => item.year),
+    }
+    const data2 = {
+      labels: forecast.map((item) => item.year),
           datasets: [
             {
               label: 'Salaries and Benefits',
@@ -269,10 +212,119 @@ const Forecast = () => {
               backgroundColor: '#2252FE',
             },
           ],
-        },
+    }
+
+    const data3 = {
+      labels: forecast.map((item) => item.year),
+          datasets: [
+            {
+              label: 'Net Income',
+              data: forecast.map((item) => item.netIncome),
+              fill: false,
+              borderColor: '#2252FE',
+              tension: 0.1,
+              pointHoverBackgroundColor: '#05AFCA',
+            },
+          ],
+    }
+
+    const chartConfigs = [
+      {
+        type: 'line' as const,
+        data: data1,
         options: {
           responsive: true,
+          interaction: {
+            mode: 'index' as const,
+            intersect: false,
+          },
           plugins: {
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true
+                },
+                mode: 'y' as const,
+              }
+            },
+            title: {
+              display: true,
+              text: 'Revenue vs. Net Sales',
+              font: { size: 25, weight: 700 },
+              color: 'white',
+            },
+            legend: {
+              display: true,
+              position: 'bottom' as 'bottom',
+              labels: {
+                color: 'white',
+                font: { size: 18 },
+              },
+            },
+            tooltip: {
+              bodyColor: 'white',
+              titleColor: 'white',
+            },
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'white',
+                font: { size: 16 },
+              },
+              title: {
+                display: true,
+                text: 'Year',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+            y: {
+              ticks: {
+                color: 'white',
+                font: { size: 16 },
+              },
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Dollars ($)',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+          },
+        },
+      },
+      {
+        type: 'bar' as const,
+        data: data2,
+        options: {
+          responsive: true,
+          interaction: {
+            mode: 'index' as const,
+            intersect: false,
+          },
+          plugins: {
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true
+                },
+                mode: 'y' as const,
+              }
+            },
             title: {
               display: true,
               text: 'Operating Expenses Over Time',
@@ -331,22 +383,25 @@ const Forecast = () => {
       },
       {
         type: 'line' as const,
-        data: {
-          labels: forecast.map((item) => item.year),
-          datasets: [
-            {
-              label: 'Net Income',
-              data: forecast.map((item) => item.netIncome),
-              fill: false,
-              borderColor: '#2252FE',
-              tension: 0.1,
-              pointHoverBackgroundColor: '#05AFCA',
-            },
-          ],
-        },
+        data: data3,
         options: {
           responsive: true,
+          interaction: {
+            mode: 'index' as const,
+            intersect: false,
+          },
           plugins: {
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true
+                },
+                mode: 'y' as const,
+              }
+            },
             title: {
               display: true,
               text: 'Net Income Over Time',
@@ -420,16 +475,8 @@ const Forecast = () => {
   return (
     <main>
       <Container id="dashboard" fluid className="text-center">
-        <h1>Financial Forecast</h1>
-        <Carousel activeIndex={index} onSelect={handleSelect} className="dark-background">
-          {chartRefs.map((ref, cIndex) => (
-            <Carousel.Item key={cIndex}>
-              <canvas ref={ref} />
-            </Carousel.Item>
-          ))}
-        </Carousel>
-        <h2 className="left">12-YEAR FORECAST</h2>
-        <Table borderless responsive>
+        <h1>12-Year Financial Forecast</h1>
+        <Table responsive>
           <thead>
             {loading && (
               <tr>
@@ -449,9 +496,7 @@ const Forecast = () => {
           <tbody className="font">
             <tr>
               <td className="bold">
-                Financial Compilation (FC)
-                <br />
-                12 Year Forecast Output
+                Financial Compilation
               </td>
               {forecast.map((data) => (
                 <td className="bold">
@@ -502,9 +547,17 @@ const Forecast = () => {
                 </td>
               ))}
             </tr>
+          </tbody>
+        </Table>
+        <div className="dark-background">
+          <canvas ref={chartRefs[0]} />
+        </div>
+        <Table responsive>
+          <thead>
             <tr>
-              <td colSpan={1} aria-label="Empty cell">&nbsp;</td>
             </tr>
+          </thead>
+          <tbody>
             <tr className="bold">
               <td className="left">Cost of goods sold:</td>
             </tr>
@@ -659,9 +712,17 @@ const Forecast = () => {
                 </td>
               ))}
             </tr>
+            </tbody>
+        </Table>
+          <div className="dark-background">
+            <canvas ref={chartRefs[1]} />
+          </div>
+        <Table responsive>
+          <thead>
             <tr>
-              <td colSpan={1} aria-label="Empty cell">&nbsp;</td>
             </tr>
+          </thead>
+          <tbody>
             <tr className="bold">
               <td className="left">Profit (loss) from operations</td>
               {forecast.map((data) => (
@@ -841,9 +902,17 @@ const Forecast = () => {
                 </td>
               ))}
             </tr>
+            </tbody>
+        </Table>
+          <div className="dark-background">
+            <canvas ref={chartRefs[2]} />
+          </div>
+        <Table responsive>
+          <thead>
             <tr>
-              <td colSpan={1} aria-label="Empty cell">&nbsp;</td>
             </tr>
+          </thead>
+          <tbody>
           </tbody>
           <thead>
             <tr>
