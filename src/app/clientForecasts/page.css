@@ -50,17 +50,17 @@ canvas {
 
 h1 {
     font-family: 'Roboto', sans-serif;
-    font-weight: bold;
+    font-weight: 700;
     font-size: 3rem;
-    padding-bottom: 5%;
-    padding-top: 5%;
+    padding-bottom: 3%;
+    padding-top: 3%;
+    color: #051C2C
 }
 
 h2 {
     padding-top: 12%;
     padding-bottom: 6%;
     font-family: 'Roboto', sans-serif;
-    font-weight: bold;
     font-size: 3rem;
 }
 
