@@ -69,7 +69,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-
 /* Usage with Postman go to localhost:3000/api/stress-test/ on postman change to post method
     Add body to the request(copy and paste this) Method checked curr database I got first 3 year
     and the output is correct for the value:
