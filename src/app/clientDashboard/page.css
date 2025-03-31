@@ -3,24 +3,23 @@
 }
 
 .left-section {
-    background-color: #76AFD4 !important;
+    background-color: #25479D !important;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 85vh;
-    padding: 20px;
+    padding: 2.5%;
     box-sizing: border-box;
 }
 
 .heading-left {
     font-family: 'Open Sans', sans-serif;
-    font-size: 3rem;
+    font-size: 3vw;
     font-weight: bold;
-    margin-bottom: 10px;
-    padding-bottom: 20px;
+    margin-bottom: 1.5%;
+    padding-bottom: 2.5%;
 }
 
 .date-text {
@@ -30,19 +29,18 @@
 
 .white-button {
     background-color: white;
-    color: #0A2D4D;
+    color: black;
     border: none;
-    font-size: 1.5rem;
-    padding: 20px 30px;
-    border-radius: 10px;
-    margin: 10px 0;
-    width: 60%;
+    font-size: 1.5vw;
+    padding: 3% 5%;
+    margin: 2% 0;
+    width: 75%;
     text-align: center;
     transition: 0.3s ease-in-out;
 }
 
 .white-button:hover {
-    background-color: #00223B;
+    background-color: black;
 }
 
 .right-section {
@@ -52,27 +50,63 @@
     align-items: center;
     justify-content: center;
     text-align: center;
-    height: 85vh;
 }
 
-.blue-button {
-    background-color: #76AFD4;
+.orange-button {
+    background-color: #F6861E;
     color: white;
-    font-size: 2rem;
-    padding: 30px 50px;
-    border-radius: 10px;
+    font-size: 2.5vw;
+    padding: 3% 5%;
     border: none;
-    margin: 50px 0;
+    margin: 6% 0;
     width: 60%;
     text-align: center;
     transition: 0.3s ease-in-out;
+    font-family: 'Times New Roman';
+    font-weight: bold;
 }
 
-.blue-button:hover {
-    background-color: #00223B;
+.pink-button {
+    background-color: #B01E8C;
+    color: white;
+    font-size: 2.5vw;
+    padding: 3% 5%;
+    border: none;
+    margin: 6% 0;
+    width: 60%;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    font-family: 'Times New Roman';
+    font-weight: bold;
 }
 
-.blue-button a {
+.purple-button {
+    background-color: #6360AA;
+    color: white;
+    font-size: 2.5vw;
+    padding: 3% 5%;
+    border: none;
+    margin: 6% 0;
+    width: 60%;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    font-family: 'Times New Roman';
+    font-weight: bold;
+}
+
+.orange-button:hover {
+    background-color: black;
+}
+
+.pink-button:hover {
+    background-color: black;
+}
+
+.purple-button:hover {
+    background-color: black;
+}
+
+.purple-button a {
     color: white !important;
     text-decoration: none !important;
     display: block; 
