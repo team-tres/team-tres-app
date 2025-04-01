@@ -853,7 +853,7 @@ const Forecast = () => {
     <main>
       <Container id="dashboard" fluid className="text-center">
         <h1>12-YEAR FINANCIAL FORECAST</h1>
-        <div className="d-flex justify-content-center py-4">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" bordered responsive hover className="financial-table rounded w-85">
             <thead>
               {loading && (
@@ -932,7 +932,7 @@ const Forecast = () => {
         <div className="dark-background">
           <canvas ref={chartRefs[0]} />
         </div>
-        <div className="d-flex justify-content-center py-4">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1017,7 +1017,7 @@ const Forecast = () => {
         <div className="dark-background">
           <canvas ref={chartRefs[3]} />
         </div>
-        <div className="d-flex justify-content-center py-4">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1141,7 +1141,7 @@ const Forecast = () => {
         <div className="dark-background">
           <canvas ref={chartRefs[1]} />
         </div>
-        <div className="d-flex justify-content-center py-4">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1304,7 +1304,7 @@ const Forecast = () => {
         <div className="dark-background">
           <canvas ref={chartRefs[2]} />
         </div>
-        <div className="d-flex justify-content-center py-4">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr className="table-primary">
@@ -1441,7 +1441,7 @@ const Forecast = () => {
         <div className="dark-background">
           <canvas ref={chartRefs[4]} />
         </div>
-        <div className="d-flex justify-content-center py-4">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
