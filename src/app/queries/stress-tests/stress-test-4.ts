@@ -1,33 +1,31 @@
+import { FinancialCompilation } from '../financial-comp/financial-calculations';
+
 interface StressData4 {
-  totalOperatingExpenses : number;
-  percentageIncrease : number;
+  percentageIncrease: number;
+  currentAssetsChange: number;
 }
 
-const CalculateStressTest4 = (data: StressData4) => {
-  const increaseInExpenses = data.totalOperatingExpenses * data.percentageIncrease;
-  const total = increaseInExpenses + data.totalOperatingExpenses;
-  return increaseInExpenses;
-  return total;
-};
+export interface StressTestResult4 extends FinancialCompilation {
+  increaseInExpenses: number;
+  newTotalOperatingExpenses: number;
+  changeInCurrentAssets: number;
+  newTotalCurrentAssets: number;
+}
 
-// example usage
-const sampleData2025: StressData4 = {
-  totalOperatingExpenses: 52589,
-  percentageIncrease: 0.025,
-};
+export const calculateStressTest4 = (
+  financialData: FinancialCompilation[],
+  params: StressData4,
+): StressTestResult4[] => financialData.map((data) => {
+  const increaseInExpenses = data.totalOperatingExpenses * (params.percentageIncrease / 100);
+  const newTotalOperatingExpenses = data.totalOperatingExpenses + increaseInExpenses;
+  const changeInCurrentAssets = params.currentAssetsChange;
+  const newTotalCurrentAssets = data.totalCurrentAssets + changeInCurrentAssets;
 
-const sampleData2026: StressData4 = {
-  totalOperatingExpenses: 52564,
-  percentageIncrease: 0.025,
-};
-
-const sampleData2027: StressData4 = {
-  totalOperatingExpenses: 52930,
-  percentageIncrease: 0.025,
-};
-
-console.log(CalculateStressTest4(sampleData2025));
-console.log(CalculateStressTest4(sampleData2026));
-console.log(CalculateStressTest4(sampleData2027));
-
-export default CalculateStressTest4;
+  return {
+    ...data,
+    increaseInExpenses,
+    newTotalOperatingExpenses,
+    changeInCurrentAssets,
+    newTotalCurrentAssets,
+  };
+});

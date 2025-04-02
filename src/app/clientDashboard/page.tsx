@@ -38,9 +38,9 @@ const ClientDashboard = () => {
           </Col>
 
           <Col md={8} className="right-section">
-            <Button className="blue-button">View Sustainability Model</Button>
-            <Button className="blue-button">View Stress Tests</Button>
-            <Button className="blue-button">
+            <Button className="orange-button">View Sustainability Model</Button>
+            <Button className="pink-button">View Stress Tests</Button>
+            <Button className="purple-button">
               <Link href="/clientForecasts" passHref legacyBehavior>
                 <a href="/clientForecasts">View Forecasts</a>
               </Link>
