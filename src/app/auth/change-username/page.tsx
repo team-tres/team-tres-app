@@ -6,17 +6,15 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
-import { changeUsername } from '@/lib/dbActions';
+import { useRouter } from 'next/navigation';
+import { PrismaClient } from '@prisma/client';
 import LoadingSpinner from '@/components/LoadingSpinner';
 
-type ChangeUsernameForm = {
-  newUsername: string;
-  confirmUsername: string;
-};
+const prisma = new PrismaClient();
 
-/** The change username page. */
 const ChangeUsername = () => {
   const { data: session, status } = useSession();
+  const router = useRouter();
   const email = session?.user?.email || '';
 
   const validationSchema = Yup.object().shape({
@@ -34,14 +32,18 @@ const ChangeUsername = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<ChangeUsernameForm>({
+  } = useForm({
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = async (data: ChangeUsernameForm) => {
-    await changeUsername({ email, ...data });
+  const onSubmit = async (data) => {
+    await prisma.user.update({
+      where: { email },
+      data: { username: data.newUsername },
+    });
     await swal('Username Changed', 'Your username has been updated', 'success', { timer: 2000 });
     reset();
+    router.push('/account-settings');
   };
 
   if (status === 'loading') {
@@ -57,7 +59,7 @@ const ChangeUsername = () => {
             <Card>
               <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit)}>
-                  <Form.Group className="form-group">
+                  <Form.Group>
                     <Form.Label>New Username</Form.Label>
                     <input
                       type="text"
@@ -67,7 +69,7 @@ const ChangeUsername = () => {
                     <div className="invalid-feedback">{errors.newUsername?.message}</div>
                   </Form.Group>
 
-                  <Form.Group className="form-group">
+                  <Form.Group>
                     <Form.Label>Confirm Username</Form.Label>
                     <input
                       type="text"
@@ -80,12 +82,14 @@ const ChangeUsername = () => {
                   <Form.Group className="form-group py-3">
                     <Row>
                       <Col>
-                        <Button type="submit" className="btn btn-primary">
-                          Change
-                        </Button>
+                        <Button type="submit" className="btn btn-primary">Change</Button>
                       </Col>
                       <Col>
-                        <Button type="button" onClick={() => reset()} className="btn btn-warning float-right">
+                        <Button
+                          type="button"
+                          onClick={() => reset()}
+                          className="btn btn-warning float-right"
+                        >
                           Reset
                         </Button>
                       </Col>
