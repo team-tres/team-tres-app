@@ -1,6 +1,6 @@
 'use client';
 
-import { Col, Container, Row, Button } from 'react-bootstrap';
+import { Col, Container, Button } from 'react-bootstrap';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
@@ -38,13 +38,13 @@ const ClientDashboard = () => {
         <Col className="right-section">
           <Button className="orange-button">View Sustainability Model</Button>
           <h3>
-            View your company's fiscal sustainability model which incorporates inputs
-            from your financial forecast and stress test scenario options. 
+            View your company&apos;s fiscal sustainability model which incorporates inputs
+            from your financial forecast and stress test scenario options.
           </h3>
           <Button className="pink-button">View Stress Tests</Button>
           <h3>
             Apply different stess test scenarios against for financial forecast to understand
-            its impact on your organization's financial health. 
+            its impact on your organization&apos;s financial health.
           </h3>
           <Button className="purple-button">
             <Link href="/clientForecasts" passHref legacyBehavior>
@@ -53,7 +53,7 @@ const ClientDashboard = () => {
           </Button>
           <h3>
             Learn more about future financial outcomes for the next 12-years based on historical data
-            obtained from your organization. 
+            obtained from your organization.
           </h3>
         </Col>
       </Container>
