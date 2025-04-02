@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -16,54 +14,88 @@ const Home = () => {
   }, []);
 
   return (
-    <Container fluid className={`main-container ${isLoaded ? 'loaded' : ''}`}>
-      <Row fluid className="min-vh-100 flex-column flex-md-column g-0">
-        <Col xs={12} className="top-section d-flex flex-column justify-content-center mb-4 mb-md-0">
-          <div className={`content-wrapper ${isLoaded ? 'fade-in' : ''}`}>
-            <h1 className="heading-left mb-3">
-              <span className="hawaiian-quote">I ka wā ma mua,</span>
-              <br />
-              <span className="hawaiian-quote">ka wā ma hope.</span>
+    <Container fluid className={`page-container ${isLoaded ? 'loaded' : ''}`}>
+      <Row className="hero-row min-vh-100 g-0">
+        <Col xs={12} className="hero-section d-flex flex-column justify-content-center mb-4 mb-md-0">
+          <div className={`hero-content ${isLoaded ? 'fade-in' : ''}`}>
+            <h1 className="hero-quote mb-3">
+              <span className="hawaiian-phrase">I ka wā ma mua, ka wā ma hope.</span>
             </h1>
-            <h2 className="heading-left mb-5 quote-translation">
-              The future is found in the past.
+            <h2 className="hero-translation text-center mb-5">
+              <span>The future is found in the past.</span>
+              <br />
+              <Image
+                src="/spirebar.png"
+                alt="Spire Bar"
+                width={70}
+                height={0}
+                className="spire-logo"
+                priority
+              />
             </h2>
-            <h3 className="heading-left quote-attribution">
-              Molokaʻi: Future of a Hawaiian Island, Sustainability Conference, July 2009
+            <h3 className="hero-attribution text-center">
+              <span>Molokaʻi: Future of a Hawaiian Island, Sustainability Conference, July 2009</span>
             </h3>
           </div>
         </Col>
-
-        {/* Right Section - White Background */}
-        <Col xs={12} className="bottom-section d-flex flex-column justify-content-center">
-          <div className={`content-wrapper ${isLoaded ? 'slide-in' : ''}`}>
-            <h3 className="heading-right text-center">
+      </Row>
+      <Row className="content-row g-0">
+        <Col xs={12} className="content-section d-flex flex-column justify-content-center">
+          <div className={`content-body ${isLoaded ? 'slide-in' : ''}`}>
+            <h3 className="welcome-heading text-center">
               E komo mai!
               <br />
               {' '}
-              Welcome to Spire&apos;s Fiscal Navigator.
+              Welcome to Spire.
             </h3>
-            <div className="text-right">
-              <p className="lead text-center">
+            <div>
+              <p className="lead content-text">
                 <span />
-                In cooperation with
+                {'  '}
+                At
                 {' '}
-                <Link href="https://www.spirehawaii.com/" className="text-right-link" target="_blank" rel="noopener noreferrer">
+                <Link
+                  href="https://www.spirehawaii.com/"
+                  className="content-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <strong>Spire</strong>
                 </Link>
-                , we utilize this fiscal navigator, or Fisc-Nav for short, to support organizations in making informed financial and strategic decisions. Fisc-Nav leverages historical financial data, incorporates relevant variables, and provides future-focused financial forecasts and trend analyses. Through this integrated approach, Spire helps organizations navigate today&apos;s evolving economic landscape, enhancing their ability to make sound management decisions.
+                , we&apos;ve developed this platform to streamline the
+                financial analysis process between our expert team and
+                the clients we serve. This tool transforms complex financial
+                data into clear, actionable intelligence, allowing our analysts
+                and auditors to provide more efficient and targeted insights for your organization.
+                <br />
+                <br />
+                {'  '}
+                By integrating historical financial information with relevant
+                market variables, we generate sophisticated forecasts and trend analyses
+                that illuminate the path forward in today&apos;s dynamic economic
+                environment. Our system presents this information in an intuitive
+                format, making complex financial concepts more digestible for
+                decision-makers while enabling our professionals to deliver deeper, more customized guidance.
+                <br />
+                <br />
+                {'  '}
+                This approach honors the Hawaiian spirit of collaboration while
+                enhancing your organization&apos;s ability to make informed strategic
+                decisions based on expert financial analysis. Through this thoughtful integration
+                of professional expertise and streamlined data presentation, we aim to
+                provide exceptional value that supports your long-term success.
               </p>
             </div>
 
-            <div className="action-container d-flex justify-content-between align-items-center mt-4">
+            <div className="footer-container d-flex justify-content-between align-items-center mt-4">
               <Link href="/about" className="about-link">
                 About us
               </Link>
 
-              <div className="partner-section d-flex align-items-center">
-                <p className="partner-text me-3 mb-0">In partnership with:</p>
+              <div className="partner-container d-flex align-items-center">
+                <p className="partner-label me-3 mb-0">In partnership with:</p>
                 <Link href="https://www.spirehawaii.com/" target="_blank" rel="noopener noreferrer">
-                  <div className="logo-wrapper">
+                  <div className="logo-container">
                     <Image
                       src="/spire.png"
                       alt="Spire Logo"

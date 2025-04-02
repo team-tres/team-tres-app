@@ -21,14 +21,16 @@ body, html {
 }
 
 /* Container styles */
-.main-container {
-  padding:0;
+.page-container {
+  padding: 0;
 }
 
-/* Top section styles (formerly left-section) */
-.top-section {
-  background: linear-gradient(135deg, var(--primary-blue), var(--primary-dark));
-  color: var(--text-light);
+/* Hero section styles */
+.hero-section {
+  background-image: url('/oceanbackground.png');
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -36,28 +38,29 @@ body, html {
   padding: 2rem;
 }
 
-.hawaiian-quote {
+.hawaiian-phrase {
   font-family: var(--quote-font);
   font-size: 2.5rem;
   font-weight: 500;
   line-height: 1.2;
-  white-space: nowrap; /* Force single line */
+  text-align: center;/* Force single line */
 }
 
-.quote-translation {
+.hero-translation {
   font-family: var(--quote-font);
   font-size: 1.2rem;
   font-weight: 400;
   line-height: 1.4;
 }
 
-.heading-left {
+.hero-quote {
   font-weight: 200;
   line-height: 1.4;
   margin: 0;
+  text-align: center;
 }
 
-.quote-attribution {
+.hero-attribution {
   font-size: 1rem;
   font-weight: 400;
   opacity: 0.8;
@@ -67,25 +70,24 @@ body, html {
   font-family: var(--heading-font);
 }
 
-.quote-attribution:before {
+.hero-attribution:before {
   content: "";
   position: absolute;
   left: 0;
   top: 0.5rem;
   width: 1rem;
   height: 2px;
-  background-color: var(--accent-orange);
 }
 
-/* Bottom section styles (formerly right-section) */
-.bottom-section {
+/* Content section styles */
+.content-section {
   background-color: var(--text-light);
   color: var(--text-dark);
   position: relative;
   padding: 2rem;
 }
 
-.heading-right {
+.welcome-heading {
   color: var(--primary-light-blue);
   font-weight: 700;
   font-size: 2.5rem;
@@ -96,7 +98,7 @@ body, html {
   white-space: nowrap; /* Force single line */
 }
 
-.heading-right:after {
+.welcome-heading:after {
   content: "";
   position: absolute;
   left: 50%;
@@ -107,9 +109,10 @@ body, html {
   background-color: var(--accent-orange);
 }
 
-.text-right {
+.content-text {
   line-height: 1.6;
   margin-bottom: 2rem;
+  font-size: 1.15rem;
 }
 
 .first-line-indent {
@@ -117,23 +120,19 @@ body, html {
   width: 2em;
 }
 
-.lead {
-  font-size: 1.15rem;
-}
-
-.text-right-link {
+.content-link {
   color: var(--primary-light-blue);
   text-decoration: none;
   position: relative;
   transition: color var(--transition-speed);
 }
 
-.text-right-link:hover, 
-.text-right-link:focus {
+.content-link:hover, 
+.content-link:focus {
   color: var(--primary-blue);
 }
 
-.text-right-link:after {
+.content-link:after {
   content: '';
   position: absolute;
   width: 100%;
@@ -146,8 +145,8 @@ body, html {
   transition: transform 0.3s ease-out;
 }
 
-.text-right-link:hover:after,
-.text-right-link:focus:after {
+.content-link:hover:after,
+.content-link:focus:after {
   transform: scaleX(1);
   transform-origin: bottom left;
 }
@@ -186,23 +185,23 @@ body, html {
   transform-origin: bottom left;
 }
 
-/* Logo section */
-.action-container {
+/* Footer section */
+.footer-container {
   margin-top: 2rem;
   width: 100%;
 }
 
-.partner-section {
+.partner-container {
   transition: all 0.3s ease;
 }
 
-.partner-text {
+.partner-label {
   font-size: 0.9rem;
   color: #666;
   font-weight: 500;
 }
 
-.logo-wrapper {
+.logo-container {
   padding: 0.75rem;
   background-color: var(--light-gray);
   border-radius: 4px;
@@ -213,7 +212,7 @@ body, html {
   justify-content: center;
 }
 
-.logo-wrapper:hover {
+.logo-container:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
@@ -225,7 +224,8 @@ body, html {
 }
 
 /* Animation classes */
-.content-wrapper {
+.hero-content,
+.content-body {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
@@ -246,71 +246,71 @@ body, html {
 
 /* Responsive adjustments */
 @media (max-width: 767.98px) {
-  .hawaiian-quote {
+  .hawaiian-phrase {
     font-size: 2rem;
     white-space: normal; /* Allow wrapping on mobile */
   }
 
-  .quote-translation {
+  .hero-translation {
     font-size: 1.3rem;
   }
 
-  .heading-right {
+  .welcome-heading {
     font-size: 2rem;
     white-space: normal; /* Allow wrapping on mobile */
   }
   
-  .action-container {
+  .footer-container {
     flex-direction: column;
     align-items: flex-start;
   }
   
-  .partner-section {
+  .partner-container {
     margin-top: 1.5rem;
     width: 100%;
   }
 }
 
 @media (min-width: 768px) and (max-width: 991.98px) {
-  .hawaiian-quote {
+  .hawaiian-phrase {
     font-size: 2.2rem;
   }
 
-  .action-container {
+  .footer-container {
     flex-wrap: wrap;
   }
   
-  .partner-section {
+  .partner-container {
     margin-top: 1rem;
   }
 }
 
 @media (min-width: 992px) {
-  .top-section, .bottom-section {
+  .hero-section, .content-section {
     padding: 2.5rem 3rem;
   }
   
-  .hawaiian-quote {
+  .hawaiian-phrase {
     font-size: 2.5rem;
   }
 }
 
 /* Dark mode adjustments */
 @media (prefers-color-scheme: dark) {
-  .bottom-section {
+  .content-section {
     background-color: #1a1a1a;
     color: #f0f0f0;
   }
   
-  .heading-right {
+  .welcome-heading {
     color: #65b0e8; /* Lighter blue for better contrast against dark background */
   }
   
-  .logo-wrapper {
+  .logo-container {
     background-color: #ffffff; /* Keep logo background white in dark mode */
   }
   
-  .partner-text {
+  .partner-label {
     color: #c0c0c0;
   }
   
@@ -322,11 +322,11 @@ body, html {
     color: #8ec5f0;
   }
   
-  .text-right-link {
+  .content-link {
     color: #65b0e8;
   }
   
-  .text-right-link:hover {
+  .content-link:hover {
     color: #8ec5f0;
   }
 }
