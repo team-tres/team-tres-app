@@ -1,5 +1,5 @@
 interface StressData2 {
-  netSales : number;
+  netSales : number; // this is revenue from the database
   percentDecrease: number; // in decimal form
 }
 
