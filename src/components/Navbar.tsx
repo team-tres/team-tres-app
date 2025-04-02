@@ -1,8 +1,11 @@
+/* eslint-disable max-len */
+
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { Container, Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
+import { Nav, Navbar, NavDropdown, Image } from 'react-bootstrap';
 import { BoxArrowRight, Lock, PersonFill, PersonPlusFill } from 'react-bootstrap-icons';
 import './component.css';
 
@@ -13,18 +16,38 @@ const NavBar: React.FC = () => {
   const role = userWithRole?.randomKey;
   const pathName = usePathname();
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50); // Change state when scrolled more than 50px
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
-    <Navbar expand="sm" style={{ backgroundColor: 'white' }}>
-      <Container fluid>
-        <Navbar.Brand href="/" className="me-auto">
-          <Image src="/logo.png" alt="Logo" style={{ height: '100px', width: 'auto' }} />
-        </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            {currentUser && (
-              <>
-                {role === 'CLIENT' && (
+    <Navbar className={`custom-navbar ${scrolled ? 'scrolled' : ''}`} fixed="top">
+      <Nav.Link
+        id="welcome-page"
+        href="/"
+        active={pathName === '/'}
+        className="font-nav"
+      >
+        <Image
+          src="/spire.png"
+          alt="2x size"
+          width={scrolled ? 100 : 125} // Shrink logo when scrolled
+          height={scrolled ? 34.1 : 42.6}
+          className="img-logo"
+        />
+      </Nav.Link>
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="ms-auto">
+          {currentUser && (
+            <>
+              {role === 'CLIENT' && (
                 <Nav.Link
                   id="client-dashboard"
                   href="/clientDashboard"
@@ -33,8 +56,8 @@ const NavBar: React.FC = () => {
                 >
                   DASHBOARD
                 </Nav.Link>
-                )}
-                {role === 'AUDITOR' && (
+              )}
+              {role === 'AUDITOR' && (
                 <Nav.Link
                   id="financial-stuff-nav"
                   href="/financial"
@@ -43,8 +66,8 @@ const NavBar: React.FC = () => {
                 >
                   INPUT FINANCIALS
                 </Nav.Link>
-                )}
-                { role === 'ANALYST' && (
+              )}
+              {role === 'ANALYST' && (
                 <Nav.Link
                   id="analyst-stuff-nav"
                   href="/analyst"
@@ -53,47 +76,46 @@ const NavBar: React.FC = () => {
                 >
                   ANALYST
                 </Nav.Link>
-                )}
-                {role === 'ADMIN' && (
-                  <Nav.Link
-                    id="admin-stuff-nav"
-                    href="/admin"
-                    active={pathName === '/admin'}
-                    className="font-nav"
-                  >
-                    ADMIN
-                  </Nav.Link>
-                )}
-              </>
-            )}
-          </Nav>
-          <Nav className="ms-auto" style={{ paddingRight: '100px' }}>
-            {session ? (
-              <NavDropdown id="login-dropdown" title={currentUser} className="font-nav">
-                <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
-                  <BoxArrowRight className="me-2" />
-                  Sign Out
-                </NavDropdown.Item>
-                <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
-                  <Lock className="me-2" />
-                  Change Password
-                </NavDropdown.Item>
-              </NavDropdown>
-            ) : (
-              <NavDropdown id="login-dropdown" title="Login" className="font-nav">
-                <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin">
-                  <PersonFill className="me-2" />
-                  Sign in
-                </NavDropdown.Item>
-                <NavDropdown.Item id="login-dropdown-sign-up" href="/auth/signup">
-                  <PersonPlusFill className="me-2" />
-                  Sign up
-                </NavDropdown.Item>
-              </NavDropdown>
-            )}
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
+              )}
+              {role === 'ADMIN' && (
+                <Nav.Link
+                  id="admin-stuff-nav"
+                  href="/admin"
+                  active={pathName === '/admin'}
+                  className="font-nav"
+                >
+                  ADMIN
+                </Nav.Link>
+              )}
+            </>
+          )}
+        </Nav>
+        <Nav className="ms-auto" style={{ paddingRight: '100px' }}>
+          {session ? (
+            <NavDropdown id="login-dropdown" title={currentUser} className="font-nav">
+              <NavDropdown.Item id="login-dropdown-sign-out" href="/api/auth/signout">
+                <BoxArrowRight className="me-2" />
+                Sign Out
+              </NavDropdown.Item>
+              <NavDropdown.Item id="login-dropdown-change-password" href="/auth/change-password">
+                <Lock className="me-2" />
+                Change Password
+              </NavDropdown.Item>
+            </NavDropdown>
+          ) : (
+            <NavDropdown id="login-dropdown" title="Login" className="font-nav">
+              <NavDropdown.Item id="login-dropdown-sign-in" href="/auth/signin">
+                <PersonFill className="me-2" />
+                Sign in
+              </NavDropdown.Item>
+              <NavDropdown.Item id="login-dropdown-sign-up" href="/auth/signup">
+                <PersonPlusFill className="me-2" />
+                Sign up
+              </NavDropdown.Item>
+            </NavDropdown>
+          )}
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 };

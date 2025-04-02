@@ -40,27 +40,27 @@
 }
 
 canvas {
-    width: 60% !important;
+    width: 90% !important;
     height: auto !important;
     display: block;
     margin: auto;
-    padding-top: 10%;
+    padding-top: 5%;
     padding-bottom: 5%;
 }
 
 h1 {
-    font-family: 'Times New Roman';
-    font-weight: bold;
-    font-size: 4rem;
-    padding-bottom: 10%;
-    padding-top: 5%;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 3rem;
+    padding-bottom: 3%;
+    padding-top: 3%;
+    color: #051C2C
 }
 
 h2 {
     padding-top: 12%;
     padding-bottom: 6%;
-    font-family: 'Times New Roman';
-    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
     font-size: 3rem;
 }
 
@@ -84,5 +84,5 @@ tr {
 th {
     padding: 5%;
     font-size: x-large;
-    font-family: 'Times New Roman';
+    font-family: 'Roboto', sans-serif;
 }
