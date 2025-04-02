@@ -3,13 +3,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
-import { useRouter } from 'next/navigation';
-import { hash } from 'bcrypt';
+import { hash } from 'bcryptjs'; // changed to bcryptjs to avoid SSR issues
 import { useSession } from 'next-auth/react';
 import { prisma } from '@/lib/prisma';
 
 const ChangePassword = () => {
-  const router = useRouter();
   const { data: session } = useSession();
   const email = session?.user?.email || '';
 
@@ -33,14 +31,11 @@ const ChangePassword = () => {
   const onSubmit = async (data) => {
     const hashedPassword = await hash(data.password, 10);
     await prisma.user.update({
-      where: { email: session.data.user.email },
+      where: { email },
       data: { password: hashedPassword },
     });
     await swal('Success!', 'Your password has been updated.', 'success');
   };
-
-  const { data: session, status } = useSession();
-  const email = session?.user?.email || '';
 
   return (
     <main>
