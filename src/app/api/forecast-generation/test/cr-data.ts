@@ -4,10 +4,10 @@ const prisma = new PrismaClient();
 
 async function clearData() {
   try {
-    await prisma.financialCompilation.deleteMany();
+    // await prisma.financialCompilation.deleteMany();
     console.log('Financial data cleared successfully!');
 
-    await prisma.company.deleteMany();
+    // await prisma.company.deleteMany();
     console.log('Company data cleared successfully!');
 
     await prisma.user.deleteMany();
