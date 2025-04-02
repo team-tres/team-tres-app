@@ -29,13 +29,20 @@ const NavBar: React.FC = () => {
 
   return (
     <Navbar className={`custom-navbar ${scrolled ? 'scrolled' : ''}`} fixed="top">
-      <Image
-        src="/spire.png"
-        alt="2x size"
-        width={scrolled ? 100 : 125} // Shrink logo when scrolled
-        height={scrolled ? 34.1 : 42.6}
-        className="img-logo"
-      />
+      <Nav.Link
+        id="welcome-page"
+        href="/"
+        active={pathName === '/'}
+        className="font-nav"
+      >
+        <Image
+          src="/spire.png"
+          alt="2x size"
+          width={scrolled ? 100 : 125} // Shrink logo when scrolled
+          height={scrolled ? 34.1 : 42.6}
+          className="img-logo"
+        />
+      </Nav.Link>
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="ms-auto">
           {currentUser && (
