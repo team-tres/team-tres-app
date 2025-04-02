@@ -37,7 +37,7 @@
 
 .white-button {
     background-color: white;
-    color: black;
+    color: #051C2C;
     border: none;
     font-size: 1.5vw;
     padding: 3% 5%;
@@ -49,7 +49,7 @@
 }
 
 .white-button:hover {
-    background-color: black;
+    background-color: #051C2C;
 }
 
 .right-section {
