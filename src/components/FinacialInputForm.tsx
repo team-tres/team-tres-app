@@ -72,7 +72,7 @@ const FinancialInputForm: React.FC = () => {
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label>costOfContracting</Form.Label>
+                  <Form.Label>Cost of Contracting</Form.Label>
                   <input
                     type="number"
                     {...register('costOfContracting')}
@@ -82,7 +82,7 @@ const FinancialInputForm: React.FC = () => {
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label>overhead</Form.Label>
+                  <Form.Label>Overhead</Form.Label>
                   <input
                     type="number"
                     {...register('overhead')}
@@ -92,7 +92,7 @@ const FinancialInputForm: React.FC = () => {
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label>salariesAndBenefits</Form.Label>
+                  <Form.Label>Salaries and Benefits</Form.Label>
                   <input
                     type="number"
                     {...register('salariesAndBenefits')}
@@ -102,7 +102,7 @@ const FinancialInputForm: React.FC = () => {
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label>rentAndOverhead</Form.Label>
+                  <Form.Label>Rent and Overhead</Form.Label>
                   <input
                     type="number"
                     {...register('rentAndOverhead')}
@@ -112,7 +112,7 @@ const FinancialInputForm: React.FC = () => {
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label>depreciationAndAmortization</Form.Label>
+                  <Form.Label>Depreciation and Amortization</Form.Label>
                   <input
                     type="number"
                     {...register('depreciationAndAmortization')}
@@ -179,15 +179,6 @@ const FinancialInputForm: React.FC = () => {
                   <div className="invalid-feedback">{errors.interestExpense?.message}</div>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>gainOnDisposalOfAssets</Form.Label>
-                  <input
-                    type="number"
-                    {...register('gainOnDisposalOfAssets')}
-                    className={`form-control ${errors.gainOnDisposalOfAssets ? 'is-invalid' : ''}`}
-                  />
-                  <div className="invalid-feedback">{errors.gainOnDisposalOfAssets?.message}</div>
-                </Form.Group>
-                <Form.Group>
                   <Form.Label>Gain on Disposal of Assets</Form.Label>
                   <input
                     type="number"
@@ -207,7 +198,7 @@ const FinancialInputForm: React.FC = () => {
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label>incomeTaxes</Form.Label>
+                  <Form.Label>Income Taxes</Form.Label>
                   <input
                     type="number"
                     {...register('incomeTaxes')}
@@ -262,7 +253,7 @@ const FinancialInputForm: React.FC = () => {
                   <div className="invalid-feedback">{errors.investment?.message}</div>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>accountsPayable</Form.Label>
+                  <Form.Label>Accounts Payable</Form.Label>
                   <input
                     type="number"
                     {...register('accountsPayable')}
@@ -271,7 +262,7 @@ const FinancialInputForm: React.FC = () => {
                   <div className="invalid-feedback">{errors.accountsPayable?.message}</div>
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>taxesPayable</Form.Label>
+                  <Form.Label>Taxes Payable</Form.Label>
                   <input
                     type="number"
                     {...register('taxesPayable')}
@@ -281,7 +272,7 @@ const FinancialInputForm: React.FC = () => {
                 </Form.Group>
 
                 <Form.Group>
-                  <Form.Label>loansPayable</Form.Label>
+                  <Form.Label>Loans Payable</Form.Label>
                   <input
                     type="number"
                     {...register('loansPayable')}
