@@ -1,33 +1,24 @@
-interface ResidualEffectData {
-  principal: number; // Principal loss per year
-  annualReturnRate: number; // 0.0602 for 6.02%
-  startYr: number;
-  endYr: number;
+import { CURRENT_YEAR, MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '@config/constants';
+
+export interface ResidualEffectData {
+  expense: number;
+  eventYear: number;
 }
 
 const calculateResidualEffects3 = (data: ResidualEffectData) => {
-  const { principal, annualReturnRate, startYr, endYr } = data;
+  const { expense } = data;
   const totalInterestsLost: number[] = [];
-  let currentYr = startYr;
-  let yearCount = 1;
+  let processedYears = 0;
 
-  while (currentYr <= endYr) {
+  for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
     let totalLoss = 0;
-    // Calculate compounding interest loss from each past year
-    totalLoss += principal * (1 + annualReturnRate) ** yearCount - principal;
-    totalInterestsLost.push(Math.round(totalLoss));
-    currentYr++;
-    yearCount++;
+    if (data.eventYear <= (CURRENT_YEAR + forecastedYears)) {
+      processedYears++;
+      totalLoss += expense * (1 + ANNUAL_RETURN_RATE) ** processedYears - expense;
+    }
+    totalInterestsLost.push(totalLoss);
   }
   return totalInterestsLost;
 };
-  // Example Usage
-const exampleData: ResidualEffectData = {
-  principal: 50000, // Principal loss per year
-  annualReturnRate: 0.0602, // 6.02%
-  startYr: 2025,
-  endYr: 2036,
-};
 
-console.log(calculateResidualEffects3(exampleData));
 export default calculateResidualEffects3;

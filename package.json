@@ -9,7 +9,15 @@
     "start": "next start",
     "lint": "next lint",
     "playwright-development": "npx playwright test",
-    "playwright-ci": "next dev && npx playwright test"
+    "playwright-ci": "next dev && npx playwright test",
+    "test:fin-comp": "vitest run src/app/queries/financial-comp/**/*.test.ts",
+    "test:forecast": "vitest run src/app/queries/forecasts/**/*.test.ts",
+    "test:stress-test": "vitest run src/app/queries/stress-test/**/*.test.ts",
+    "test:stress1": "vitest run src/app/queries/stress-test/stress-test1.test.ts",
+    "test:stress2": "vitest run src/app/queries/stress-test/stress-test2.test.ts",
+    "test:stress3": "vitest run src/app/queries/stress-test/stress-test3.test.ts",
+    "test:stress4": "vitest run src/app/queries/stress-test/stress-test4.test.ts",
+    "test:stress5": "vitest run src/app/queries/stress-test/stress-test5.test.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
