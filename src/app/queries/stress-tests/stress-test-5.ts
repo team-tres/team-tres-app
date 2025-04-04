@@ -1,17 +1,6 @@
-import generateLoanBalances from './stress-test-5-utils/loan-generation';
-import calculateResidualEffects from './residual-effects';
-
-/**
- * Calculates the principal differences between baseline and stress test loan balances.
- * The principal is calculated by subtracting the stress test loan balance from the baseline loan balance.
- *
- * @param baselineBalances An array of baseline loan balances over time
- * @param stressTestBalances An array of stress test loan balances over time (decreased interest rate)
- * @returns An array of principal values (the differences between the baseline and stress test loan balances)
- */
-function calculatePrincipal(baselineBalances: number[], stressTestBalances: number[]): number[] {
-  return baselineBalances.map((balance, index) => balance - stressTestBalances[index]);
-}
+import generateLoanBalances from './stress-test-utils/loan-generation';
+import calculateResidualEffects from './stress-test-utils/residual-effects';
+import calculatePrincipal from './stress-test-utils/principal-utils';
 
 /**
  * Calculates loan balances and residual effects based on the loan parameters.
@@ -24,16 +13,13 @@ function calculatePrincipal(baselineBalances: number[], stressTestBalances: numb
  * (e.g., 6% is 0.06)
  * @param stressTestInterestRate The interest rate for the stress test scenario, represented as a decimal
  * (e.g., 1.7% is 0.017)
- * @param annualInterestRate The annual return rate used for calculating residual effects, represented as a
- * decimal (e.g., 6.02% is 0.0602)
  * @returns Object with the principal and the residual effect values
  */
 export default function performStressTest(
-  loanAmount: number,
-  loanPeriod: number,
-  baselineInterestRate: number,
-  stressTestInterestRate: number,
-  annualInterestRate: number,
+  loanAmount: number, // Needed for stress test settings
+  loanPeriod: number, // Needed for stress test settings, still needs to be implemented
+  baselineInterestRate: number, // Needed for stress test settings
+  stressTestInterestRate: number, // Needed for stress test settings
 ) {
   // Generating loan balances for baseline and stress test loans
   const baselineLoanBalances = generateLoanBalances(
@@ -53,7 +39,6 @@ export default function performStressTest(
 
   const residualEffectData = {
     principals: principal,
-    annualReturnRate: annualInterestRate,
   };
 
   const residualEffects = calculateResidualEffects(residualEffectData);

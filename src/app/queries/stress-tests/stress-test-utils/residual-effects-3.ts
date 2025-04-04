@@ -1,8 +1,8 @@
 import { CURRENT_YEAR, MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '@config/constants';
 
 export interface ResidualEffectData {
-  expense: number;
-  eventYear: number;
+  expense: number; // Needed for stress test settings
+  eventYear: number; // Needed for stress test settings
 }
 
 const calculateResidualEffects3 = (data: ResidualEffectData) => {
