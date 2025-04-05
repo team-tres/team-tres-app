@@ -16,7 +16,7 @@ import calculatePrincipal from './stress-test-utils/principal-utils';
  * @returns Object with the principal and the residual effect values
  */
 export default function performStressTest(
-  loanAmount: number, // Needed for stress test settings
+  loanAmount: number,
   loanPeriod: number, // Needed for stress test settings, still needs to be implemented
   baselineInterestRate: number, // Needed for stress test settings
   stressTestInterestRate: number, // Needed for stress test settings
