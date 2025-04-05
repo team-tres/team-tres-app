@@ -1,31 +1,30 @@
-import { FinancialCompilation } from '../financial-comp/financial-calculations';
+import { MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '@/config/constants';
+import calculateResidualEffects from './stress-test-utils/residual-effects';
 
-interface StressData4 {
-  percentageIncrease: number;
-  currentAssetsChange: number;
+interface StressData {
+  increaseInExpenses: number[];
+  expenseIncreasePercentage: number; // Needed for stress test settings
 }
 
-export interface StressTestResult4 extends FinancialCompilation {
-  increaseInExpenses: number;
-  newTotalOperatingExpenses: number;
-  changeInCurrentAssets: number;
-  newTotalCurrentAssets: number;
-}
+const calculateStressTest4 = (data: StressData) => {
+  const stressEffects: number [] = [];
 
-export const calculateStressTest4 = (
-  financialData: FinancialCompilation[],
-  params: StressData4,
-): StressTestResult4[] => financialData.map((data) => {
-  const increaseInExpenses = data.totalOperatingExpenses * (params.percentageIncrease / 100);
-  const newTotalOperatingExpenses = data.totalOperatingExpenses + increaseInExpenses;
-  const changeInCurrentAssets = params.currentAssetsChange;
-  const newTotalCurrentAssets = data.totalCurrentAssets + changeInCurrentAssets;
+  for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
+    const increaseInExpenses = data.increaseInExpenses[forecastedYears] * (data.expenseIncreasePercentage);
+    stressEffects.push(increaseInExpenses);
+  }
+
+  const residualEffectsData = {
+    principals: stressEffects,
+    annualReturnRate: ANNUAL_RETURN_RATE,
+  };
+
+  const residualEffects = calculateResidualEffects(residualEffectsData);
 
   return {
-    ...data,
-    increaseInExpenses,
-    newTotalOperatingExpenses,
-    changeInCurrentAssets,
-    newTotalCurrentAssets,
+    stressEffects,
+    residualEffects,
   };
-});
+};
+
+export default calculateStressTest4;
