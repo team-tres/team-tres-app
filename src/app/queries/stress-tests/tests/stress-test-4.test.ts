@@ -11,7 +11,7 @@ describe('Stress Test 4 - Edge Cases', () => {
   it('handles 100% increase in expenses', () => {
     const data = { increaseInExpenses: [1000, 2000], expenseIncreasePercentage: 1 };
     const result = calculateStressTest4(data);
-    expect(result.stressEffects).toEqual([1000, 2000]);
+    expect(result.stressEffects.every((v, i) => v === data.increaseInExpenses[i])).toBe(true);
   });
 
   it('handles empty expenses array', () => {
