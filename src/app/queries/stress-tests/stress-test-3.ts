@@ -3,6 +3,14 @@ import calculateResidualEffects3, { ResidualEffectData } from './stress-test-uti
 
 const CalculateStressTest3 = (data: ResidualEffectData) => {
   const stressEffects: number[] = new Array(MAX_FORECAST_SIZE).fill(0);
+
+  if (data.eventYear > (CURRENT_YEAR + MAX_FORECAST_SIZE)) {
+    return {
+      stressEffects: [],
+      residualEffects: [],
+    };
+  }
+
   stressEffects[data.eventYear - CURRENT_YEAR] = data.expense;
   const residualEffects = calculateResidualEffects3(data);
 
