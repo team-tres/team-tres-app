@@ -1,4 +1,4 @@
-import { MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '@/config/constants';
+import { MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '@config/constants';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 
 interface StressData {
