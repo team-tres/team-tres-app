@@ -7,19 +7,16 @@ export interface InvestmentDetails {
   impactedYears: number;
   reinvestmentPercentage: number;
 }
-const generateInvestmentBalances = (data: InvestmentDetails) => {
-  const newInterestRate = data.interestRate;
+const generateInvestmentBalances = ({ investmentAmount, interestRate }: InvestmentDetails) => {
   let interestEarned = 0;
   const investmentBalances: number[] = [];
-  let balance = data.investmentAmount;
-  let newBalance = balance;
+  let balance = investmentAmount;
 
   for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
-    interestEarned = calculateInterestPayment(balance, newInterestRate, 'yearly');
-    newBalance = balance + interestEarned;
+    interestEarned = calculateInterestPayment(balance, interestRate, 'yearly');
 
     balance += interestEarned;
-    investmentBalances.push(newBalance);
+    investmentBalances.push(balance);
   }
   return investmentBalances;
 };

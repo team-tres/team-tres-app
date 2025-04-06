@@ -1,11 +1,6 @@
 import { ANNUAL_RETURN_RATE } from '../../../../config/constants';
 
-interface ResidualEffectData {
-  principals: number[]; // Array of principal losses per year
-}
-
-const calculateResidualEffects = (data: ResidualEffectData) => {
-  const { principals } = data;
+const calculateResidualEffects = (principals: number[]): number[] => {
   const totalInterestsLost: number[] = [];
 
   for (let year = 1; year <= principals.length; year++) {

@@ -11,6 +11,7 @@ import { MONTHS_IN_YEAR } from '../../../../config/constants';
 export default function calculateInterestPayment(
   loanAmount: number,
   annualInterestRate: number,
+  // When no frequency is defined, it will default to monthly based calculations
   frequency: 'monthly' | 'yearly' = 'monthly',
 ): number {
   if (frequency === 'yearly') {

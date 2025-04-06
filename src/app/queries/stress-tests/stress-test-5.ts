@@ -30,11 +30,7 @@ export default function performStressTest(
   // Calculates principal difference (baseline - stress test)
   const stressEffects = calculatePrincipal(baselineLoanBalances, stressTestLoanBalances);
 
-  const residualEffectData = {
-    principals: stressEffects,
-  };
-
-  const residualEffects = calculateResidualEffects(residualEffectData);
+  const residualEffects = calculateResidualEffects(stressEffects);
 
   return {
     stressEffects,

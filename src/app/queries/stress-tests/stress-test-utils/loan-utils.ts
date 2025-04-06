@@ -28,7 +28,7 @@ export const calculateMonthlyPayment = (loanAmount: number, interestRate: number
 };
 
 /**
- * Calculates thethe monthly payment, total number of payments, and interest paid per payment of a loan.
+ * Calculates the monthly payment, total number of payments, and interest paid per payment of a loan.
  * This function uses an amortisation formula to calculate the monthly payments and interest for each payment.
  *
  * @param input The input parameters
@@ -36,8 +36,8 @@ export const calculateMonthlyPayment = (loanAmount: number, interestRate: number
  * @param input.interestRate The annual interest rate of the loan, represented as a decimal (e.g., 6% is 0.06)
  * @param input.loanPeriod The total duration of the loan in years
  * @returns An object containing the loan details:
- *  - `monthlyPayment`: The amount to bepaid monthly
- *  - `numberOfPayments`: The total number of payments to be made (Loan in Years * MONTHS_IN_YEAR)
+ *  - `monthlyPayment`: The amount to be paid monthly
+ *  - `numberOfPayments`: The total number of payments to be made (loanPeriod * MONTHS_IN_YEAR)
  *  - `interestPerPayment`: An array of monthly interest paid
  */
 export const calculateLoan = (input: LoanCalculatorInput): LoanCalculatorOutput => {

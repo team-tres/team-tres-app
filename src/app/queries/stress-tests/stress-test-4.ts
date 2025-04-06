@@ -1,4 +1,4 @@
-import { MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '../../../config/constants';
+import { MAX_FORECAST_SIZE } from '../../../config/constants';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 
 interface StressData {
@@ -27,12 +27,7 @@ const calculateStressTest4 = (data: StressData) => {
     stressEffects.push(increaseInExpenses);
   }
 
-  const residualEffectsData = {
-    principals: stressEffects,
-    annualReturnRate: ANNUAL_RETURN_RATE,
-  };
-
-  const residualEffects = calculateResidualEffects(residualEffectsData);
+  const residualEffects = calculateResidualEffects(stressEffects);
 
   return {
     stressEffects,

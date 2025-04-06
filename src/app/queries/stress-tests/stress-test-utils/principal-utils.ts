@@ -7,7 +7,13 @@
  * @returns An array of principal values (the differences between the baseline and stress test loan balances)
  */
 function calculatePrincipal(baselineBalances: number[], stressTestBalances: number[]): number[] {
-  return baselineBalances.map((balance, index) => balance - stressTestBalances[index]);
+  if (baselineBalances.length !== stressTestBalances.length) {
+    throw new Error("Mismatched array lengths in calculatePrincipal.");
+  }
+  return baselineBalances.map((balance, index) => {
+    const principal = balance - stressTestBalances[index];
+    return principal;
+  });
 }
 
 export default calculatePrincipal;
