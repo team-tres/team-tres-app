@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import calculateInterestPayment from '../stress-test-utils/ipmt-utils';
+import calculateInterestPayment from '../ipmt-utils';
 
 describe('calculateInterestPayment', () => {
   it('calculates monthly interest correctly', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import generateInvestmentBalances from '../stress-test-utils/investment-generation';
+import generateInvestmentBalances from '../investment-generation';
 
 describe('generateInvestmentBalances', () => {
   it('generates balances with 0% interest rate', () => {

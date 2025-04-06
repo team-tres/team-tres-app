@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import calculateResidualEffects3 from '../stress-test-utils/residual-effects-3';
+import calculateResidualEffects3 from '../residual-effects-3';
 
 describe('calculateResidualEffects3', () => {
   it('returns all zeros if event is after forecast', () => {

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import calculatePrincipal from '../stress-test-utils/principal-utils';
+import calculatePrincipal from '../principal-utils';
 
 describe('calculatePrincipal', () => {
   it('calculates correct difference between balances', () => {

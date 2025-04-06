@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { calculateLoan } from '../stress-test-utils/loan-utils';
+import { calculateLoan } from '../loan-utils';
 
 describe('calculateLoan', () => {
   it('calculates correct loan outputs', () => {

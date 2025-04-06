@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import generateLoanBalances from '../stress-test-utils/loan-generation';
+import generateLoanBalances from '../loan-generation';
 
 describe('generateLoanBalances', () => {
   it('generates decreasing balances for a valid loan', () => {

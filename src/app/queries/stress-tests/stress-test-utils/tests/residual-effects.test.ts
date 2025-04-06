@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import calculateResidualEffects from '../stress-test-utils/residual-effects';
+import calculateResidualEffects from '../residual-effects';
 
 describe('calculateResidualEffects', () => {
   it('calculates positive residual effects', () => {
