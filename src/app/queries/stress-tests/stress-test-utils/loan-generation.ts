@@ -1,4 +1,4 @@
-import { MONTHS_IN_YEAR } from '../../../../config/constants';
+import { MAX_FORECAST_SIZE, MONTHS_IN_YEAR } from '../../../../config/constants';
 import { calculateLoan, LoanCalculatorInput, LoanCalculatorOutput } from './loan-utils';
 import calculateInterestPayment from './ipmt-utils';
 
@@ -11,7 +11,11 @@ import calculateInterestPayment from './ipmt-utils';
  * @param loanPeriod The loan period in years
  * @returns An array of loan balances for each year, including interest accumulation and payments
  */
-export default function generateLoanBalances(loanAmount: number, interestRate: number, loanPeriod: number): number[] {
+export default function generateLoanBalances(
+  loanAmount: number,
+  interestRate: number,
+  loanPeriod: number,
+): number[] {
   const input: LoanCalculatorInput = {
     loanAmount,
     interestRate,
@@ -26,19 +30,19 @@ export default function generateLoanBalances(loanAmount: number, interestRate: n
   const loanBalances: number[] = [];
 
   // Loop through each year to calculate the subsequent balances
-  for (let year = 0; year <= input.loanPeriod; year++) {
-    const interestEarned = calculateInterestPayment(balance, input.interestRate) * MONTHS_IN_YEAR;
-
-    newBalance = balance + interestEarned;
-
-    // newBalance = presentBalance + interest - yearlyPayment
-    balance += interestEarned - yearlyPayment + loanDetails.interestPerPayment[year];
-
-    loanBalances.push(newBalance);
-
+  for (let year = 0; year <= MAX_FORECAST_SIZE; year++) {
     // Loan is paid off
-    if (balance <= 0) {
-      break;
+    if (balance <= 0) break;
+
+    if (year <= input.loanPeriod) {
+      const interestEarned = calculateInterestPayment(balance, input.interestRate) * MONTHS_IN_YEAR;
+
+      newBalance = balance + interestEarned;
+
+      // newBalance = presentBalance + interest - yearlyPayment
+      balance += interestEarned - yearlyPayment + loanDetails.interestPerPayment[year];
+
+      loanBalances.push(newBalance);
     }
   }
 
