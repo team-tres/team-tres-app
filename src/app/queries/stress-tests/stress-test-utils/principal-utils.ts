@@ -8,7 +8,7 @@
  */
 function calculatePrincipal(baselineBalances: number[], stressTestBalances: number[]): number[] {
   if (baselineBalances.length !== stressTestBalances.length) {
-    throw new Error("Mismatched array lengths in calculatePrincipal.");
+    throw new Error('Mismatched array lengths in calculatePrincipal.');
   }
   return baselineBalances.map((balance, index) => {
     const principal = balance - stressTestBalances[index];
