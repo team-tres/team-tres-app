@@ -23,7 +23,7 @@
     "test:loan-utils": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/loan-utils.test.ts",
     "test:principal-utils": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/principal-utils.test.ts",
     "test:residual-effects-3": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/residual-effects-3.test.ts",
-    "test:residual-effects": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/residual-effects.test.ts",
+    "test:residual-effects": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/residual-effects.test.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
