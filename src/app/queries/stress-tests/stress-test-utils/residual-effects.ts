@@ -1,4 +1,4 @@
-import { ANNUAL_RETURN_RATE } from '@config/constants';
+import { ANNUAL_RETURN_RATE } from '../../../../config/constants';
 
 interface ResidualEffectData {
   principals: number[]; // Array of principal losses per year

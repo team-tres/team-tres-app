@@ -1,4 +1,4 @@
-import { CURRENT_YEAR, MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '@config/constants';
+import { CURRENT_YEAR, MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '../../../../config/constants';
 
 export interface ResidualEffectData {
   expense: number; // Needed for stress test settings

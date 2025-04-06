@@ -1,4 +1,4 @@
-import { MAX_FORECAST_SIZE } from '@config/constants';
+import { MAX_FORECAST_SIZE } from '../../../../config/constants';
 import calculateInterestPayment from './ipmt-utils';
 
 export interface InvestmentDetails {

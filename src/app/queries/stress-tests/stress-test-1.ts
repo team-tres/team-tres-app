@@ -1,4 +1,4 @@
-import { ANNUAL_RETURN_RATE } from '@config/constants';
+import { ANNUAL_RETURN_RATE } from '../../../config/constants';
 import calculatePrincipal from './stress-test-utils/principal-utils';
 import generateInvestmentBalances, { InvestmentDetails } from './stress-test-utils/investment-generation';
 import calculateResidualEffects from './stress-test-utils/residual-effects';

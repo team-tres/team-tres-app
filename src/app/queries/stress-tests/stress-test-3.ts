@@ -1,4 +1,4 @@
-import { CURRENT_YEAR, MAX_FORECAST_SIZE } from '@config/constants';
+import { CURRENT_YEAR, MAX_FORECAST_SIZE } from '../../../config/constants';
 import calculateResidualEffects3, { ResidualEffectData } from './stress-test-utils/residual-effects-3';
 
 const CalculateStressTest3 = (data: ResidualEffectData) => {

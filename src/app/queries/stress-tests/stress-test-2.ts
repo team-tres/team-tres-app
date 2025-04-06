@@ -1,4 +1,4 @@
-import { MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '@config/constants';
+import { MAX_FORECAST_SIZE, ANNUAL_RETURN_RATE } from '../../../config/constants';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 
 interface StressData2 {
@@ -8,12 +8,21 @@ interface StressData2 {
 }
 
 const CalculateStressTest2 = (data: StressData2) => {
+  // Handle no stress test affect applied early
+  if (data.netSales.length === 0 || data.investmentRateDrop === 0 || data.investmentRateDrop >= 1) {
+    return {
+      stressEffects: [],
+      residualEffects: [],
+    };
+  }
+
   const stressEffects: number[] = [];
   // The effective drop in return rate per a year
   const reducedInvestmentRate = data.investmentRate * data.investmentRateDrop;
 
   for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
-    const decreaseInNetSales = data.netSales[forecastedYears] * reducedInvestmentRate;
+    const netSale = data.netSales[forecastedYears] ?? 0;
+    const decreaseInNetSales = netSale * reducedInvestmentRate;
 
     stressEffects.push(decreaseInNetSales);
   }

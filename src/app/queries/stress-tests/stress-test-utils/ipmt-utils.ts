@@ -1,4 +1,4 @@
-import { MONTHS_IN_YEAR } from '@config/constants';
+import { MONTHS_IN_YEAR } from '../../../../config/constants';
 
 /**
  * Calculates the interest payment for a given loan amount based on the annual interest rate.

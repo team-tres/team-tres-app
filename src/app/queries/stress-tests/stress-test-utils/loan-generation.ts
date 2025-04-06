@@ -1,4 +1,4 @@
-import { MONTHS_IN_YEAR } from '@config/constants';
+import { MONTHS_IN_YEAR } from '../../../../config/constants';
 import { calculateLoan, LoanCalculatorInput, LoanCalculatorOutput } from './loan-utils';
 import calculateInterestPayment from './ipmt-utils';
 
