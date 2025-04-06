@@ -6,8 +6,8 @@ export interface StressData {
   investmentAmount: number; // Needed for stress test settings
   interestRate: number; // Needed for stress test settings
   interestRateDrop: number; // Needed for stress test settings
-  impactedYears: number; // Needed for stress test settings, still needs to be implemented
-  reinvestmentPercentage: number; // Needed for stress test settings, still needs to be implemented
+  impactedYears: number; // Needed for stress test settings
+  reinvestmentPercentage: number; // Needed for stress test settings
 }
 
 const calculateStressTest1 = ({

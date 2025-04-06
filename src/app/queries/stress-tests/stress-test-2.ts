@@ -8,9 +8,9 @@ interface StressData2 {
 }
 
 const CalculateStressTest2 = ({
-  netSales,
-  investmentRate,
-  investmentRateDrop,
+  netSales, // Needed for stress test settings
+  investmentRate, // Needed for stress test settings
+  investmentRateDrop, // Needed for stress test settings
 }: StressData2) => {
   // Handle no stress test affect applied early
   if (netSales.length === 0 || investmentRateDrop === 0 || investmentRateDrop >= 1) {
