@@ -10,20 +10,26 @@ export interface StressData {
   reinvestmentPercentage: number; // Needed for stress test settings, still needs to be implemented
 }
 
-const calculateStressTest1 = (data: StressData) => {
+const calculateStressTest1 = ({
+  investmentAmount,
+  interestRate,
+  interestRateDrop,
+  impactedYears,
+  reinvestmentPercentage,
+} : StressData) => {
   const baseSettings = {
-    investmentAmount: data.investmentAmount,
-    impactedYears: data.impactedYears,
-    reinvestmentPercentage: data.reinvestmentPercentage,
+    investmentAmount,
+    impactedYears,
+    reinvestmentPercentage,
   };
 
   const baselineInvestmentDetails: InvestmentDetails = {
     ...baseSettings,
-    interestRate: data.interestRate,
+    interestRate,
   };
   const stressInvestmentDetails: InvestmentDetails = {
     ...baseSettings,
-    interestRate: data.interestRate * (1 - data.interestRateDrop),
+    interestRate: interestRate * (1 - interestRateDrop),
   };
 
   const baselineInvestmentBalances = generateInvestmentBalances(baselineInvestmentDetails);

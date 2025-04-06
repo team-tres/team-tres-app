@@ -7,9 +7,13 @@ interface StressData2 {
   investmentRateDrop: number; // Needed for stress test settings, decimal form (e.g., 6.02% is 0.0602)
 }
 
-const CalculateStressTest2 = (data: StressData2) => {
+const CalculateStressTest2 = ({
+  netSales,
+  investmentRate,
+  investmentRateDrop,
+}: StressData2) => {
   // Handle no stress test affect applied early
-  if (data.netSales.length === 0 || data.investmentRateDrop === 0 || data.investmentRateDrop >= 1) {
+  if (netSales.length === 0 || investmentRateDrop === 0 || investmentRateDrop >= 1) {
     return {
       stressEffects: [],
       residualEffects: [],
@@ -18,10 +22,10 @@ const CalculateStressTest2 = (data: StressData2) => {
 
   const stressEffects: number[] = [];
   // The effective drop in return rate per a year
-  const reducedInvestmentRate = data.investmentRate * data.investmentRateDrop;
+  const reducedInvestmentRate = investmentRate * investmentRateDrop;
 
   for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
-    const netSale = data.netSales[forecastedYears] ?? 0;
+    const netSale = netSales[forecastedYears] ?? 0;
     const decreaseInNetSales = netSale * reducedInvestmentRate;
 
     stressEffects.push(decreaseInNetSales);

@@ -2,15 +2,18 @@ import { MAX_FORECAST_SIZE } from '../../../config/constants';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 
 interface StressData {
-  increaseInExpenses: number[];
-  expenseIncreasedPercentage: number; // Needed for stress test settings
+  expensesByYear: number[];
+  increasePercentage: number; // Needed for stress test settings
 }
 
-const calculateStressTest4 = (data: StressData) => {
+const calculateStressTest4 = ({
+  expensesByYear,
+  increasePercentage,
+}: StressData) => {
   if (
-    data.increaseInExpenses.length === 0
-    || data.expenseIncreasedPercentage === 0
-    || data.increaseInExpenses.length < MAX_FORECAST_SIZE
+    expensesByYear.length === 0
+    || increasePercentage === 0
+    || expensesByYear.length < MAX_FORECAST_SIZE
   ) {
     return {
       stressEffects: [],
@@ -18,12 +21,10 @@ const calculateStressTest4 = (data: StressData) => {
     };
   }
   const stressEffects: number [] = [];
-  if (data.increaseInExpenses.length < MAX_FORECAST_SIZE) {
-    throw new Error('Insufficient data for stress test 4.');
-  }
+
   for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
-    const increaseInExpense = data.increaseInExpenses[forecastedYears] ?? 0;
-    const increaseInExpenses = increaseInExpense * (data.expenseIncreasedPercentage);
+    const increaseInExpense = expensesByYear[forecastedYears] ?? 0;
+    const increaseInExpenses = increaseInExpense * (increasePercentage);
     stressEffects.push(increaseInExpenses);
   }
 
