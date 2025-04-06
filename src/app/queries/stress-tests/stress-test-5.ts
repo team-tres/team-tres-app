@@ -4,6 +4,7 @@ import calculatePrincipal from './stress-test-utils/principal-utils';
 
 /**
  * Calculates loan balances and residual effects based on the loan parameters.
+ *
  * Compares the baseline scenario with the decreased interest rate to assess the impact with principal and
  * residual effects.
  *
@@ -22,29 +23,24 @@ export default function performStressTest(
   stressTestInterestRate: number, // Needed for stress test settings
 ) {
   // Generating loan balances for baseline and stress test loans
-  const baselineLoanBalances = generateLoanBalances(
-    loanAmount,
-    baselineInterestRate,
-    loanPeriod,
-  );
-
-  const stressTestLoanBalances = generateLoanBalances(
-    loanAmount,
-    stressTestInterestRate,
-    loanPeriod,
-  );
+  const balances = (rate: number) => generateLoanBalances(loanAmount, rate, loanPeriod);
+  const baselineLoanBalances = balances(baselineInterestRate);
+  const stressTestLoanBalances = balances(stressTestInterestRate);
 
   // Calculates principal difference (baseline - stress test)
-  const principal = calculatePrincipal(baselineLoanBalances, stressTestLoanBalances);
+  const stressEffects = calculatePrincipal(baselineLoanBalances, stressTestLoanBalances);
 
   const residualEffectData = {
-    principals: principal,
+    principals: stressEffects,
   };
 
   const residualEffects = calculateResidualEffects(residualEffectData);
 
   return {
-    principal,
+    stressEffects,
     residualEffects,
+  } as {
+    stressEffects: number[];
+    residualEffects: number[];
   };
 }

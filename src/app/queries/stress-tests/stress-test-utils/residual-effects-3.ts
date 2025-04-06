@@ -8,16 +8,19 @@ export interface ResidualEffectData {
 const calculateResidualEffects3 = (data: ResidualEffectData) => {
   const { expense } = data;
   const totalInterestsLost: number[] = [];
-  let processedYears = 0;
+  const startYear = CURRENT_YEAR;
 
-  for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
-    let totalLoss = 0;
-    if (data.eventYear <= (CURRENT_YEAR + forecastedYears)) {
-      processedYears++;
-      totalLoss += expense * (1 + ANNUAL_RETURN_RATE) ** processedYears - expense;
+  for (let forecastedYear = 0; forecastedYear < MAX_FORECAST_SIZE; forecastedYear++) {
+    if (forecastedYear < startYear) {
+      totalInterestsLost.push(0);
+    } else {
+      const processedYears = forecastedYear - startYear + 1;
+      // Calculate the compounded loss of missed returns
+      const totalLoss = expense * (1 + ANNUAL_RETURN_RATE) ** processedYears - expense;
+      totalInterestsLost.push(totalLoss);
     }
-    totalInterestsLost.push(totalLoss);
   }
+
   return totalInterestsLost;
 };
 

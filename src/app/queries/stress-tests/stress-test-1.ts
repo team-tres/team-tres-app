@@ -12,36 +12,37 @@ export interface StressData {
 }
 
 const calculateStressTest1 = (data: StressData) => {
-  const baselineInvestmentDetails: InvestmentDetails = {
+  const baseSettings = {
     investmentAmount: data.investmentAmount,
-    interestRate: data.interestRate,
     impactedYears: data.impactedYears,
     reinvestmentPercentage: data.reinvestmentPercentage,
   };
 
-  const stressInterestRate = data.interestRate * (1 - data.interestRateDrop);
-
+  const baselineInvestmentDetails: InvestmentDetails = {
+    ...baseSettings,
+    interestRate: data.interestRate,
+  };
   const stressInvestmentDetails: InvestmentDetails = {
-    investmentAmount: data.investmentAmount,
-    interestRate: stressInterestRate,
-    impactedYears: data.impactedYears,
-    reinvestmentPercentage: data.reinvestmentPercentage,
+    ...baseSettings,
+    interestRate: data.interestRate * (1 - data.interestRateDrop),
   };
 
   const baselineInvestmentBalances = generateInvestmentBalances(baselineInvestmentDetails);
   const stressInvestmentBalances = generateInvestmentBalances(stressInvestmentDetails);
-  const stressEffect = calculatePrincipal(baselineInvestmentBalances, stressInvestmentBalances);
+  const stressEffects = calculatePrincipal(baselineInvestmentBalances, stressInvestmentBalances);
 
   const residualEffectData = {
-    principals: stressEffect,
+    principals: stressEffects,
     annualReturnRate: ANNUAL_RETURN_RATE,
   };
-
-  const residualEffect = calculateResidualEffects(residualEffectData);
+  const residualEffects = calculateResidualEffects(residualEffectData);
 
   return {
-    stressEffect,
-    residualEffect,
+    stressEffects,
+    residualEffects,
+  } as {
+    stressEffects: number[];
+    residualEffects: number[];
   };
 };
 

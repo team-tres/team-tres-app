@@ -9,9 +9,11 @@ interface StressData2 {
 
 const CalculateStressTest2 = (data: StressData2) => {
   const stressEffects: number[] = [];
+  // The effective drop in return rate per a year
+  const reducedInvestmentRate = data.investmentRate * data.investmentRateDrop;
 
   for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
-    const decreaseInNetSales = data.netSales[forecastedYears] * (data.investmentRate * data.investmentRateDrop);
+    const decreaseInNetSales = data.netSales[forecastedYears] * reducedInvestmentRate;
 
     stressEffects.push(decreaseInNetSales);
   }
@@ -20,12 +22,14 @@ const CalculateStressTest2 = (data: StressData2) => {
     principals: stressEffects,
     annualReturnRate: ANNUAL_RETURN_RATE,
   };
-
   const residualEffects = calculateResidualEffects(residualEffectData);
 
   return {
     stressEffects,
     residualEffects,
+  } as {
+    stressEffects: number[];
+    residualEffects: number[];
   };
 };
 

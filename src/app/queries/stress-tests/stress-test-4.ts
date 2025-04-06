@@ -8,7 +8,9 @@ interface StressData {
 
 const calculateStressTest4 = (data: StressData) => {
   const stressEffects: number [] = [];
-
+  if (data.increaseInExpenses.length < MAX_FORECAST_SIZE) {
+    throw new Error('Insufficient data for stress test 4.');
+  }
   for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
     const increaseInExpenses = data.increaseInExpenses[forecastedYears] * (data.expenseIncreasePercentage);
     stressEffects.push(increaseInExpenses);
@@ -24,6 +26,9 @@ const calculateStressTest4 = (data: StressData) => {
   return {
     stressEffects,
     residualEffects,
+  } as {
+    stressEffects: number[];
+    residualEffects: number[];
   };
 };
 

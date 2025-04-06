@@ -9,6 +9,9 @@ const CalculateStressTest3 = (data: ResidualEffectData) => {
   return {
     stressEffects,
     residualEffects,
+  } as {
+    stressEffects: number[];
+    residualEffects: number[];
   };
 };
 
