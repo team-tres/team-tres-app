@@ -127,31 +127,18 @@ model StressTest {
     id                     Int     @id @default(autoincrement())
     company                Company @relation(fields: [companyId], references: [id])
     companyId              Int     @unique
-    //Stress test 1 req value
     investmentAmount       Int
     interestRate           Decimal
     interestRateDrop       Decimal
     impactedYears          Int
     reinvestmentPercentage Decimal
 
-    //Stress test 2 req value
     investmentRate     Decimal
     investmentRateDrop Decimal
 
-    //Stress test 3 req value
-    expensesAndYear Json
-    /**
-     * example data:
-     * expensesAndYear:[
-     * {year: 2024, expense: 3000},
-     * {year: 2027, expense: 4000}
-     * ]
-     */
-
-    //Stress test 4 req value
+    expensesAndYear    Json
     increasePercentage Decimal
 
-    //Stress test 5 req value
     loanPeriod             Int
     baselineInterestRate   Decimal
     stressTestInterestRate Decimal
