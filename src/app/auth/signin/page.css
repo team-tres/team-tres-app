@@ -11,12 +11,37 @@
 .sign-in-container {
     display: flex;
     background: #d9eaf4;
-    border-radius: 10px;
+    border-radius: 0px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     padding: 40px;
     max-width: 800px;
     width: 100%;
+
+    /* Gradient border */
+    border: 5px solid;
+    border-image: linear-gradient(135deg, #7da8d6, #f09c3d, #9b84bd) 1;
+    
+    /* Black outline around border */
+    outline: 2px solid black;
+    outline-offset: px;
+
+    /* Animation base */
+    animation: borderGlow 5s linear infinite;
 }
+
+/* Animate the gradient background inside the border */
+@keyframes borderGlow {
+    0% {
+        border-image-source: linear-gradient(135deg, #7da8d6, #f09c3d, #9b84bd);
+    }
+    50% {
+        border-image-source: linear-gradient(135deg, #f09c3d, #9b84bd, #7da8d6);
+    }
+    100% {
+        border-image-source: linear-gradient(135deg, #7da8d6, #f09c3d, #9b84bd);
+    }
+}
+
 
 /* Left Section */
 .left-section {
@@ -95,3 +120,11 @@ button:hover {
 .signup-link a:hover {
     text-decoration: underline;
 }
+
+/* Spire Logo Styling for Sign In Page */
+.spire-logo {
+    max-width: 90%;
+    height: auto;
+    object-fit: contain;
+}
+

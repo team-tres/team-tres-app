@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import './page.css';
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 const SignIn = () => {
   const { data: session } = useSession();
@@ -58,14 +59,20 @@ const SignIn = () => {
     <Container fluid className="d-flex justify-content-center align-items-center background">
       <Row className="sign-in-container">
         <Col md={5} className="left-section d-flex align-items-center justify-content-center">
-          <h1>Sign In</h1>
+          <Image
+            src="/spire.png"
+            alt="Spire Logo"
+            className="spire-logo"
+            width={300}
+            height={300}
+            priority
+          />
         </Col>
 
         <Col md={8}>
           <Card className="d-flex align-items-center">
             <Card.Body>
               <Form className="form" onSubmit={handleSubmit}>
-
                 <Form.Group as={Row} controlId="email" className="mb-3">
                   <Form.Label column sm={4}>Email</Form.Label>
                   <Col md={8}>
