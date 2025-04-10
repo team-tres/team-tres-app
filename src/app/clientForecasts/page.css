@@ -7,7 +7,7 @@
 }
 
 .underline {
-    text-decoration: underline 1px solid black;
+    text-decoration: underline 1px solid #051C2C;
 }
 
 .font {
@@ -25,17 +25,17 @@
 }
 
 .company {
-    background-color: #F6861E !important;
+    background-color: #051C2C !important;
     color: white !important;
 }
 
 .income-statement {
-    background-color: #B01E8C !important;
+    background-color: #051C2C !important;
     color: white !important;
 }
 
 .balance-sheet{
-    background-color: #6460AA !important;
+    background-color: #051C2C !important;
     color: white !important;
 }
 
@@ -49,7 +49,7 @@ canvas {
 }
 
 h1 {
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, sans-serif;;
     font-weight: 700;
     font-size: 3rem;
     padding-bottom: 3%;
@@ -60,7 +60,7 @@ h1 {
 h2 {
     padding-top: 12%;
     padding-bottom: 6%;
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, sans-serif;;
     font-size: 3rem;
 }
 
@@ -84,5 +84,9 @@ tr {
 th {
     padding: 5%;
     font-size: x-large;
-    font-family: 'Roboto', sans-serif;
+    font-family: Arial, sans-serif;;
+}
+
+.custom_dropdown {
+    width: 150%;
 }
