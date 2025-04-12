@@ -35,6 +35,7 @@
     "bcrypt": "^5.1.1",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.8",
+    "chartjs-plugin-zoom": "^2.2.0",
     "multiselect-react-dropdown": "^2.0.25",
     "next": "14.2.10",
     "next-auth": "^4.24.7",

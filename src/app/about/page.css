@@ -6,30 +6,31 @@
   }
 
   .header-font {
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 3em;
     font-weight: 900;
-    color: black;
+    color: white;
     padding-top: 10px;
     padding-bottom: 10px;
   }
 
   .sub-sec-font {
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
     font-size: 2em;
     font-weight: 900;
-    color: black;
+    color: white;
     padding-top: 10px;
     padding-bottom: 10px;
   }
 
   .text-font {
-    font-family: Open Sans;
+    font-family: 'Roboto', sans-serif;
     padding-top: 10px;
     padding-bottom: 10px;
+    color: white;
   }
 
   main.container {
-    background-color: #F8F8F8;
-    padding: 2rem; 
+    background-color: #051C2C;
+    padding: 3rem; 
   }
