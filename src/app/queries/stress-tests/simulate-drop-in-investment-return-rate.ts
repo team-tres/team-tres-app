@@ -1,5 +1,5 @@
 import calculatePrincipal from './stress-test-utils/principal-utils';
-import simulateInvestmentBalances, { InvestmentDetails } from './stress-test-utils/simulate-investment-balances';
+import simulateInvestmentBalance, { InvestmentDetails } from './stress-test-utils/simulate-investment-balance';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 import { validateValue, validateAndClampPercentage } from '../../../utils/validation-utils';
 
@@ -57,8 +57,8 @@ const simulateDropInInvestmentReturnRate = ({
     interestRate,
   };
 
-  const baselineInvestmentBalances = simulateInvestmentBalances(baselineInvestmentDetails);
-  const stressInvestmentBalances = simulateInvestmentBalances(stressInvestmentDetails);
+  const baselineInvestmentBalances = simulateInvestmentBalance(baselineInvestmentDetails);
+  const stressInvestmentBalances = simulateInvestmentBalance(stressInvestmentDetails);
   const stressEffects = calculatePrincipal(baselineInvestmentBalances, stressInvestmentBalances);
 
   const residualEffects = calculateResidualEffects(stressEffects);

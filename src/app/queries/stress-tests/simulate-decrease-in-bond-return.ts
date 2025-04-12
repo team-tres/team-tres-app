@@ -1,4 +1,4 @@
-import simulateLoanBalances from './stress-test-utils/simulate-loan-balances';
+import simulateLoanBalance from './stress-test-utils/simulate-loan-balance';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 import calculatePrincipal from './stress-test-utils/principal-utils';
 import { MAX_FORECAST_SIZE } from '../../../config/constants';
@@ -48,7 +48,7 @@ export default function simulateDecreaseInBondReturn({
     };
   }
   // Generating loan balances for baseline and stress test loans
-  const balances = (rate: number) => simulateLoanBalances(loanAmount, rate, loanPeriod);
+  const balances = (rate: number) => simulateLoanBalance(loanAmount, rate, loanPeriod);
   const baselineLoanBalances = balances(baselineInterestRate);
   const stressTestLoanBalances = balances(stressTestInterestRate);
 

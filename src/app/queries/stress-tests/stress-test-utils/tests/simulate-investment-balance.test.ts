@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import simulateInvestmentBalances from '../simulate-investment-balances';
+import simulateInvestmentBalance from '../simulate-investment-balance';
 import { MAX_FORECAST_SIZE } from '../../../../../config/constants';
 
-describe('simulateInvestmentBalances', () => {
+describe('simulateInvestmentBalance', () => {
   it('generic data', () => {
-    const result = simulateInvestmentBalances({
+    const result = simulateInvestmentBalance({
       investmentAmount: 999999,
       interestRate: 0.05,
       impactedYears: 10,
@@ -16,7 +16,7 @@ describe('simulateInvestmentBalances', () => {
   });
 
   it('impacted years far beyond forecast scope', () => {
-    const result = simulateInvestmentBalances({
+    const result = simulateInvestmentBalance({
       investmentAmount: 999999,
       interestRate: 0.05,
       impactedYears: 500,
@@ -27,7 +27,7 @@ describe('simulateInvestmentBalances', () => {
 
   describe('investmentAmount', () => {
     it('non-number value, throw invalid error', () => {
-      expect(() => simulateInvestmentBalances({
+      expect(() => simulateInvestmentBalance({
         investmentAmount: 'j', // Edge case: non-number investment amount
         interestRate: 0.05,
         impactedYears: 10,
@@ -36,7 +36,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('NAN value, throw invalid error', () => {
-      expect(() => simulateInvestmentBalances({
+      expect(() => simulateInvestmentBalance({
         investmentAmount: NaN, // Edge case: NAN investment amount
         interestRate: 0.05,
         impactedYears: 10,
@@ -45,7 +45,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('0 value, return empty array', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 0, // Edge case: 0 investment amount
         interestRate: 0.05,
         impactedYears: 10,
@@ -55,7 +55,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('Negative value, throw invalid error', () => {
-      expect(() => simulateInvestmentBalances({
+      expect(() => simulateInvestmentBalance({
         investmentAmount: -999999, // Edge case: negative investment amount
         interestRate: 0.5,
         impactedYears: 10,
@@ -66,7 +66,7 @@ describe('simulateInvestmentBalances', () => {
 
   describe('impactedYears', () => {
     it('NAN value, throw invalid error', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 50000,
         interestRate: 0.05,
         impactedYears: NaN, // Edge case: NaN impacted years
@@ -76,7 +76,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('non-number value, throw invalid error', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 50000,
         interestRate: 0.05,
         impactedYears: 'waswas', // Edge case: string impacted years
@@ -86,7 +86,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('0 value, return empty array', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 50000,
         interestRate: 0.05,
         impactedYears: 0, // Edge case: 0 impacted years
@@ -96,7 +96,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('Negative value, throw invalid error', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 50000,
         interestRate: 0.05,
         impactedYears: -10, // Edge case: 0 impacted years
@@ -108,7 +108,7 @@ describe('simulateInvestmentBalances', () => {
 
   describe('investmentRate', () => {
     it('NaN value, value does not change over time', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 999999,
         interestRate: 0.05,
         impactedYears: 10,
@@ -118,7 +118,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('non-number value, value does not change over time', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 999999,
         interestRate: 0.05,
         impactedYears: 10,
@@ -128,7 +128,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('<100% value, gets clamped up to 0% effect', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 999999,
         interestRate: 0.05,
         impactedYears: 10,
@@ -138,7 +138,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('0% value, value does not change over time', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 999999,
         interestRate: 0.05,
         impactedYears: 10,
@@ -148,14 +148,14 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('>100% value, gets clamped down to 100% effect', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 999999,
         interestRate: 0.05,
         impactedYears: 10,
         reinvestmentPercentage: 1000, // Edge case: > 100% reinvestment
       });
 
-      const resultClamped = simulateInvestmentBalances({
+      const resultClamped = simulateInvestmentBalance({
         investmentAmount: 999999,
         interestRate: 0.05,
         impactedYears: 10,
@@ -167,7 +167,7 @@ describe('simulateInvestmentBalances', () => {
 
   describe('interestRate', () => {
     it('NaN value, throws an error', () => {
-      expect(() => simulateInvestmentBalances({
+      expect(() => simulateInvestmentBalance({
         investmentAmount: 10000,
         interestRate: NaN, // Edge case: NaN interest rate
         impactedYears: 10,
@@ -176,7 +176,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('non-number value, throws an error', () => {
-      expect(() => simulateInvestmentBalances({
+      expect(() => simulateInvestmentBalance({
         investmentAmount: 10000,
         interestRate: 'watwat', // Edge case: non-number interest rate
         impactedYears: 10,
@@ -185,7 +185,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('negative value, throws an error', () => {
-      expect(() => simulateInvestmentBalances({
+      expect(() => simulateInvestmentBalance({
         investmentAmount: 10000,
         interestRate: -0.05, // Edge case: negative interest rate
         impactedYears: 10,
@@ -194,7 +194,7 @@ describe('simulateInvestmentBalances', () => {
     });
 
     it('0% value, total does not increase', () => {
-      const result = simulateInvestmentBalances({
+      const result = simulateInvestmentBalance({
         investmentAmount: 10000,
         interestRate: 0, // Edge case: 0% interest rate
         impactedYears: 10,

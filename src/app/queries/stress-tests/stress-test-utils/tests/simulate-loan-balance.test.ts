@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest';
-import simulateLoanBalances from '../simulate-loan-balances';
+import simulateLoanBalance from '../simulate-loan-balance';
 import { MAX_FORECAST_SIZE } from '../../../../../config/constants';
 
-describe('simulateLoanBalances', () => {
+describe('simulateLoanBalance', () => {
   it('generic data', () => {
-    const result = simulateLoanBalances(
+    const result = simulateLoanBalance(
       5000,
       0.06,
       24,
@@ -15,7 +15,7 @@ describe('simulateLoanBalances', () => {
   });
 
   it('loan period far beyond forecast scope', () => {
-    const result = simulateLoanBalances(
+    const result = simulateLoanBalance(
       999999,
       0.05,
       500,
@@ -25,7 +25,7 @@ describe('simulateLoanBalances', () => {
 
   describe('loanAmount', () => {
     it('non-number value, throw invalid error', () => {
-      expect(() => simulateLoanBalances(
+      expect(() => simulateLoanBalance(
         'j', // Edge case: non-number loan amount
         0.05,
         10,
@@ -33,7 +33,7 @@ describe('simulateLoanBalances', () => {
     });
 
     it('NAN value, throw invalid error', () => {
-      expect(() => simulateLoanBalances(
+      expect(() => simulateLoanBalance(
         NaN, // Edge case: NAN loan amount
         0.05,
         10,
@@ -41,7 +41,7 @@ describe('simulateLoanBalances', () => {
     });
 
     it('0 value, return empty array', () => {
-      const result = simulateLoanBalances(
+      const result = simulateLoanBalance(
         0, // Edge case: 0 loan amount
         0.05,
         10,
@@ -50,7 +50,7 @@ describe('simulateLoanBalances', () => {
     });
 
     it('Negative value, throw invalid error', () => {
-      expect(() => simulateLoanBalances(
+      expect(() => simulateLoanBalance(
         -999999, // Edge case: negative loan amount
         0.5,
         10,
@@ -60,7 +60,7 @@ describe('simulateLoanBalances', () => {
 
   describe('loanPeriod', () => {
     it('NAN value, throw invalid error', () => {
-      expect(() => simulateLoanBalances(
+      expect(() => simulateLoanBalance(
         50000,
         0.05,
         NaN, // Edge case: NaN loan period
@@ -68,7 +68,7 @@ describe('simulateLoanBalances', () => {
     });
 
     it('non-number value, throw invalid error', () => {
-      expect(() => simulateLoanBalances(
+      expect(() => simulateLoanBalance(
         50000,
         0.05,
         'waswas', // Edge case: string loan period
@@ -76,7 +76,7 @@ describe('simulateLoanBalances', () => {
     });
 
     it('0 value, return empty array', () => {
-      const result = simulateLoanBalances(
+      const result = simulateLoanBalance(
         50000,
         0.05,
         0, // Edge case: 0 loan period
@@ -85,7 +85,7 @@ describe('simulateLoanBalances', () => {
     });
 
     it('Negative value, throw invalid error', () => {
-      expect(() => simulateLoanBalances(
+      expect(() => simulateLoanBalance(
         50000,
         0.05,
         -10, // Edge case: 0 loan period
@@ -95,7 +95,7 @@ describe('simulateLoanBalances', () => {
 
   describe('interestRate', () => {
     it('NaN value, throws an error', () => {
-      expect(() => simulateLoanBalances(
+      expect(() => simulateLoanBalance(
         10000,
         NaN, // Edge case: NaN interest rate
         10,
@@ -103,7 +103,7 @@ describe('simulateLoanBalances', () => {
     });
 
     it('non-number value, throws an error', () => {
-      expect(() => simulateLoanBalances(
+      expect(() => simulateLoanBalance(
         10000,
         'watwat', // Edge case: non-number interest rate
         10,
@@ -111,7 +111,7 @@ describe('simulateLoanBalances', () => {
     });
 
     it('negative value, throws an error', () => {
-      expect(() => simulateLoanBalances(
+      expect(() => simulateLoanBalance(
         10000,
         -0.05, // Edge case: negative interest rate
         10,
@@ -120,12 +120,12 @@ describe('simulateLoanBalances', () => {
     });
 
     it('0% value, total does not increase', () => {
-      const result = simulateLoanBalances(
+      const result = simulateLoanBalance(
         10000,
         0, // Edge case: 0% interest rate
         10,
       );
-      const result2 = simulateLoanBalances(
+      const result2 = simulateLoanBalance(
         10000,
         0.1, // Edge case: 0% interest rate
         10,

@@ -32,7 +32,7 @@ export interface InvestmentDetails {
  * @throws {Error} - Throws an error if any of the input values are invalid
  *
  */
-const simulateInvestmentBalances = ({
+const simulateInvestmentBalance = ({
   investmentAmount,
   interestRate,
   impactedYears,
@@ -60,4 +60,4 @@ const simulateInvestmentBalances = ({
   return investmentBalances;
 };
 
-export default simulateInvestmentBalances;
+export default simulateInvestmentBalance;

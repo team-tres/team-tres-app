@@ -1,6 +1,9 @@
 import { validateValue } from '../../../utils/validation-utils';
 import { CURRENT_YEAR, MAX_FORECAST_SIZE } from '../../../config/constants';
-import calculateResidualEffects3, { ResidualEffectData } from './stress-test-utils/one-time-event-expense-residual-effects';
+import calculateResidualEffects3,
+{
+  ResidualEffectData,
+} from './stress-test-utils/one-time-event-expense-residual-effects';
 
 /**
  * Calculates the stress test results for an expense increase from a given event year.

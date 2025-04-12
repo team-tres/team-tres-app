@@ -23,7 +23,12 @@ export interface LoanCalculatorOutput {
 export const calculateMonthlyPayment = (loanAmount: number, interestRate: number, numberOfPayments: number): number => {
   let monthlyRate = 0;
   if (interestRate !== 0) monthlyRate = interestRate / MONTHS_IN_YEAR;
-  if (monthlyRate === 0) return loanAmount / numberOfPayments;
+  if (monthlyRate === 0) {
+    if (numberOfPayments === 0) {
+      throw new Error('Invalid input: Number of payments cannot be zero.');
+    }
+    return loanAmount / numberOfPayments; // If interest rate is 0, return basic division
+  }
 
   const numerator = monthlyRate * loanAmount;
   const denominator = 1 - (1 + monthlyRate) ** -numberOfPayments; // Amortisation formula
