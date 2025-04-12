@@ -31,9 +31,10 @@ describe('calculateResidualEffects', () => {
         10204,
         12067,
         14094,
-        16298,
+        16298, // Edge case: only 11 elements
       ],
-    )).toThrow(`Invalid input: Array should contain at least ${MAX_FORECAST_SIZE} elements.`);
+    ))
+      .toThrowError(`Invalid input: Array should contain at least ${MAX_FORECAST_SIZE} elements.`);
   });
 
   it('array bigger than forecast size, returns an array the size of forecast', () => {
@@ -51,7 +52,7 @@ describe('calculateResidualEffects', () => {
         14094,
         16298,
         18691,
-        22551,
+        22551, // Edge case: extra elements
       ],
     );
     expect(result).toHaveLength(MAX_FORECAST_SIZE);
@@ -73,7 +74,8 @@ describe('calculateResidualEffects', () => {
         16298,
         18691,
       ],
-    )).toThrow('Invalid input: Array contains a non-number value.');
+    ))
+      .toThrowError('Invalid input: Array contains a non-number value.');
   });
 
   it('non-number in array, throws error', () => {
@@ -92,7 +94,8 @@ describe('calculateResidualEffects', () => {
         16298,
         18691,
       ],
-    )).toThrow('Invalid input: Array contains a non-number value.');
+    ))
+      .toThrowError('Invalid input: Array contains a non-number value.');
   });
 
   it('negative-value in  array, throws error', () => {
@@ -111,7 +114,8 @@ describe('calculateResidualEffects', () => {
         16298,
         18691,
       ],
-    )).toThrow('Invalid input: Array should only contain positive values.');
+    ))
+      .toThrowError('Invalid input: Array should only contain positive values.');
   });
 
   it('zero-values, expect an array of zeroes', () => {

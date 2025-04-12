@@ -17,21 +17,24 @@ describe('calculateResidualEffects3', () => {
       expect(() => calculateResidualEffects3({
         expense: NaN, // Edge case: NaN expense
         eventYear: 2025,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number value, throws an error', () => {
       expect(() => calculateResidualEffects3({
         expense: 'waswas', // Edge case: non-number expense
         eventYear: 2025,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative value, throws an error', () => {
       expect(() => calculateResidualEffects3({
         expense: -5000, // Edge case: negative expense
         eventYear: 2025,
-      })).toThrow('Invalid input: Value must be a positive number.');
+      }))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
 
     it('0 expense, returns all zeroes', () => {
@@ -50,14 +53,16 @@ describe('calculateResidualEffects3', () => {
       expect(() => calculateResidualEffects3({
         expense: 10000,
         eventYear: NaN, // Edge case: NaN eventYear
-      })).toThrow();
+      }))
+        .toThrowError();
     });
 
     it('non-number value, throws an error', () => {
       expect(() => calculateResidualEffects3({
         expense: 10000,
         eventYear: 'awsaws', // Edge case: non-number eventYear
-      })).toThrow();
+      }))
+        .toThrowError();
     });
 
     it('year at forecast limit, doesnt calculate till last year', () => {

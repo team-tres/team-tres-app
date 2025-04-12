@@ -29,7 +29,8 @@ describe('calculateLoan', () => {
         loanAmount: 'j', // Edge case: non-number loan amount
         interestRate: 0.05,
         loanPeriod: 10,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('NAN value, throw invalid error', () => {
@@ -37,7 +38,8 @@ describe('calculateLoan', () => {
         loanAmount: NaN, // Edge case: NAN loan amount
         interestRate: 0.05,
         loanPeriod: 10,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('0 value, return empty array', () => {
@@ -54,7 +56,8 @@ describe('calculateLoan', () => {
         loanAmount: -999999, // Edge case: negative loan amount
         interestRate: 0.5,
         loanPeriod: 10,
-      })).toThrow('Invalid input: Value must be a positive number.');
+      }))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
   });
 
@@ -64,7 +67,8 @@ describe('calculateLoan', () => {
         loanAmount: 50000,
         interestRate: 0.05,
         loanPeriod: NaN, // Edge case: NaN loan period
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number value, throw invalid error', () => {
@@ -72,7 +76,8 @@ describe('calculateLoan', () => {
         loanAmount: 50000,
         interestRate: 0.05,
         loanPeriod: 'waswas', // Edge case: string loan period
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('0 value, return empty array', () => {
@@ -89,7 +94,8 @@ describe('calculateLoan', () => {
         loanAmount: 50000,
         interestRate: 0.05,
         loanPeriod: -10, // Edge case: 0 loan period
-      })).toThrow('Invalid input: Value must be a positive number.');
+      }))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
   });
 
@@ -99,7 +105,8 @@ describe('calculateLoan', () => {
         loanAmount: 10000,
         interestRate: NaN, // Edge case: NaN interest rate
         loanPeriod: 10,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number value, throws an error', () => {
@@ -107,7 +114,8 @@ describe('calculateLoan', () => {
         loanAmount: 10000,
         interestRate: 'watwat', // Edge case: non-number interest rate
         loanPeriod: 10,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative value, throws an error', () => {
@@ -116,7 +124,8 @@ describe('calculateLoan', () => {
         interestRate: -0.05, // Edge case: negative interest rate
         loanPeriod: 10,
 
-      })).toThrow('Invalid input: Interest rate must be 0% or higher.');
+      }))
+        .toThrowError('Invalid input: Interest rate must be 0% or higher.');
     });
 
     it('0% value, total does not increase', () => {

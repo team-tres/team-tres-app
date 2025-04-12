@@ -19,22 +19,26 @@ describe('calculatePrincipal', () => {
       -8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // Negative value at the start of the first array
     ], [
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    ])).toThrow('Invalid input: Array should only contain positive values.');
+    ]))
+      .toThrowError('Invalid input: Array should only contain positive values.');
     expect(() => calculatePrincipal([
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, // Negative value at the start of the second array
     ], [
       -8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    ])).toThrow('Invalid input: Array should only contain positive values.');
+    ]))
+      .toThrowError('Invalid input: Array should only contain positive values.');
     expect(() => calculatePrincipal([
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, // Negative value at the end of the first array
     ], [
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    ])).toThrow('Invalid input: Array should only contain positive values.');
+    ]))
+      .toThrowError('Invalid input: Array should only contain positive values.');
     expect(() => calculatePrincipal([
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     ], [
       0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -8, // Negative value at the end of the second array
-    ])).toThrow('Invalid input: Array should only contain positive values.');
+    ]))
+      .toThrowError('Invalid input: Array should only contain positive values.');
   });
 
   it('alternating zero values, alternates between 8 and -8 result', () => {
@@ -54,7 +58,8 @@ describe('calculatePrincipal', () => {
         108, 208, 308, 408, 508, 608, 708, 808, 908, 1008, 1108, 1208,
       ], [
         100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, // Edge case: two more indeces
-      ])).toThrow('Invalid Input: Mismatched array lengths.');
+      ]))
+        .toThrowError('Invalid Input: Mismatched array lengths.');
     });
 
     it('handles empty arrays gracefully', () => {
@@ -70,7 +75,8 @@ describe('calculatePrincipal', () => {
         [
           100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, // Edge case: less than MAX_FORECAST_SIZE indeces
         ],
-      )).toThrow(`Invalid input: Array should contain at least ${MAX_FORECAST_SIZE} elements.`);
+      ))
+        .toThrowError(`Invalid input: Array should contain at least ${MAX_FORECAST_SIZE} elements.`);
     });
 
     it('invalid array data type, throws an error', () => {
@@ -78,7 +84,8 @@ describe('calculatePrincipal', () => {
         108, 208, 308, 408, 508, 608, 708, 808, 908, 1008, 1108, 1208,
       ], [
         100, 200, 300, 400, 500, NaN, 700, 800, 900, 1000, 1100, 1200, // Edge case: NaN value
-      ])).toThrow('Invalid input: Array contains a non-number value.');
+      ]))
+        .toThrowError('Invalid input: Array contains a non-number value.');
     });
 
     it('negative value in array, throws an error', () => {
@@ -86,7 +93,8 @@ describe('calculatePrincipal', () => {
         108, 208, 308, 408, 508, 608, 708, 808, 908, 1008, 1108, 1208,
       ], [
         100, 200, 300, 400, -500, 600, 700, 800, 900, 1000, 1100, 1200, // Edge case: negative value
-      ])).toThrow('Invalid input: Array should only contain positive values.');
+      ]))
+        .toThrowError('Invalid input: Array should only contain positive values.');
     });
   });
 });

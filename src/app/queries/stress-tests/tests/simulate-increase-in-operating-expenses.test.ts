@@ -36,7 +36,8 @@ describe('Stress Test 4 - Edge Cases', () => {
         expensesByYear: arr, // Edge case: array smaller than forecast
         increasePercentage: 0.025,
       };
-      expect(() => simulateIncreaseInOperatingExpenses(data)).toThrow('Invalid input: Array should contain at least 12 elements.');
+      expect(() => simulateIncreaseInOperatingExpenses(data))
+        .toThrowError('Invalid input: Array should contain at least 12 elements.');
     });
 
     it('NaN value in array, throws error', () => {
@@ -57,7 +58,8 @@ describe('Stress Test 4 - Edge Cases', () => {
         ],
         increasePercentage: 0.025,
       };
-      expect(() => simulateIncreaseInOperatingExpenses(data)).toThrow('Invalid input: Array contains a non-number value.');
+      expect(() => simulateIncreaseInOperatingExpenses(data))
+        .toThrowError('Invalid input: Array contains a non-number value.');
     });
 
     it('non-number value in array, throws error', () => {
@@ -78,7 +80,8 @@ describe('Stress Test 4 - Edge Cases', () => {
         ],
         increasePercentage: 0.025,
       };
-      expect(() => simulateIncreaseInOperatingExpenses(data)).toThrow('Invalid input: Array contains a non-number value.');
+      expect(() => simulateIncreaseInOperatingExpenses(data))
+        .toThrowError('Invalid input: Array contains a non-number value.');
     });
 
     it('negative value in array, throws error', () => {
@@ -99,7 +102,8 @@ describe('Stress Test 4 - Edge Cases', () => {
         ],
         increasePercentage: 0.025,
       };
-      expect(() => simulateIncreaseInOperatingExpenses(data)).toThrow('Invalid input: Array should only contain positive values.');
+      expect(() => simulateIncreaseInOperatingExpenses(data))
+        .toThrowError('Invalid input: Array should only contain positive values.');
     });
   });
 
@@ -109,7 +113,8 @@ describe('Stress Test 4 - Edge Cases', () => {
         expensesByYear: [52589, 52564, 52930, 52694, 52729, 52785, 52736, 52750, 52757, 52748, 52752, 52752],
         increasePercentage: NaN, // Edge case: NaN increase
       };
-      expect(() => simulateIncreaseInOperatingExpenses(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateIncreaseInOperatingExpenses(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number expense increase, throws error', () => {
@@ -117,7 +122,8 @@ describe('Stress Test 4 - Edge Cases', () => {
         expensesByYear: [52589, 52564, 52930, 52694, 52729, 52785, 52736, 52750, 52757, 52748, 52752, 52752],
         increasePercentage: 'twat', // Edge case: non-number increase
       };
-      expect(() => simulateIncreaseInOperatingExpenses(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateIncreaseInOperatingExpenses(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative expense increase, throws error', () => {
@@ -125,7 +131,8 @@ describe('Stress Test 4 - Edge Cases', () => {
         expensesByYear: [52589, 52564, 52930, 52694, 52729, 52785, 52736, 52750, 52757, 52748, 52752, 52752],
         increasePercentage: -1, // Edge case: negative increase
       };
-      expect(() => simulateIncreaseInOperatingExpenses(data)).toThrow('Invalid input: Value must be a positive number.');
+      expect(() => simulateIncreaseInOperatingExpenses(data))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
 
     it('0% increase in expenses, returns an array filled with zeroes', () => {

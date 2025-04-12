@@ -17,21 +17,24 @@ describe('calculateInterestPayment', () => {
       expect(() => calculateInterestPayment(
         NaN,
         0.05,
-      )).toThrow('Invalid input: Value must be a valid number.');
+      ))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number value, throws an error', () => {
       expect(() => calculateInterestPayment(
         'wat',
         0.05,
-      )).toThrow('Invalid input: Value must be a valid number.');
+      ))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative value, throws an error', () => {
       expect(() => calculateInterestPayment(
         -999999,
         0.05,
-      )).toThrow('Invalid input: Value must be a positive number.');
+      ))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
 
     it('0, return will be 0', () => {
@@ -46,7 +49,8 @@ describe('calculateInterestPayment', () => {
         1000,
         NaN,
         'yearly',
-      )).toThrow('Invalid input: Value must be a valid number.');
+      ))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number value, throws an error', () => {
@@ -54,7 +58,8 @@ describe('calculateInterestPayment', () => {
         1000,
         'wftwft',
         'yearly',
-      )).toThrow('Invalid input: Value must be a valid number.');
+      ))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative value, throws an error', () => {
@@ -62,7 +67,8 @@ describe('calculateInterestPayment', () => {
         1000,
         -0.05,
         'yearly',
-      )).toThrow('Invalid input: Interest rate must be 0% or higher.');
+      ))
+        .toThrowError('Invalid input: Interest rate must be 0% or higher.');
     });
 
     it('0% interest rate, no interest payment', () => {

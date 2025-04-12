@@ -27,7 +27,8 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInInvestmentReturnRate(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number value, throws error', () => {
@@ -38,7 +39,8 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow();
+      expect(() => simulateDropInInvestmentReturnRate(data))
+        .toThrowError();
     });
 
     it('negative value, throws error', () => {
@@ -49,7 +51,8 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow();
+      expect(() => simulateDropInInvestmentReturnRate(data))
+        .toThrowError();
     });
 
     it('0 value, has no affect on the result', () => {
@@ -74,7 +77,8 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow();
+      expect(() => simulateDropInInvestmentReturnRate(data))
+        .toThrowError();
     });
 
     it('non-number value, throws error', () => {
@@ -85,7 +89,8 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow();
+      expect(() => simulateDropInInvestmentReturnRate(data))
+        .toThrowError();
     });
 
     it('negative value, clamps up to 0% rate drop', () => {

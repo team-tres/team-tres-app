@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma';
 import { generateForecast } from '@/app/queries/forecasts/forecast';
 import { FinancialCompilation } from '@prisma/client';
 import { processForecast } from '@/app/queries/financial-comp/financial-calculations';
-import simulateDropInRevenueReturnRate from '@/app/queries/stress-tests/stress-test-2-simulate-drop-in-revenue-return-rate';
+import simulateDropInRevenueReturnRate from '@/app/queries/stress-tests/simulate-drop-in-revenue-return-rate';
 
 export async function POST(req: NextRequest) {
   try {

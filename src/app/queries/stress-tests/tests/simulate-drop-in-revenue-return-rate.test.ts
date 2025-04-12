@@ -55,7 +55,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 0.6,
       };
-      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Array contains a non-number value.');
+      expect(() => simulateDropInRevenueReturnRate(data))
+        .toThrowError('Invalid input: Array contains a non-number value.');
     });
 
     it('non-number value in array, throws error', () => {
@@ -77,7 +78,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 0.6,
       };
-      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Array contains a non-number value.');
+      expect(() => simulateDropInRevenueReturnRate(data))
+        .toThrowError('Invalid input: Array contains a non-number value.');
     });
 
     it('negative value in array, throws error', () => {
@@ -99,7 +101,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 0.6,
       };
-      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Array should only contain positive values.');
+      expect(() => simulateDropInRevenueReturnRate(data))
+        .toThrowError('Invalid input: Array should only contain positive values.');
     });
   });
 
@@ -110,7 +113,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: NaN, // Edge case: NaN rate
         investmentRateDrop: 0.6,
       };
-      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInRevenueReturnRate(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number rate, throws error', () => {
@@ -119,7 +123,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 'warswa', // Edge case: non-number rate
         investmentRateDrop: 0.6,
       };
-      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInRevenueReturnRate(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative rate, throws error', () => {
@@ -128,7 +133,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: -1, // Edge case: negative rate
         investmentRateDrop: 0.6,
       };
-      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Interest rate must be 0% or higher.');
+      expect(() => simulateDropInRevenueReturnRate(data))
+        .toThrowError('Invalid input: Interest rate must be 0% or higher.');
     });
 
     it('0% rate, returns 0 for both arrays', () => {
@@ -154,7 +160,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: NaN, // Edge case: NaN drop
       };
-      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInRevenueReturnRate(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number drop, throws error', () => {
@@ -163,7 +170,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 'wataw', // Edge case: non-number drop
       };
-      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInRevenueReturnRate(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative drop, clamps and returns', () => {

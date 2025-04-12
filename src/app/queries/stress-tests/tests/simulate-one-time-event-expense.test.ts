@@ -22,7 +22,8 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: NaN, // Edge case: NaN expenses
         eventYear: 2028,
       };
-      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateOneTimeEventExpense(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number expenses, throws error', () => {
@@ -30,7 +31,8 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 'wasra', // Edge case: non-number expenses
         eventYear: 2028,
       };
-      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateOneTimeEventExpense(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative expenses, throws error', () => {
@@ -38,7 +40,8 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: -999999, // Edge case: negative expenses
         eventYear: 2028,
       };
-      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a positive number.');
+      expect(() => simulateOneTimeEventExpense(data))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
 
     it('0 expenses, returns arrays filled with zeroes', () => {
@@ -62,7 +65,8 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 999999, // Edge case: NaN year
         eventYear: NaN,
       };
-      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateOneTimeEventExpense(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number year, throws error', () => {
@@ -70,7 +74,8 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 999999, // Edge case: non-number year
         eventYear: 'wasra',
       };
-      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateOneTimeEventExpense(data))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative year, throws error', () => {
@@ -78,7 +83,8 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 999999,
         eventYear: -8, // Edge case: negative year
       };
-      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a positive number.');
+      expect(() => simulateOneTimeEventExpense(data))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
 
     it('current year, returns valid arrays', () => {
@@ -98,7 +104,8 @@ describe('Stress Test 3 - Edge Cases', () => {
 
     it('year before forecast, throws error', () => {
       const data = { expense: 999999, eventYear: 0 };
-      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Event year is before forecast range.');
+      expect(() => simulateOneTimeEventExpense(data))
+        .toThrowError('Invalid input: Event year is before forecast range.');
     });
 
     it('year beyond forecast, returns arrays with 0', () => {

@@ -19,7 +19,8 @@ describe('Stress Test 5 - Edge Cases', () => {
       loanPeriod: 24,
       baselineInterestRate: 0.017,
       stressTestInterestRate: 0.06, // Edge case: stress test interest rate greater than baseline
-    })).toThrow('Baseline interest rate must be greater than or equal to stress test interest rate.');
+    }))
+      .toThrowError('Baseline interest rate must be greater than or equal to stress test interest rate.');
   });
 
   describe('Loan Amount', () => {
@@ -29,7 +30,8 @@ describe('Stress Test 5 - Edge Cases', () => {
         loanPeriod: 24,
         baselineInterestRate: 0.06,
         stressTestInterestRate: 0.017,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number loan amount, throws error', () => {
@@ -38,7 +40,8 @@ describe('Stress Test 5 - Edge Cases', () => {
         loanPeriod: 24,
         baselineInterestRate: 0.06,
         stressTestInterestRate: 0.017,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative loan amount, throws error', () => {
@@ -47,7 +50,8 @@ describe('Stress Test 5 - Edge Cases', () => {
         loanPeriod: 24,
         baselineInterestRate: 0.06,
         stressTestInterestRate: 0.017,
-      })).toThrow('Invalid input: Value must be a positive number.');
+      }))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
 
     it('0 loan amount, returns an array filled with zeroes', () => {
@@ -69,7 +73,8 @@ describe('Stress Test 5 - Edge Cases', () => {
         loanPeriod: NaN, // Edge case: NaN period
         baselineInterestRate: 0.06,
         stressTestInterestRate: 0.017,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number year loan period, ', () => {
@@ -78,7 +83,8 @@ describe('Stress Test 5 - Edge Cases', () => {
         loanPeriod: 'was', // Edge case: non-number period
         baselineInterestRate: 0.06,
         stressTestInterestRate: 0.017,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative year loan period, ', () => {
@@ -87,7 +93,8 @@ describe('Stress Test 5 - Edge Cases', () => {
         loanPeriod: -24, // Edge case: negative period
         baselineInterestRate: 0.06,
         stressTestInterestRate: 0.017,
-      })).toThrow('Invalid input: Value must be a positive number.');
+      }))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
 
     it('0 year loan period, ', () => {

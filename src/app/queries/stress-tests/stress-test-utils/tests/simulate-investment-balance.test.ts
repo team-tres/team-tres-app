@@ -32,7 +32,8 @@ describe('simulateInvestmentBalance', () => {
         interestRate: 0.05,
         impactedYears: 10,
         reinvestmentPercentage: 1,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('NAN value, throw invalid error', () => {
@@ -41,7 +42,8 @@ describe('simulateInvestmentBalance', () => {
         interestRate: 0.05,
         impactedYears: 10,
         reinvestmentPercentage: 1,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('0 value, return empty array', () => {
@@ -60,7 +62,8 @@ describe('simulateInvestmentBalance', () => {
         interestRate: 0.5,
         impactedYears: 10,
         reinvestmentPercentage: 1,
-      })).toThrow('Invalid input: Value must be a positive number.');
+      }))
+        .toThrowError('Invalid input: Value must be a positive number.');
     });
   });
 
@@ -172,7 +175,8 @@ describe('simulateInvestmentBalance', () => {
         interestRate: NaN, // Edge case: NaN interest rate
         impactedYears: 10,
         reinvestmentPercentage: 1,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('non-number value, throws an error', () => {
@@ -181,7 +185,8 @@ describe('simulateInvestmentBalance', () => {
         interestRate: 'watwat', // Edge case: non-number interest rate
         impactedYears: 10,
         reinvestmentPercentage: 1,
-      })).toThrow('Invalid input: Value must be a valid number.');
+      }))
+        .toThrowError('Invalid input: Value must be a valid number.');
     });
 
     it('negative value, throws an error', () => {
@@ -190,7 +195,8 @@ describe('simulateInvestmentBalance', () => {
         interestRate: -0.05, // Edge case: negative interest rate
         impactedYears: 10,
         reinvestmentPercentage: 1,
-      })).toThrow('Invalid input: Interest rate must be 0% or higher.');
+      }))
+        .toThrowError('Invalid input: Interest rate must be 0% or higher.');
     });
 
     it('0% value, total does not increase', () => {
