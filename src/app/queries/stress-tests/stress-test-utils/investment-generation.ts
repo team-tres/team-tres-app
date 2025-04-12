@@ -9,16 +9,17 @@ export interface InvestmentDetails {
   reinvestmentPercentage: number;
 }
 const generateInvestmentBalances = ({
-  investmentAmount, // Screened
-  interestRate, // Screened
-  impactedYears, // Screened
-  reinvestmentPercentage, // Screened
+  investmentAmount,
+  interestRate,
+  impactedYears,
+  reinvestmentPercentage,
 }: InvestmentDetails) => {
   if (!isValidPeriod(impactedYears)) {
     return new Array(MAX_FORECAST_SIZE).fill(0);
   }
   let interestEarned = 0;
   const investmentBalances: number[] = [];
+
   let balance = validateValue(investmentAmount, 'positive');
   const reinvestmentRate = validateAndClampPercentage(reinvestmentPercentage);
   const interestRateValue = validateValue(interestRate, 'interestRate');

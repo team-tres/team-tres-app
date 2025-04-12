@@ -1,13 +1,14 @@
 import calculatePrincipal from './stress-test-utils/principal-utils';
 import generateInvestmentBalances, { InvestmentDetails } from './stress-test-utils/investment-generation';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
+import { validateValue, validateAndClampPercentage } from '../../../utils/validation-utils';
 
 export interface StressData {
-  investmentAmount: number; // Needed for stress test settings
-  interestRate: number; // Needed for stress test settings
-  interestRateDrop: number; // Needed for stress test settings
-  impactedYears: number; // Needed for stress test settings
-  reinvestmentPercentage: number; // Needed for stress test settings
+  investmentAmount: number;
+  interestRate: number;
+  interestRateDrop: number;
+  impactedYears: number;
+  reinvestmentPercentage: number;
 }
 
 const calculateStressTest1 = ({
@@ -22,14 +23,16 @@ const calculateStressTest1 = ({
     impactedYears,
     reinvestmentPercentage,
   };
+  validateValue(interestRate, 'interestRate');
+  const clampedInterestRateDrop = validateAndClampPercentage(interestRateDrop);
 
+  const stressInvestmentDetails: InvestmentDetails = {
+    ...baseSettings,
+    interestRate: interestRate * (1 - clampedInterestRateDrop),
+  };
   const baselineInvestmentDetails: InvestmentDetails = {
     ...baseSettings,
     interestRate,
-  };
-  const stressInvestmentDetails: InvestmentDetails = {
-    ...baseSettings,
-    interestRate: interestRate * (1 - interestRateDrop),
   };
 
   const baselineInvestmentBalances = generateInvestmentBalances(baselineInvestmentDetails);
