@@ -1,4 +1,5 @@
 import { MONTHS_IN_YEAR } from '../../../../config/constants';
+import { validateValue } from '../../../../utils/validation-utils';
 
 export interface LoanCalculatorInput {
   loanAmount: number;
@@ -20,7 +21,8 @@ export interface LoanCalculatorOutput {
  * @returns The amount paid monthly
  */
 export const calculateMonthlyPayment = (loanAmount: number, interestRate: number, numberOfPayments: number): number => {
-  const monthlyRate = interestRate / MONTHS_IN_YEAR;
+  let monthlyRate = 0;
+  if (interestRate !== 0) monthlyRate = interestRate / MONTHS_IN_YEAR;
   if (monthlyRate === 0) return loanAmount / numberOfPayments;
   const numerator = monthlyRate * loanAmount;
   const denominator = 1 - (1 + monthlyRate) ** -numberOfPayments; // Amortisation formula
@@ -43,9 +45,13 @@ export const calculateMonthlyPayment = (loanAmount: number, interestRate: number
 export const calculateLoan = (input: LoanCalculatorInput): LoanCalculatorOutput => {
   const { loanAmount, interestRate, loanPeriod } = input;
 
-  const numberOfPayments = loanPeriod * MONTHS_IN_YEAR;
+  const numberOfPayments = validateValue(loanPeriod, 'positive') * MONTHS_IN_YEAR;
 
-  const monthlyPayment = calculateMonthlyPayment(loanAmount, interestRate, numberOfPayments);
+  const monthlyPayment = calculateMonthlyPayment(
+    validateValue(loanAmount, 'positive'),
+    validateValue(interestRate, 'interestRate'),
+    numberOfPayments,
+  );
 
   // Track interest paid per month
   const interestPerPayment: number[] = [];

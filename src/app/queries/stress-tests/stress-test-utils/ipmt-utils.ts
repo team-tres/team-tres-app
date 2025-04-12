@@ -1,3 +1,4 @@
+import { validateValue } from '../../../../utils/validation-utils';
 import { MONTHS_IN_YEAR } from '../../../../config/constants';
 
 /**
@@ -14,7 +15,9 @@ export default function calculateInterestPayment(
   // When no frequency is defined, it will default to monthly based calculations
   frequency: 'monthly' | 'yearly' = 'monthly',
 ): number {
-  if (frequency === 'yearly') {
+  validateValue(loanAmount, 'positive');
+  validateValue(annualInterestRate, 'interestRate');
+  if (frequency.toLowerCase() === 'yearly') {
     return loanAmount * annualInterestRate;
   }
   const monthlyInterestRate = annualInterestRate / MONTHS_IN_YEAR;

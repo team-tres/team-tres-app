@@ -1,15 +1,22 @@
-import { ANNUAL_RETURN_RATE } from '../../../../config/constants';
+import { ANNUAL_RETURN_RATE, MAX_FORECAST_SIZE } from '../../../../config/constants';
+import { isValidArray } from '../../../../utils/validation-utils';
 
 const calculateResidualEffects = (principals: number[]): number[] => {
   const totalInterestsLost: number[] = [];
+  if (principals.length === 0) {
+    return Array(MAX_FORECAST_SIZE).fill(0);
+  }
 
-  for (let year = 1; year <= principals.length; year++) {
+  isValidArray(principals, 'number');
+
+  for (let forecastedYear = 1; forecastedYear <= MAX_FORECAST_SIZE; forecastedYear++) {
     let totalLoss = 0;
 
-    for (let i = 0; i < year; i++) {
-      totalLoss += principals[i] * (1 + ANNUAL_RETURN_RATE) ** (year - i) - principals[i];
+    for (let principalCount = 0; principalCount < forecastedYear; principalCount++) {
+      totalLoss += principals[principalCount] * (1 + ANNUAL_RETURN_RATE)
+      ** (forecastedYear - principalCount) - principals[principalCount];
     }
-    totalInterestsLost.push(Math.round(totalLoss));
+    totalInterestsLost.push(totalLoss);
   }
   return totalInterestsLost;
 };
