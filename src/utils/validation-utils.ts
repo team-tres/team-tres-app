@@ -76,7 +76,7 @@ export const validateValue = (value: number, type: 'positive' | 'percentage' | '
   throw new Error('Invalid type.'); // Add a default return statement for any other type
 };
 
-// Clamp Percantages to 0-100%
+// Clamp Percantages to 0% or 100%
 export const clamp = (value: number, min: number, max: number): number => Math.min(Math.max(value, min), max);
 
 // Vaidates a percentage and clamps it to the 0-1 range if invalid

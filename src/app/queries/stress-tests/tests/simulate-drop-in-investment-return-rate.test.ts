@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import calculateStressTest1, { StressData } from '../stress-test-1';
+import simulateDropInInvestmentReturnRate, { StressData } from '../simulate-drop-in-investment-return-rate';
 import { MAX_FORECAST_SIZE } from '../../../../config/constants';
 
 describe('Stress Test 1', () => {
@@ -11,7 +11,7 @@ describe('Stress Test 1', () => {
       impactedYears: 10,
       reinvestmentPercentage: 0,
     };
-    const result = calculateStressTest1(data);
+    const result = simulateDropInInvestmentReturnRate(data);
     expect(result.stressEffects).toBeInstanceOf(Array);
     expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
     expect(result.residualEffects).toBeInstanceOf(Array);
@@ -27,7 +27,7 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => calculateStressTest1(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
     });
 
     it('non-number value, throws error', () => {
@@ -38,7 +38,7 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => calculateStressTest1(data)).toThrow();
+      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow();
     });
 
     it('negative value, throws error', () => {
@@ -49,7 +49,7 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => calculateStressTest1(data)).toThrow();
+      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow();
     });
 
     it('0 value, has no affect on the result', () => {
@@ -60,7 +60,7 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      const result = calculateStressTest1(data);
+      const result = simulateDropInInvestmentReturnRate(data);
       expect(result.stressEffects[0]).toEqual(result.stressEffects[1]);
     });
   });
@@ -74,7 +74,7 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => calculateStressTest1(data)).toThrow();
+      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow();
     });
 
     it('non-number value, throws error', () => {
@@ -85,7 +85,7 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      expect(() => calculateStressTest1(data)).toThrow();
+      expect(() => simulateDropInInvestmentReturnRate(data)).toThrow();
     });
 
     it('negative value, clamps up to 0% rate drop', () => {
@@ -103,8 +103,8 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      const result = calculateStressTest1(data);
-      const controlResult = calculateStressTest1(controlData);
+      const result = simulateDropInInvestmentReturnRate(data);
+      const controlResult = simulateDropInInvestmentReturnRate(controlData);
       expect(result).toEqual(controlResult);
     });
 
@@ -116,7 +116,7 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      const result = calculateStressTest1(data);
+      const result = simulateDropInInvestmentReturnRate(data);
       expect(result.stressEffects[0]).toEqual(result.stressEffects[1]);
     });
 
@@ -135,8 +135,8 @@ describe('Stress Test 1', () => {
         impactedYears: 10,
         reinvestmentPercentage: 0,
       };
-      const result = calculateStressTest1(data);
-      const controlResult = calculateStressTest1(controlData);
+      const result = simulateDropInInvestmentReturnRate(data);
+      const controlResult = simulateDropInInvestmentReturnRate(controlData);
       expect(result).toEqual(controlResult);
     });
   });

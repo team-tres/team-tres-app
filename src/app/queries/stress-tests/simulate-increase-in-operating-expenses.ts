@@ -24,7 +24,7 @@ interface StressData {
  *
  * @throws {Error} If the increasePercentage is less than or equal to 0 or if expensesByYear is invalid
  */
-const calculateStressTest4 = ({
+const simulateIncreaseInOperatingExpenses = ({
   expensesByYear,
   increasePercentage,
 }: StressData) => {
@@ -58,4 +58,4 @@ const calculateStressTest4 = ({
   };
 };
 
-export default calculateStressTest4;
+export default simulateIncreaseInOperatingExpenses;

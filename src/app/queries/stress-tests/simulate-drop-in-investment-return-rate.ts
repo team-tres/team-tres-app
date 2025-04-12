@@ -1,5 +1,5 @@
 import calculatePrincipal from './stress-test-utils/principal-utils';
-import generateInvestmentBalances, { InvestmentDetails } from './stress-test-utils/investment-generation';
+import simulateInvestmentBalances, { InvestmentDetails } from './stress-test-utils/simulate-investment-balances';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 import { validateValue, validateAndClampPercentage } from '../../../utils/validation-utils';
 
@@ -33,7 +33,7 @@ export interface StressData {
  *
  * @throws {Error} If any of the input values are invalid (e.g., investmentAmount, interestRate, etc.)
  */
-const calculateStressTest1 = ({
+const simulateDropInInvestmentReturnRate = ({
   investmentAmount,
   interestRate,
   interestRateDrop,
@@ -57,8 +57,8 @@ const calculateStressTest1 = ({
     interestRate,
   };
 
-  const baselineInvestmentBalances = generateInvestmentBalances(baselineInvestmentDetails);
-  const stressInvestmentBalances = generateInvestmentBalances(stressInvestmentDetails);
+  const baselineInvestmentBalances = simulateInvestmentBalances(baselineInvestmentDetails);
+  const stressInvestmentBalances = simulateInvestmentBalances(stressInvestmentDetails);
   const stressEffects = calculatePrincipal(baselineInvestmentBalances, stressInvestmentBalances);
 
   const residualEffects = calculateResidualEffects(stressEffects);
@@ -72,4 +72,4 @@ const calculateStressTest1 = ({
   };
 };
 
-export default calculateStressTest1;
+export default simulateDropInInvestmentReturnRate;

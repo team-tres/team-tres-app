@@ -1,4 +1,4 @@
-import generateLoanBalances from './stress-test-utils/loan-generation';
+import simulateLoanBalances from './stress-test-utils/simulate-loan-balances';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 import calculatePrincipal from './stress-test-utils/principal-utils';
 import { MAX_FORECAST_SIZE } from '../../../config/constants';
@@ -31,7 +31,7 @@ export interface StressData5 {
  *
  * @throws {Error} If the baseline interest rate is less than the stress test interest rate
  */
-export default function performStressTest({
+export default function simulateDecreaseInBondReturn({
   loanAmount,
   loanPeriod,
   baselineInterestRate,
@@ -48,7 +48,7 @@ export default function performStressTest({
     };
   }
   // Generating loan balances for baseline and stress test loans
-  const balances = (rate: number) => generateLoanBalances(loanAmount, rate, loanPeriod);
+  const balances = (rate: number) => simulateLoanBalances(loanAmount, rate, loanPeriod);
   const baselineLoanBalances = balances(baselineInterestRate);
   const stressTestLoanBalances = balances(stressTestInterestRate);
 

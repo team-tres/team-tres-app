@@ -27,7 +27,7 @@ interface StressData2 {
  *
  * @throws {Error} If any of the input values are invalid, such as non-numeric values (e.g., netSales)
  */
-const CalculateStressTest2 = ({
+const simulateDropInRevenueReturnRate = ({
   netSales,
   investmentRate,
   investmentRateDrop,
@@ -65,4 +65,4 @@ const CalculateStressTest2 = ({
   };
 };
 
-export default CalculateStressTest2;
+export default simulateDropInRevenueReturnRate;

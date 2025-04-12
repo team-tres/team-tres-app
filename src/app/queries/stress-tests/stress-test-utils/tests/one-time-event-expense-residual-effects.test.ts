@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import calculateResidualEffects3 from '../residual-effects-3';
+import calculateResidualEffects3 from '../one-time-event-expense-residual-effects';
 import { CURRENT_YEAR, MAX_FORECAST_SIZE } from '../../../../../config/constants';
 
 describe('calculateResidualEffects3', () => {

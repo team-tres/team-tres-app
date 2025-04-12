@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import CalculateStressTest3 from '../stress-test-3';
+import simulateOneTimeEventExpense from '../simulate-one-time-event-expense';
 import { CURRENT_YEAR, MAX_FORECAST_SIZE } from '../../../../config/constants';
 
 describe('Stress Test 3 - Edge Cases', () => {
@@ -8,7 +8,7 @@ describe('Stress Test 3 - Edge Cases', () => {
       expense: 999999,
       eventYear: 2028,
     };
-    const result = CalculateStressTest3(data);
+    const result = simulateOneTimeEventExpense(data);
     expect(result.stressEffects).toBeInstanceOf(Array);
     expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
     expect(result.residualEffects).toBeInstanceOf(Array);
@@ -22,7 +22,7 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: NaN, // Edge case: NaN expenses
         eventYear: 2028,
       };
-      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a valid number.');
     });
 
     it('non-number expenses, throws error', () => {
@@ -30,7 +30,7 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 'wasra', // Edge case: non-number expenses
         eventYear: 2028,
       };
-      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a valid number.');
     });
 
     it('negative expenses, throws error', () => {
@@ -38,7 +38,7 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: -999999, // Edge case: negative expenses
         eventYear: 2028,
       };
-      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a positive number.');
+      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a positive number.');
     });
 
     it('0 expenses, returns arrays filled with zeroes', () => {
@@ -46,7 +46,7 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 0, // Edge case: 0 expenses
         eventYear: 2028,
       };
-      const result = CalculateStressTest3(data);
+      const result = simulateOneTimeEventExpense(data);
       expect(result.stressEffects).toBeInstanceOf(Array);
       expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
       expect(result.residualEffects).toBeInstanceOf(Array);
@@ -62,7 +62,7 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 999999, // Edge case: NaN year
         eventYear: NaN,
       };
-      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a valid number.');
     });
 
     it('non-number year, throws error', () => {
@@ -70,7 +70,7 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 999999, // Edge case: non-number year
         eventYear: 'wasra',
       };
-      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a valid number.');
     });
 
     it('negative year, throws error', () => {
@@ -78,7 +78,7 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 999999,
         eventYear: -8, // Edge case: negative year
       };
-      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a positive number.');
+      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Value must be a positive number.');
     });
 
     it('current year, returns valid arrays', () => {
@@ -87,7 +87,7 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 999999,
         eventYear: currentYear, // Edge case: current year
       };
-      const result = CalculateStressTest3(data);
+      const result = simulateOneTimeEventExpense(data);
       expect(result.stressEffects).toBeInstanceOf(Array);
       expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
       expect(result.residualEffects).toBeInstanceOf(Array);
@@ -98,7 +98,7 @@ describe('Stress Test 3 - Edge Cases', () => {
 
     it('year before forecast, throws error', () => {
       const data = { expense: 999999, eventYear: 0 };
-      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Event year is before forecast range.');
+      expect(() => simulateOneTimeEventExpense(data)).toThrow('Invalid input: Event year is before forecast range.');
     });
 
     it('year beyond forecast, returns arrays with 0', () => {
@@ -106,7 +106,7 @@ describe('Stress Test 3 - Edge Cases', () => {
         expense: 999999,
         eventYear: 9999, // Edge case: beyond forecast range
       };
-      const result = CalculateStressTest3(data);
+      const result = simulateOneTimeEventExpense(data);
       expect(result.stressEffects).toBeInstanceOf(Array);
       expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
       expect(result.residualEffects).toBeInstanceOf(Array);

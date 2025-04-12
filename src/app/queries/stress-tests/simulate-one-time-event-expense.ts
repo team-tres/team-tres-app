@@ -1,6 +1,6 @@
 import { validateValue } from '../../../utils/validation-utils';
 import { CURRENT_YEAR, MAX_FORECAST_SIZE } from '../../../config/constants';
-import calculateResidualEffects3, { ResidualEffectData } from './stress-test-utils/residual-effects-3';
+import calculateResidualEffects3, { ResidualEffectData } from './stress-test-utils/one-time-event-expense-residual-effects';
 
 /**
  * Calculates the stress test results for an expense increase from a given event year.
@@ -18,7 +18,7 @@ import calculateResidualEffects3, { ResidualEffectData } from './stress-test-uti
  *
  * @throws {Error} If the `eventYear` is before the current year or outside of the forecast range
  */
-const CalculateStressTest3 = ({ expense, eventYear }: ResidualEffectData) => {
+const simulateOneTimeEventExpense = ({ expense, eventYear }: ResidualEffectData) => {
   validateValue(expense, 'positive');
   validateValue(eventYear, 'positive');
   if (eventYear > (CURRENT_YEAR + MAX_FORECAST_SIZE)) {
@@ -45,4 +45,4 @@ const CalculateStressTest3 = ({ expense, eventYear }: ResidualEffectData) => {
   };
 };
 
-export default CalculateStressTest3;
+export default simulateOneTimeEventExpense;

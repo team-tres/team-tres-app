@@ -12,7 +12,7 @@ import { validateValue } from '../../../../utils/validation-utils';
  * @param loanPeriod Loan period in years
  * @returns Array of loan balances for each year, including interest accumulation and payments
  */
-export default function generateLoanBalances(
+export default function simulateLoanBalances(
   loanAmount: number,
   interestRate: number,
   loanPeriod: number,

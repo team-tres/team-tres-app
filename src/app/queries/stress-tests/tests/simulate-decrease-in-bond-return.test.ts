@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import performStressTest from '../stress-test-5';
+import simulateDecreaseInBondReturn from '../simulate-decrease-in-bond-return';
 
 describe('Stress Test 5 - Edge Cases', () => {
   it('generic data', () => {
-    const result = performStressTest({
+    const result = simulateDecreaseInBondReturn({
       loanAmount: 5000,
       loanPeriod: 24,
       baselineInterestRate: 0.06,
@@ -14,7 +14,7 @@ describe('Stress Test 5 - Edge Cases', () => {
   });
 
   it('stress > base interest rate', () => {
-    expect(() => performStressTest({
+    expect(() => simulateDecreaseInBondReturn({
       loanAmount: 999999,
       loanPeriod: 24,
       baselineInterestRate: 0.017,
@@ -24,7 +24,7 @@ describe('Stress Test 5 - Edge Cases', () => {
 
   describe('Loan Amount', () => {
     it('NaN loan amount, throws error', () => {
-      expect(() => performStressTest({
+      expect(() => simulateDecreaseInBondReturn({
         loanAmount: NaN, // Edge case: NaN amount
         loanPeriod: 24,
         baselineInterestRate: 0.06,
@@ -33,7 +33,7 @@ describe('Stress Test 5 - Edge Cases', () => {
     });
 
     it('non-number loan amount, throws error', () => {
-      expect(() => performStressTest({
+      expect(() => simulateDecreaseInBondReturn({
         loanAmount: 'watwat', // Edge case: non-number amount
         loanPeriod: 24,
         baselineInterestRate: 0.06,
@@ -42,7 +42,7 @@ describe('Stress Test 5 - Edge Cases', () => {
     });
 
     it('negative loan amount, throws error', () => {
-      expect(() => performStressTest({
+      expect(() => simulateDecreaseInBondReturn({
         loanAmount: -999999, // Edge case: negative amount
         loanPeriod: 24,
         baselineInterestRate: 0.06,
@@ -51,7 +51,7 @@ describe('Stress Test 5 - Edge Cases', () => {
     });
 
     it('0 loan amount, returns an array filled with zeroes', () => {
-      const result = performStressTest({
+      const result = simulateDecreaseInBondReturn({
         loanAmount: 0, // Edge case: 0 amount
         loanPeriod: 24,
         baselineInterestRate: 0.06,
@@ -64,7 +64,7 @@ describe('Stress Test 5 - Edge Cases', () => {
 
   describe('Loan Period', () => {
     it('NaN year loan period, ', () => {
-      expect(() => performStressTest({
+      expect(() => simulateDecreaseInBondReturn({
         loanAmount: 999999,
         loanPeriod: NaN, // Edge case: NaN period
         baselineInterestRate: 0.06,
@@ -73,7 +73,7 @@ describe('Stress Test 5 - Edge Cases', () => {
     });
 
     it('non-number year loan period, ', () => {
-      expect(() => performStressTest({
+      expect(() => simulateDecreaseInBondReturn({
         loanAmount: 999999,
         loanPeriod: 'was', // Edge case: non-number period
         baselineInterestRate: 0.06,
@@ -82,7 +82,7 @@ describe('Stress Test 5 - Edge Cases', () => {
     });
 
     it('negative year loan period, ', () => {
-      expect(() => performStressTest({
+      expect(() => simulateDecreaseInBondReturn({
         loanAmount: 999999,
         loanPeriod: -24, // Edge case: negative period
         baselineInterestRate: 0.06,
@@ -91,7 +91,7 @@ describe('Stress Test 5 - Edge Cases', () => {
     });
 
     it('0 year loan period, ', () => {
-      const result = performStressTest({
+      const result = simulateDecreaseInBondReturn({
         loanAmount: 999999,
         loanPeriod: 0, // Edge case: 0 period
         baselineInterestRate: 0.06,

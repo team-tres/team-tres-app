@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import CalculateStressTest2 from '../stress-test-2';
+import simulateDropInRevenueReturnRate from '../simulate-drop-in-revenue-return-rate';
 import { MAX_FORECAST_SIZE } from '../../../../config/constants';
 
 describe('Stress Test 2 - Edge Cases', () => {
@@ -9,7 +9,7 @@ describe('Stress Test 2 - Edge Cases', () => {
       investmentRate: 0.0375,
       investmentRateDrop: 0.6,
     };
-    const result = CalculateStressTest2(data);
+    const result = simulateDropInRevenueReturnRate(data);
     expect(result.stressEffects).toBeInstanceOf(Array);
     expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
     expect(result.residualEffects).toBeInstanceOf(Array);
@@ -27,7 +27,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 0.6,
       };
-      const result = CalculateStressTest2(data);
+      const result = simulateDropInRevenueReturnRate(data);
       expect(result.stressEffects).toBeInstanceOf(Array);
       expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
       expect(result.residualEffects).toBeInstanceOf(Array);
@@ -55,7 +55,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 0.6,
       };
-      expect(() => CalculateStressTest2(data)).toThrow('Invalid input: Array contains a non-number value.');
+      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Array contains a non-number value.');
     });
 
     it('non-number value in array, throws error', () => {
@@ -77,7 +77,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 0.6,
       };
-      expect(() => CalculateStressTest2(data)).toThrow('Invalid input: Array contains a non-number value.');
+      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Array contains a non-number value.');
     });
 
     it('negative value in array, throws error', () => {
@@ -99,7 +99,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 0.6,
       };
-      expect(() => CalculateStressTest2(data)).toThrow('Invalid input: Array should only contain positive values.');
+      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Array should only contain positive values.');
     });
   });
 
@@ -110,7 +110,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: NaN, // Edge case: NaN rate
         investmentRateDrop: 0.6,
       };
-      expect(() => CalculateStressTest2(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
     });
 
     it('non-number rate, throws error', () => {
@@ -119,7 +119,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 'warswa', // Edge case: non-number rate
         investmentRateDrop: 0.6,
       };
-      expect(() => CalculateStressTest2(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
     });
 
     it('negative rate, throws error', () => {
@@ -128,7 +128,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: -1, // Edge case: negative rate
         investmentRateDrop: 0.6,
       };
-      expect(() => CalculateStressTest2(data)).toThrow('Invalid input: Interest rate must be 0% or higher.');
+      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Interest rate must be 0% or higher.');
     });
 
     it('0% rate, returns 0 for both arrays', () => {
@@ -137,7 +137,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0, // Edge case: 0 rate
         investmentRateDrop: 0.6,
       };
-      const result = CalculateStressTest2(data);
+      const result = simulateDropInRevenueReturnRate(data);
       expect(result.stressEffects).toBeInstanceOf(Array);
       expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
       expect(result.residualEffects).toBeInstanceOf(Array);
@@ -154,7 +154,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: NaN, // Edge case: NaN drop
       };
-      expect(() => CalculateStressTest2(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
     });
 
     it('non-number drop, throws error', () => {
@@ -163,7 +163,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 'wataw', // Edge case: non-number drop
       };
-      expect(() => CalculateStressTest2(data)).toThrow('Invalid input: Value must be a valid number.');
+      expect(() => simulateDropInRevenueReturnRate(data)).toThrow('Invalid input: Value must be a valid number.');
     });
 
     it('negative drop, clamps and returns', () => {
@@ -177,8 +177,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 0, // Control case: 0% drop
       };
-      const result = CalculateStressTest2(data);
-      const controlResult = CalculateStressTest2(controlData);
+      const result = simulateDropInRevenueReturnRate(data);
+      const controlResult = simulateDropInRevenueReturnRate(controlData);
       expect(result).toEqual(controlResult);
     });
 
@@ -188,7 +188,7 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 0, // Edge case: 0% drop
       };
-      const result = CalculateStressTest2(data);
+      const result = simulateDropInRevenueReturnRate(data);
       expect(result.stressEffects.every(v => v === 0)).toBe(true);
       expect(result.residualEffects.every(v => v === 0)).toBe(true);
     });
@@ -204,8 +204,8 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: 1, // Control case: 100% drop
       };
-      const result = CalculateStressTest2(data);
-      const controlResult = CalculateStressTest2(controlData);
+      const result = simulateDropInRevenueReturnRate(data);
+      const controlResult = simulateDropInRevenueReturnRate(controlData);
       expect(result).toEqual(controlResult);
     });
   });
