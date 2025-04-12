@@ -1,33 +1,39 @@
+import { isValidArray, validateAndClampPercentage, validateValue } from '../../../utils/validation-utils';
 import { MAX_FORECAST_SIZE } from '../../../config/constants';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 
 interface StressData2 {
   netSales : number[];
-  investmentRate: number; // Needed for stress test settings
-  investmentRateDrop: number; // Needed for stress test settings, decimal form (e.g., 6.02% is 0.0602)
+  investmentRate: number;
+  investmentRateDrop: number; // decimal form (e.g., 6.02% is 0.0602)
 }
 
 const CalculateStressTest2 = ({
-  netSales, // Needed for stress test settings
-  investmentRate, // Needed for stress test settings
-  investmentRateDrop, // Needed for stress test settings
+  netSales,
+  investmentRate,
+  investmentRateDrop,
 }: StressData2) => {
-  // Handle no stress test affect applied early
-  if (netSales.length === 0 || investmentRateDrop === 0 || investmentRateDrop >= 1) {
+  if (netSales.length === 0 || investmentRate === 0) {
     return {
-      stressEffects: [],
-      residualEffects: [],
+      stressEffects: Array(MAX_FORECAST_SIZE).fill(0),
+      residualEffects: Array(MAX_FORECAST_SIZE).fill(0),
     };
   }
 
   const stressEffects: number[] = [];
+
+  validateValue(investmentRate, 'interestRate');
+  const clampedInvestmentRateDrop = validateAndClampPercentage(investmentRateDrop);
   // The effective drop in return rate per a year
-  const reducedInvestmentRate = investmentRate * investmentRateDrop;
+  const reducedInvestmentRate = investmentRate * clampedInvestmentRateDrop;
+
+  isValidArray(netSales, 'number');
 
   for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
+    console.log(`forecastedYears: ${forecastedYears}, netSales: ${netSales[forecastedYears]}`);
     const netSale = netSales[forecastedYears] ?? 0;
     const decreaseInNetSales = netSale * reducedInvestmentRate;
-
+    console.log(`decreaseInNetSales: ${decreaseInNetSales}`);
     stressEffects.push(decreaseInNetSales);
   }
 

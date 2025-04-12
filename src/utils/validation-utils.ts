@@ -68,7 +68,7 @@ export const validateValue = (value: number, type: 'positive' | 'percentage' | '
 
   if (type === 'interestRate') {
     if (value < 0) {
-      throw new Error('Interest rate must be 0% or higher.');
+      throw new Error('Invalid input: Interest rate must be 0% or higher.');
     }
     return value;
   }
@@ -88,5 +88,5 @@ export const validateAndClampPercentage = (value: number): number => {
     }
     return value; // Valid percentage, no need to clamp
   }
-  throw new Error('Invalid input: Not a valid number');
+  throw new Error('Invalid input: Value must be a valid number.');
 };

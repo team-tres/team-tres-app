@@ -190,7 +190,7 @@ describe('generateInvestmentBalances', () => {
         interestRate: -0.05, // Edge case: negative interest rate
         impactedYears: 10,
         reinvestmentPercentage: 1,
-      })).toThrow('Interest rate must be 0% or higher.');
+      })).toThrow('Invalid input: Interest rate must be 0% or higher.');
     });
 
     it('0% value, total does not increase', () => {

@@ -116,7 +116,7 @@ describe('generateLoanBalances', () => {
         -0.05, // Edge case: negative interest rate
         10,
 
-      )).toThrow('Interest rate must be 0% or higher.');
+      )).toThrow('Invalid input: Interest rate must be 0% or higher.');
     });
 
     it('0% value, total does not increase', () => {

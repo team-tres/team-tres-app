@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import calculateStressTest1, { StressData } from '../stress-test-1';
+import { MAX_FORECAST_SIZE } from '../../../../config/constants';
 
 describe('Stress Test 1', () => {
   it('generic data', () => {
@@ -12,7 +13,8 @@ describe('Stress Test 1', () => {
     };
 
     const result = calculateStressTest1(data);
-    expect(result.stressEffects.length).toBeGreaterThan(0);
+    expect(result).toBeInstanceOf(Array);
+    expect(result).toHaveLength(MAX_FORECAST_SIZE);
   });
 
   describe('Interest Rate', () => {

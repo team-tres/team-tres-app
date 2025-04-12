@@ -62,7 +62,7 @@ describe('calculateInterestPayment', () => {
         1000,
         -0.05,
         'yearly',
-      )).toThrow('Interest rate must be 0% or higher.');
+      )).toThrow('Invalid input: Interest rate must be 0% or higher.');
     });
 
     it('0% interest rate, no interest payment', () => {
