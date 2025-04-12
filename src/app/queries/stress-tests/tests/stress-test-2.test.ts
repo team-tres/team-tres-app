@@ -19,7 +19,7 @@ describe('Stress Test 2 - Edge Cases', () => {
   });
 
   describe('Net sales', () => {
-    it('handles empty net sales', () => {
+    it('epmty net sales, return arrays filled with zeroes', () => {
       const data = {
         netSales: [], // Edge case: empty net sales
         investmentRate: 0.0375,

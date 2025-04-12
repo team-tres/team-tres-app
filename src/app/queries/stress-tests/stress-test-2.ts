@@ -30,10 +30,8 @@ const CalculateStressTest2 = ({
   isValidArray(netSales, 'number');
 
   for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
-    console.log(`forecastedYears: ${forecastedYears}, netSales: ${netSales[forecastedYears]}`);
     const netSale = netSales[forecastedYears] ?? 0;
     const decreaseInNetSales = netSale * reducedInvestmentRate;
-    console.log(`decreaseInNetSales: ${decreaseInNetSales}`);
     stressEffects.push(decreaseInNetSales);
   }
 

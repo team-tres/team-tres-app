@@ -15,14 +15,13 @@ const calculateResidualEffects3 = ({ expense, eventYear }: ResidualEffectData) =
     || expense === 0) {
     return new Array(MAX_FORECAST_SIZE).fill(0);
   }
-
   const totalInterestsLost: number[] = [];
   const startYear = CURRENT_YEAR;
   let processedYears = 0;
   for (let forecastedYear = 0; forecastedYear < MAX_FORECAST_SIZE; forecastedYear++) {
     if (eventYear > (startYear + forecastedYear)) {
       totalInterestsLost.push(0);
-    } else if (startYear < eventYear) {
+    } else {
       processedYears++;
       // Calculate the compounded loss of missed returns
       const totalLoss = expense * (1 + ANNUAL_RETURN_RATE) ** processedYears - expense;

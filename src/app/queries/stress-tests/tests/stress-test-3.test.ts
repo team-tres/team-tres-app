@@ -1,24 +1,118 @@
 import { describe, it, expect } from 'vitest';
 import CalculateStressTest3 from '../stress-test-3';
+import { CURRENT_YEAR, MAX_FORECAST_SIZE } from '../../../../config/constants';
 
 describe('Stress Test 3 - Edge Cases', () => {
-  it('handles event in current year', () => {
-    const currentYear = new Date().getFullYear();
-    const data = { expense: 50000, eventYear: currentYear };
+  it('generic data', () => {
+    const data = {
+      expense: 999999,
+      eventYear: 2028,
+    };
     const result = CalculateStressTest3(data);
-    expect(result.stressEffects[currentYear - currentYear]).toBe(50000);
+    expect(result.stressEffects).toBeInstanceOf(Array);
+    expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
+    expect(result.residualEffects).toBeInstanceOf(Array);
+    expect(result.residualEffects).toHaveLength(MAX_FORECAST_SIZE);
+    expect(result.stressEffects[2028 - CURRENT_YEAR]).toBe(999999);
   });
 
-  it('handles future year beyond max', () => {
-    const data = { expense: 50000, eventYear: 9999 };
-    const result = CalculateStressTest3(data);
-    expect(result.stressEffects.every(v => v === 0)).toBe(true);
+  describe('Expense', () => {
+    it('NaN expenses, throws error', () => {
+      const data = {
+        expense: NaN, // Edge case: NaN expenses
+        eventYear: 2028,
+      };
+      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a valid number.');
+    });
+
+    it('non-number expenses, throws error', () => {
+      const data = {
+        expense: 'wasra', // Edge case: non-number expenses
+        eventYear: 2028,
+      };
+      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a valid number.');
+    });
+
+    it('negative expenses, throws error', () => {
+      const data = {
+        expense: -999999, // Edge case: negative expenses
+        eventYear: 2028,
+      };
+      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a positive number.');
+    });
+
+    it('0 expenses, returns arrays filled with zeroes', () => {
+      const data = {
+        expense: 0, // Edge case: 0 expenses
+        eventYear: 2028,
+      };
+      const result = CalculateStressTest3(data);
+      expect(result.stressEffects).toBeInstanceOf(Array);
+      expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
+      expect(result.residualEffects).toBeInstanceOf(Array);
+      expect(result.residualEffects).toHaveLength(MAX_FORECAST_SIZE);
+      expect(result.stressEffects.every((v) => v === 0)).toBe(true);
+      expect(result.residualEffects.every((v) => v === 0)).toBe(true);
+    });
   });
 
-  it('handles 0 expense', () => {
-    const currentYear = new Date().getFullYear();
-    const data = { expense: 0, eventYear: currentYear };
-    const result = CalculateStressTest3(data);
-    expect(result.stressEffects[currentYear - currentYear]).toBe(0);
+  describe('Event year', () => {
+    it('NaN year, throws error', () => {
+      const data = {
+        expense: 999999, // Edge case: NaN year
+        eventYear: NaN,
+      };
+      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a valid number.');
+    });
+
+    it('non-number year, throws error', () => {
+      const data = {
+        expense: 999999, // Edge case: non-number year
+        eventYear: 'wasra',
+      };
+      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a valid number.');
+    });
+
+    it('negative year, throws error', () => {
+      const data = {
+        expense: 999999,
+        eventYear: -8, // Edge case: negative year
+      };
+      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Value must be a positive number.');
+    });
+
+    it('current year, returns valid arrays', () => {
+      const currentYear = new Date().getFullYear();
+      const data = {
+        expense: 999999,
+        eventYear: currentYear, // Edge case: current year
+      };
+      const result = CalculateStressTest3(data);
+      expect(result.stressEffects).toBeInstanceOf(Array);
+      expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
+      expect(result.residualEffects).toBeInstanceOf(Array);
+      expect(result.residualEffects).toHaveLength(MAX_FORECAST_SIZE);
+      expect(result.stressEffects[0]).toBe(999999);
+      expect(result.residualEffects[0]).toBeLessThan(result.residualEffects[1]);
+    });
+
+    it('year before forecast, throws error', () => {
+      const data = { expense: 999999, eventYear: 0 };
+      expect(() => CalculateStressTest3(data)).toThrow('Invalid input: Event year is before forecast range.');
+    });
+
+    it('year beyond forecast, returns arrays with 0', () => {
+      const data = {
+        expense: 999999,
+        eventYear: 9999, // Edge case: beyond forecast range
+      };
+      const result = CalculateStressTest3(data);
+      expect(result.stressEffects).toBeInstanceOf(Array);
+      expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
+      expect(result.residualEffects).toBeInstanceOf(Array);
+      expect(result.residualEffects).toHaveLength(MAX_FORECAST_SIZE);
+      expect(result.stressEffects.every(v => v === 0)).toBe(true);
+      expect(result.residualEffects.every(v => v === 0)).toBe(true);
+    });
   });
 });
