@@ -1,4 +1,4 @@
-import { MONTHS_IN_YEAR } from '../../../../config/constants';
+import { MAX_FORECAST_SIZE, MONTHS_IN_YEAR } from '../../../../config/constants';
 import { validateValue } from '../../../../utils/validation-utils';
 
 export interface LoanCalculatorInput {
@@ -57,8 +57,14 @@ export const calculateLoan = (input: LoanCalculatorInput): LoanCalculatorOutput 
   const interestPerPayment: number[] = [];
 
   let remainingBalance = loanAmount;
-
-  for (let month = 1; month <= numberOfPayments; month++) {
+  if (loanPeriod <= 0 || loanAmount <= 0 || numberOfPayments <= 0) {
+    return {
+      monthlyPayment: 0,
+      numberOfPayments: 0,
+      interestPerPayment: new Array(MAX_FORECAST_SIZE).fill(0),
+    };
+  }
+  for (let month = 1; month <= MAX_FORECAST_SIZE; month++) {
     const monthlyInterest = remainingBalance * (interestRate / MONTHS_IN_YEAR);
     interestPerPayment.push(monthlyInterest);
 

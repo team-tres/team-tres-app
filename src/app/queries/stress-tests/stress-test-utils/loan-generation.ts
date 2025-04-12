@@ -34,7 +34,7 @@ export default function generateLoanBalances(
   if (loanPeriod <= 0 || loanAmount <= 0) return new Array(MAX_FORECAST_SIZE).fill(0);
 
   // Loop through each year to calculate the subsequent balances
-  for (let year = 0; year <= MAX_FORECAST_SIZE; year++) {
+  for (let year = 0; year < MAX_FORECAST_SIZE; year++) {
     // Loan is paid off
     if (balance <= 0) {
       loanBalances.push(0);

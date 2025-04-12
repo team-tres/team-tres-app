@@ -81,7 +81,7 @@ describe('calculateLoan', () => {
         interestRate: 0.05,
         loanPeriod: 0, // Edge case: 0 loan period
       });
-      expect(result.interestPerPayment.every((v) => v === 0)).toBe(true);// MUSTCHANGE
+      expect(result.interestPerPayment.every((v) => v === 0)).toBe(true);
     });
 
     it('Negative value, throw invalid error', () => {
