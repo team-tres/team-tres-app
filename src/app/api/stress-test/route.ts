@@ -6,7 +6,7 @@ import { prisma } from '@/lib/prisma';
 import { generateForecast } from '@/app/queries/forecasts/forecast';
 import { FinancialCompilation } from '@prisma/client';
 import { processForecast } from '@/app/queries/financial-comp/financial-calculations';
-import CalculateStressTest2 from '@/app/queries/stress-tests/stress-test-2';
+import simulateDropInRevenueReturnRate from '@/app/queries/stress-tests/simulate-drop-in-revenue-return-rate';
 
 export async function POST(req: NextRequest) {
   try {
@@ -45,10 +45,11 @@ export async function POST(req: NextRequest) {
 
     const stressTestResult = processedForecast.map((yearForecast: any) => {
       const data = {
-        netSales: yearForecast.revenue,
-        percentDecrease: 0.0225,
+        netSales: yearForecast.netSales,
+        investmentRate: 0.0375,
+        investmentRateDrop: 0.060,
       };
-      const result = CalculateStressTest2(data);
+      const result = simulateDropInRevenueReturnRate(data);
       console.log(`Year ${yearForecast.year}:`, result);
       return {
         year: yearForecast.year,
