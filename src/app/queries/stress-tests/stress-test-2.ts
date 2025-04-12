@@ -8,6 +8,25 @@ interface StressData2 {
   investmentRateDrop: number; // decimal form (e.g., 6.02% is 0.0602)
 }
 
+/**
+ * Calculates the stress test results for net sales based on the provided investment rate and its drop.
+ * This function computes the decrease in net sales for each year based on a reduced investment rate
+ * and then calculates the residual effects (long-term financial impact).
+ *
+ * This function assumes that a decrease in investment rate leads to a corresponding reduction in net sales.
+ *
+ * @param netSales - An array of net sales for each year. These values represent the baseline net sales
+ * @param investmentRate - The initial investment rate as a decimal
+ * @param investmentRateDrop - Percentage decrease in the investment rate for the stress test
+ *                             This value should be in decimal form
+ *
+ * @returns An object containing:
+ *  - stressEffects: The calculated stress effects (i.e., reduction in net sales each year)
+ *  - residualEffects: The compounded residual effects based on the stress effects, representing
+ *    the long-term impact of the reduced investment rate on net sales
+ *
+ * @throws {Error} If any of the input values are invalid, such as non-numeric values (e.g., netSales)
+ */
 const CalculateStressTest2 = ({
   netSales,
   investmentRate,

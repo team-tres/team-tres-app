@@ -24,6 +24,7 @@ export const calculateMonthlyPayment = (loanAmount: number, interestRate: number
   let monthlyRate = 0;
   if (interestRate !== 0) monthlyRate = interestRate / MONTHS_IN_YEAR;
   if (monthlyRate === 0) return loanAmount / numberOfPayments;
+
   const numerator = monthlyRate * loanAmount;
   const denominator = 1 - (1 + monthlyRate) ** -numberOfPayments; // Amortisation formula
   return numerator / denominator;
@@ -33,23 +34,25 @@ export const calculateMonthlyPayment = (loanAmount: number, interestRate: number
  * Calculates the monthly payment, total number of payments, and interest paid per payment of a loan.
  * This function uses an amortisation formula to calculate the monthly payments and interest for each payment.
  *
- * @param input The input parameters
- * @param input.loanAmount The total loan amount
- * @param input.interestRate The annual interest rate of the loan, represented as a decimal (e.g., 6% is 0.06)
- * @param input.loanPeriod The total duration of the loan in years
+ * @param params Input parameters for the loan calculation
+ * @param loanAmount Total loan amount
+ * @param interestRate Annual interest rate of the loan, represented as a decimal
+ * @param loanPeriod Total duration of the loan in years
  * @returns An object containing the loan details:
- *  - `monthlyPayment`: The amount to be paid monthly
- *  - `numberOfPayments`: The total number of payments to be made (loanPeriod * MONTHS_IN_YEAR)
- *  - `interestPerPayment`: An array of monthly interest paid
+ *  - monthlyPayment: Amount to be paid monthly
+ *  - numberOfPayments: Total number of payments to be made
+ *  - interestPerPayment: Array of monthly interest paid
  */
-export const calculateLoan = (input: LoanCalculatorInput): LoanCalculatorOutput => {
-  const { loanAmount, interestRate, loanPeriod } = input;
+export const calculateLoan = ({ loanAmount, interestRate, loanPeriod }: LoanCalculatorInput): LoanCalculatorOutput => {
+  validateValue(loanAmount, 'positive');
+  validateValue(loanPeriod, 'positive');
+  validateValue(interestRate, 'interestRate');
 
-  const numberOfPayments = validateValue(loanPeriod, 'positive') * MONTHS_IN_YEAR;
+  const numberOfPayments = loanPeriod * MONTHS_IN_YEAR;
 
   const monthlyPayment = calculateMonthlyPayment(
-    validateValue(loanAmount, 'positive'),
-    validateValue(interestRate, 'interestRate'),
+    loanAmount,
+    interestRate,
     numberOfPayments,
   );
 

@@ -11,6 +11,8 @@ describe('Stress Test 2 - Edge Cases', () => {
     };
     const result = CalculateStressTest2(data);
     expect(result.stressEffects).toBeInstanceOf(Array);
+    expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
+    expect(result.residualEffects).toBeInstanceOf(Array);
     expect(result.residualEffects).toHaveLength(MAX_FORECAST_SIZE);
     expect(result.stressEffects[0]).toBeCloseTo(3443, 0);
     expect(result.stressEffects[11]).toBeCloseTo(4056, 0);

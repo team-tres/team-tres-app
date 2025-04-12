@@ -11,18 +11,25 @@ export interface StressData5 {
 }
 
 /**
- * Calculates loan balances and residual effects based on the loan parameters.
+ * Performs a stress test on loan balances by comparing the baseline scenario (with the original
+ * interest rate) with a stress test scenario (with a reduced interest rate). This function
+ * calculates the loan balances for both scenarios, the principal difference (baseline - stress test),
+ * and the residual effects of the loan over time.
  *
- * Compares the baseline scenario with the decreased interest rate to assess the impact with principal and
- * residual effects.
+ * The function assumes that the baseline interest rate should always be greater than or equal to the
+ * stress test interest rate.
  *
- * @param loanAmount The total loan amount. also known as the currentDebtService
- * @param loanPeriod The loan period in years
- * @param baselineInterestRate The interest rate for the baseline scenario, represeted as a decimal
- * (e.g., 6% is 0.06)
- * @param stressTestInterestRate The interest rate for the stress test scenario, represented as a decimal
- * (e.g., 1.7% is 0.017)
- * @returns Object with the principal and the residual effect values
+ * @param loanAmount Total loan amount, also known as the current debt service
+ * @param loanPeriod Loan period in years
+ * @param baselineInterestRate Interest rate for the baseline scenario, represented as a decimal
+ * @param stressTestInterestRate Interest rate for the stress scenario, represented as a decimal
+ *
+ * @returns An object containing:
+ *  - stressEffects: The calculated principal differences (baseline - stress test), representing the
+ *    impact of the interest rate reduction on the loan balances
+ *  - residualEffects: The long-term impact of the stress test on the financials over the forecast period
+ *
+ * @throws {Error} If the baseline interest rate is less than the stress test interest rate
  */
 export default function performStressTest({
   loanAmount,

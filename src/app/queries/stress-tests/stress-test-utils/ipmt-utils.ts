@@ -2,18 +2,17 @@ import { validateValue } from '../../../../utils/validation-utils';
 import { MONTHS_IN_YEAR } from '../../../../config/constants';
 
 /**
- * Calculates the interest payment for a given loan amount based on the annual interest rate.
- * The function assumes the interest rate is provided as an annual rate and calculates the interest for one month.
+ * Calculates the interest payment for a given loan amount based on the monthly or annual interest rate.
+ * If the frequency is invalid, it defaults to monthly calculations.
  *
- * @param loanAmount The total loan amount
- * @param annualInterestRate The annual interest rate of the loan, represented as a decimal (e.g., 6% is 0.06)
- * @returns The interest payment for a single month based on the provided loan amount and annual interest rate
+ * @param loanAmount Total loan amount
+ * @param annualInterestRate Annual interest rate of the loan, represented as a decimal
+ * @returns Interest payment for a single month based on the provided loan amount and annual interest rate
  */
 export default function calculateInterestPayment(
   loanAmount: number,
   annualInterestRate: number,
-  // When no frequency is defined, it will default to monthly based calculations
-  frequency: 'monthly' | 'yearly' = 'monthly',
+  frequency: 'monthly' | 'yearly' = 'monthly', // No frequency defaults to monthly based calculations
 ): number {
   validateValue(loanAmount, 'positive');
   validateValue(annualInterestRate, 'interestRate');

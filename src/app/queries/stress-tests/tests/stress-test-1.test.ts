@@ -11,10 +11,11 @@ describe('Stress Test 1', () => {
       impactedYears: 10,
       reinvestmentPercentage: 0,
     };
-
     const result = calculateStressTest1(data);
-    expect(result).toBeInstanceOf(Array);
-    expect(result).toHaveLength(MAX_FORECAST_SIZE);
+    expect(result.stressEffects).toBeInstanceOf(Array);
+    expect(result.stressEffects).toHaveLength(MAX_FORECAST_SIZE);
+    expect(result.residualEffects).toBeInstanceOf(Array);
+    expect(result.residualEffects).toHaveLength(MAX_FORECAST_SIZE);
   });
 
   describe('Interest Rate', () => {
