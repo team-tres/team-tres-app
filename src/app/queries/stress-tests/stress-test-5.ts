@@ -1,6 +1,14 @@
 import generateLoanBalances from './stress-test-utils/loan-generation';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 import calculatePrincipal from './stress-test-utils/principal-utils';
+import { MAX_FORECAST_SIZE } from '../../../config/constants';
+
+export interface StressData5 {
+  loanAmount: number,
+  loanPeriod: number,
+  baselineInterestRate: number,
+  stressTestInterestRate: number,
+}
 
 /**
  * Calculates loan balances and residual effects based on the loan parameters.
@@ -16,12 +24,22 @@ import calculatePrincipal from './stress-test-utils/principal-utils';
  * (e.g., 1.7% is 0.017)
  * @returns Object with the principal and the residual effect values
  */
-export default function performStressTest(
-  loanAmount: number,
-  loanPeriod: number, // Needed for stress test settings, still needs to be implemented
-  baselineInterestRate: number, // Needed for stress test settings
-  stressTestInterestRate: number, // Needed for stress test settings
-) {
+export default function performStressTest({
+  loanAmount,
+  loanPeriod,
+  baselineInterestRate,
+  stressTestInterestRate,
+}: StressData5) {
+  if (baselineInterestRate < stressTestInterestRate) {
+    throw new Error('Baseline interest rate must be greater than or equal to stress test interest rate.');
+  }
+
+  if (loanAmount === 0 || loanPeriod === 0) {
+    return {
+      stressEffects: Array(MAX_FORECAST_SIZE).fill(0),
+      residualEffects: Array(MAX_FORECAST_SIZE).fill(0),
+    };
+  }
   // Generating loan balances for baseline and stress test loans
   const balances = (rate: number) => generateLoanBalances(loanAmount, rate, loanPeriod);
   const baselineLoanBalances = balances(baselineInterestRate);
@@ -29,7 +47,6 @@ export default function performStressTest(
 
   // Calculates principal difference (baseline - stress test)
   const stressEffects = calculatePrincipal(baselineLoanBalances, stressTestLoanBalances);
-
   const residualEffects = calculateResidualEffects(stressEffects);
 
   return {

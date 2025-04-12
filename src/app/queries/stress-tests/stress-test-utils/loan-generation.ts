@@ -48,7 +48,6 @@ export default function generateLoanBalances(
 
       // newBalance = presentBalance + interest - yearlyPayment
       balance += interestEarned - yearlyPayment + loanDetails.interestPerPayment[year];
-
       loanBalances.push(newBalance);
     }
   }

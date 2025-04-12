@@ -1,9 +1,10 @@
+import { isValidArray, validateValue } from '../../../utils/validation-utils';
 import { MAX_FORECAST_SIZE } from '../../../config/constants';
 import calculateResidualEffects from './stress-test-utils/residual-effects';
 
 interface StressData {
   expensesByYear: number[];
-  increasePercentage: number; // Needed for stress test settings
+  increasePercentage: number;
 }
 
 const calculateStressTest4 = ({
@@ -13,14 +14,15 @@ const calculateStressTest4 = ({
   if (
     expensesByYear.length === 0
     || increasePercentage === 0
-    || expensesByYear.length < MAX_FORECAST_SIZE
   ) {
     return {
-      stressEffects: [],
-      residualEffects: [],
+      stressEffects: Array(MAX_FORECAST_SIZE).fill(0),
+      residualEffects: Array(MAX_FORECAST_SIZE).fill(0),
     };
   }
   const stressEffects: number [] = [];
+  validateValue(increasePercentage, 'positive');
+  isValidArray(expensesByYear, 'number');
 
   for (let forecastedYears = 0; forecastedYears < MAX_FORECAST_SIZE; forecastedYears++) {
     const increaseInExpense = expensesByYear[forecastedYears] ?? 0;

@@ -50,12 +50,11 @@ describe('calculatePrincipal', () => {
 
   describe('baseline and stress Balances', () => {
     it('mismatched array lenghs, throws error', () => {
-      expect(() => calculatePrincipal(
-        [
-          108, 208, 308, 408, 508, 608, 708, 808, 908, 1008, 1108, 1208,
-        ], [
-          100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, // Edge case: two more indeces
-        ])).toThrow('Invalid Input: Mismatched array lengths.');
+      expect(() => calculatePrincipal([
+        108, 208, 308, 408, 508, 608, 708, 808, 908, 1008, 1108, 1208,
+      ], [
+        100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, // Edge case: two more indeces
+      ])).toThrow('Invalid Input: Mismatched array lengths.');
     });
 
     it('handles empty arrays gracefully', () => {
