@@ -37,13 +37,8 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Failed to save financial compilation' }, { status: 500 });
   }
 }
-
-
-
 /* example of post method:
 POST: localhost:3000/api/save-stress-test/
-
-
 {
   "userId": 3,
   "investmentAmount": 500000,
@@ -63,6 +58,4 @@ POST: localhost:3000/api/save-stress-test/
   "baselineInterestRate": 0.045,
   "stressTestInterestRate": 0.065
 }
-
-
 */
