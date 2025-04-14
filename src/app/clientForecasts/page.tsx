@@ -153,8 +153,10 @@ const Forecast = () => {
     fetchForecastData();
   }, [settings, multipliers]);
 
-  const chartRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null)];
-  const chartInstances = useRef<Array<Chart | null>>([null, null, null, null, null, null, null]);
+  const chartRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null),
+    useRef(null), useRef(null), useRef(null), useRef(null)];
+  const chartInstances = useRef<Array<Chart | null>>([null, null, null, null, null, null, null, null,
+    null, null]);
 
   useEffect(() => {
     const data1 = {
@@ -299,6 +301,68 @@ const Forecast = () => {
       ],
     };
 
+    const data8 = {
+      labels: forecast.map((item) => item.year),
+      datasets: [
+        {
+          label: 'Cost of Goods Sold',
+          data: forecast.map((item) => item.costOfGoodsSold),
+          fill: false,
+          borderColor: '#B01E8C',
+          tension: 0.1,
+          pointHoverBackgroundColor: '#B01E8C',
+        },
+        {
+          label: 'Gross Profit',
+          data: forecast.map((item) => item.grossProfit),
+          fill: false,
+          borderColor: '#FFAF00',
+          tension: 0.1,
+          pointHoverBackgroundColor: '#FFAF00',
+        },
+      ],
+    };
+
+    const data9 = {
+      labels: forecast.map((item) => item.year),
+      datasets: [
+        {
+          label: 'Total Operating Expenses Overtime',
+          data: forecast.map((item) => item.totalOperatingExpenses),
+          fill: false,
+          borderColor: '#B01E8C',
+          tension: 0.1,
+          pointHoverBackgroundColor: '#B01E8C',
+        },
+      ],
+    };
+
+    const data10 = {
+      labels: forecast.map((item) => item.year),
+      datasets: [
+        {
+          label: 'Interest Income',
+          data: forecast.map((item) => item.interestIncome),
+          backgroundColor: '#F6861E',
+        },
+        {
+          label: 'Interest Expense',
+          data: forecast.map((item) => item.interestExpense),
+          backgroundColor: '#B01E8C',
+        },
+        {
+          label: 'Gain on Disposal of Assets',
+          data: forecast.map((item) => item.gainOnDisposalOfAssets),
+          backgroundColor: '#6360AA',
+        },
+        {
+          label: 'Other Income',
+          data: forecast.map((item) => item.otherIncome),
+          backgroundColor: '#2252FE',
+        },
+      ],
+    };
+
     const chartConfigs = [
       {
         type: 'line' as const,
@@ -398,7 +462,7 @@ const Forecast = () => {
             },
             title: {
               display: true,
-              text: 'Operating Expenses Over Time',
+              text: 'Breakdown of Operating Expenses',
               font: { size: 25, weight: 700 },
               color: 'white',
             },
@@ -550,7 +614,7 @@ const Forecast = () => {
             },
             title: {
               display: true,
-              text: 'Costs of Goods Sold',
+              text: 'Breakdown of Costs of Goods Sold',
               font: { size: 25, weight: 700 },
               color: 'white',
             },
@@ -833,6 +897,233 @@ const Forecast = () => {
           },
         },
       },
+      {
+        type: 'line' as const,
+        data: data8,
+        options: {
+          responsive: true,
+          interaction: {
+            mode: 'index' as const,
+            intersect: false,
+          },
+          plugins: {
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true,
+                },
+                mode: 'y' as const,
+              },
+            },
+            title: {
+              display: true,
+              text: 'Cost of Goods Sold vs. Gross Profit',
+              font: { size: 25, weight: 700 },
+              color: 'white',
+            },
+            legend: {
+              display: true,
+              position: 'bottom' as 'bottom',
+              labels: {
+                color: 'white',
+                font: { size: 18 },
+              },
+            },
+            tooltip: {
+              bodyColor: 'white',
+              titleColor: 'white',
+            },
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'white',
+                font: { size: 16 },
+              },
+              title: {
+                display: true,
+                text: 'Year',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+            y: {
+              ticks: {
+                color: 'white',
+                font: { size: 16 },
+              },
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Dollars ($)',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+          },
+        },
+      },
+      {
+        type: 'line' as const,
+        data: data9,
+        options: {
+          responsive: true,
+          interaction: {
+            mode: 'index' as const,
+            intersect: false,
+          },
+          plugins: {
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true,
+                },
+                mode: 'y' as const,
+              },
+            },
+            title: {
+              display: true,
+              text: 'Total Operating Expenses',
+              font: { size: 25, weight: 700 },
+              color: 'white',
+            },
+            legend: {
+              display: true,
+              position: 'bottom' as 'bottom',
+              labels: {
+                color: 'white',
+                font: { size: 18 },
+              },
+            },
+            tooltip: {
+              bodyColor: 'white',
+              titleColor: 'white',
+            },
+          },
+          scales: {
+            x: {
+              ticks: {
+                color: 'white',
+                font: { size: 16 },
+              },
+              title: {
+                display: true,
+                text: 'Year',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+            y: {
+              ticks: {
+                color: 'white',
+                font: { size: 16 },
+              },
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Dollars ($)',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+          },
+        },
+      },
+      {
+        type: 'bar' as const,
+        data: data10,
+        options: {
+          responsive: true,
+          interaction: {
+            mode: 'index' as const,
+            intersect: false,
+          },
+          plugins: {
+            zoom: {
+              zoom: {
+                wheel: {
+                  enabled: true,
+                },
+                pinch: {
+                  enabled: true,
+                },
+                mode: 'y' as const,
+              },
+            },
+            title: {
+              display: true,
+              text: 'Summary of Other Income',
+              font: { size: 25, weight: 700 },
+              color: 'white',
+            },
+            legend: {
+              display: true,
+              position: 'bottom' as 'bottom',
+              labels: {
+                color: 'white',
+                font: {
+                  size: 18,
+                },
+              },
+            },
+            tooltip: {
+              bodyColor: 'white',
+              titleColor: 'white',
+            },
+          },
+          scales: {
+            x: {
+              stacked: true,
+              ticks: {
+                color: 'white',
+              },
+              title: {
+                display: true,
+                text: 'Year',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+            y: {
+              stacked: true,
+              ticks: {
+                color: 'white',
+              },
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: 'Dollars ($)',
+                font: { size: 20 },
+                color: 'white',
+              },
+              grid: {
+                color: 'rgba(255, 255, 255, 0.2)',
+              },
+            },
+          },
+        },
+      },
     ];
 
     chartRefs.forEach((ref, chartIndex) => {
@@ -876,9 +1167,9 @@ const Forecast = () => {
   return (
     <main>
       <Container id="dashboard" fluid className="text-center">
-        <h1>12-YEAR FINANCIAL FORECAST</h1>
-        <div className="d-flex justify-content-center py-5 grey-bg">
-          <Table striped="columns" bordered responsive hover className="financial-table rounded w-85">
+        <h1>12-Year Financial Forecast</h1>
+        <div className="d-flex justify-content-center py-5 grey-bg rounded-3">
+          <Table striped="columns" bordered responsive hover className="financial-table w-85">
             <thead>
               {loading && (
                 <tr>
@@ -953,7 +1244,7 @@ const Forecast = () => {
             </tbody>
           </Table>
         </div>
-        <div className="dark-background">
+        <div className="dark-background rounded-3">
           <canvas ref={chartRefs[0]} />
         </div>
         <div className="d-flex flex-column align-items-center py-5 grey-bg">
@@ -1071,7 +1362,10 @@ const Forecast = () => {
             </div>
           </div>
         </div>
-        <div className="dark-background">
+        <div className="dark-background rounded-top">
+          <canvas ref={chartRefs[7]} />
+        </div>
+        <div className="dark-background rounded-bottom">
           <canvas ref={chartRefs[3]} />
         </div>
         <div className="d-flex flex-column align-items-center py-5 grey-bg">
@@ -1243,7 +1537,10 @@ const Forecast = () => {
             </div>
           </div>
         </div>
-        <div className="dark-background">
+        <div className="dark-background rounded-top">
+          <canvas ref={chartRefs[8]} />
+        </div>
+        <div className="dark-background rounded-bottom">
           <canvas ref={chartRefs[1]} />
         </div>
         <div className="d-flex flex-column align-items-center py-5 grey-bg">
@@ -1463,8 +1760,11 @@ const Forecast = () => {
             </div>
           </div>
         </div>
-        <div className="dark-background">
+        <div className="dark-background rounded-top">
           <canvas ref={chartRefs[2]} />
+        </div>
+        <div className="dark-background rounded-bottom">
+          <canvas ref={chartRefs[9]} />
         </div>
         <div className="d-flex flex-column align-items-center py-5 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
@@ -1658,7 +1958,7 @@ const Forecast = () => {
             </div>
           </div>
         </div>
-        <div className="dark-background">
+        <div className="dark-background rounded-3">
           <canvas ref={chartRefs[4]} />
         </div>
         <div className="d-flex flex-column align-items-center py-5 grey-bg">
@@ -1918,10 +2218,10 @@ const Forecast = () => {
             </div>
           </div>
         </div>
-        <div className="dark-background">
+        <div className="dark-background rounded-top">
           <canvas ref={chartRefs[5]} />
         </div>
-        <div className="dark-background">
+        <div className="dark-background rounded-bottom">
           <canvas ref={chartRefs[6]} />
         </div>
       </Container>
