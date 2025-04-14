@@ -212,7 +212,6 @@ const FinancialInputForm: React.FC = () => {
                         </Form.Group>
                       </Card>
                     </Row>
-
                   </Col>
                   <Col className="px-5">
                     <h3 className="text-center">Balance Sheet</h3>
@@ -311,7 +310,6 @@ const FinancialInputForm: React.FC = () => {
                         </Form.Group>
                       </Card>
                     </Row>
-
                     <Row className="pb-3">
                       <Card className="pt-3">
                         <Card.Title className="text-center">Long-term Liabilities</Card.Title>
