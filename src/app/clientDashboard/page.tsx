@@ -37,7 +37,11 @@ const ClientDashboard = () => {
             <Button className="white-button">Account Summary</Button>
           </Col>
           <Col xs={12} md={6} className="right-section">
-            <Button className="orange-button">View Sustainability Model</Button>
+            <Button className="orange-button">
+              <Link href="/clientSM" passHref legacyBehavior>
+                <a href="/clientSM">View Sustainability Model</a>
+              </Link>
+            </Button>
             <h3>
               View your company&apos;s fiscal sustainability model which incorporates inputs
               from your financial forecast and stress test scenario options.
