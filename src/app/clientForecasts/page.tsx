@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Container, Table, Spinner, Dropdown, Form } from 'react-bootstrap';
+import { Container, Table, Spinner, Dropdown, Form, Image } from 'react-bootstrap';
 import { Chart } from 'chart.js/auto';
 import './page.css';
 import zoomPlugin from 'chartjs-plugin-zoom';
@@ -1168,6 +1168,13 @@ const Forecast = () => {
     <main>
       <Container id="dashboard" fluid className="text-center">
         <h1>12-Year Financial Forecast</h1>
+        <Image
+          src="/spirebar.png"
+          alt="Spire Bar"
+          width={70}
+          height={5}
+          className="spire-logo"
+        />
         <div className="d-flex justify-content-center py-5 grey-bg rounded-3">
           <Table striped="columns" bordered responsive hover className="financial-table w-85">
             <thead>
