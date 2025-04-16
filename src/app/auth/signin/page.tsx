@@ -2,13 +2,18 @@
 
 import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Row, Alert } from 'react-bootstrap';
 import './page.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const SignIn = () => {
   const { data: session } = useSession();
   const router = useRouter();
+  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
 
   useEffect(() => {
     if (session?.user) {
@@ -34,23 +39,32 @@ const SignIn = () => {
     }
   }, [session, router]);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const target = e.target as typeof e.target & {
-      email: { value: string };
-      password: { value: string };
-    };
+    setError(null); // Clear any previous errors
 
-    const email = target.email.value;
-    const password = target.password.value;
     const result = await signIn('credentials', {
-      redirect: true,
-      email,
-      password,
+      redirect: false,
+      email: formData.email,
+      password: formData.password,
     });
 
     if (result?.error) {
       console.error('Sign in failed: ', result.error);
+      setError('Invalid email or password. Please try again.');
+      // Clear the password field but keep the email for convenience
+      setFormData(prev => ({
+        ...prev,
+        password: '',
+      }));
     }
   };
 
@@ -64,19 +78,35 @@ const SignIn = () => {
         <Col md={8}>
           <Card className="d-flex align-items-center">
             <Card.Body>
+              {error && (
+                <Alert variant="danger" className="mb-3">
+                  {error}
+                </Alert>
+              )}
               <Form className="form" onSubmit={handleSubmit}>
-
                 <Form.Group as={Row} controlId="email" className="mb-3">
                   <Form.Label column sm={4}>Email</Form.Label>
                   <Col md={8}>
-                    <Form.Control type="text" name="email" required />
+                    <Form.Control
+                      type="text"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                    />
                   </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} controlId="password" className="mb-3">
                   <Form.Label column sm={4}>Password</Form.Label>
                   <Col md={8}>
-                    <Form.Control type="password" name="password" required />
+                    <Form.Control
+                      type="password"
+                      name="password"
+                      value={formData.password}
+                      onChange={handleChange}
+                      required
+                    />
                   </Col>
                 </Form.Group>
 

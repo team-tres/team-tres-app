@@ -17,26 +17,26 @@ const AdminPage = async () => {
   const pendingUsers = users.filter(user => user.status === true);
   return (
     <main>
-      <Container id="dashboard" fluid className="py-3">
+      <Container id="dashboard" fluid style={{ backgroundColor: '#051C2C', minHeight: '100vh', paddingTop: '30px' }}>
         <Row className="mb-3">
           <Col className="text-center">
-            <h1>Admin Dashboard</h1>
+            <h1 className="text-light">Admin Dashboard</h1>
             <ButtonGroup>
               <Link href="/admin/client-viewing" passHref>
-                <Button style={{ backgroundColor: '#F5F5DC', borderColor: 'Black', color: '#000' }}>View Clients</Button>
+                <Button style={{ borderColor: 'Black', backgroundColor: 'white', color: '#051C2C' }}>View Clients</Button>
               </Link>
               <Link href="/admin/user-logs" passHref>
-                <Button style={{ backgroundColor: '#F5F5DC', borderColor: 'Black', color: '#000' }}>User Logs</Button>
+                <Button style={{ borderColor: 'Black', backgroundColor: 'white', color: '#051C2C' }}>User Logs</Button>
               </Link>
               <Link href="/admin/user-management" passHref>
-                <Button style={{ backgroundColor: '#F5F5DC', borderColor: 'Black', color: '#000' }}>Manage Users</Button>
+                <Button style={{ borderColor: 'Black', backgroundColor: 'white', color: '#051C2C' }}>Manage Users</Button>
               </Link>
             </ButtonGroup>
           </Col>
         </Row>
         <Row>
           <Col>
-            <h2>Pending Users</h2>
+            <h2 className="text-light">Pending Users</h2>
             <Table striped bordered hover className="shadow bg-white">
               <thead className="bg-secondary text-white">
                 <tr>
@@ -54,7 +54,7 @@ const AdminPage = async () => {
                       <td>{user.username}</td>
                       <td>{user.role}</td>
                       <td>{user.email}</td>
-                      <td style={{ backgroundColor: '#FFF3CD' }}>Pending</td>
+                      <td style={{ backgroundColor: '#808080', color: 'black' }}>Pending</td>
                       <td>
                         <Button className="btn btn-sm btn-success">Allow</Button>
                         {' '}
