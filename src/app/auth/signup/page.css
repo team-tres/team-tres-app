@@ -7,16 +7,61 @@
     background-color: #f7f7f7;
 }
 
-/* Container with Flexbox */
-.sign-up-container {
+/* Outer wrapper for clean black outline around everything */
+.sign-up-wrapper {
+    padding: 0px; /* space between black border and gradient container */
+    outline: 5px solid black;
+    outline-offset: 2px;
     display: flex;
-    background: #d9eaf4;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 40px;
-    max-width: 800px;
-    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
+
+.sign-up-container {
+    position: relative;
+    z-index: 1;
+    padding: 10px; /* thickness of the gradient border */
+    background: transparent;
+  }
+  
+  /* Inner actual content box */
+  .sign-up-inner {
+    background: #d9eaf4;
+    border-radius: 0;
+    padding: 10px;
+    width: 100%;
+    margin-left: 0px;
+    max-width: 800px;
+    display: flex;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Gradient border behind content */
+  .sign-up-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #7da8d6, #f09c3d, #9b84bd);
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
+    z-index: -1;
+  }
+  
+/* Animate the gradient border */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }}
 
 /* Left Section */
 .left-section {
@@ -24,9 +69,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 50px;
-    font-weight: bold;
-    color: #202124;
+}
+
+/* Spire Sign-Up Image Styling */
+.signup-image,
+.spire-logo {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
 }
 
 /* Right Section */
