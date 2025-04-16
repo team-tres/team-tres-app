@@ -94,7 +94,7 @@ const SignUp = () => {
         throw new Error('Failed to signup, please contact Team-Tres to resolve');
       }
 
-      const result = await response.json(); // ✅ fixed linebreak + comma issues
+      const result = await response.json();
       console.log('Success', result.username);
       setSignupSubmitted(true);
       reset();
@@ -106,122 +106,125 @@ const SignUp = () => {
 
   return (
     <Container fluid className="d-flex justify-content-center align-items-center background">
-      <Row className="sign-up-container">
-        <Col md={5} className="left-section d-flex flex-column align-items-center justify-content-center">
-          <Image
-            src="/spire.png"
-            alt="Spire Logo"
-            className="logo mb-3"
-            style={{ maxWidth: '80%', height: 'auto' }}
-            width={300}
-            height={300}
-            priority
-          />
-        </Col>
-        <Col md={8}>
-          <Card className="dflex align-items-center">
-            <Card.Body>
-              <Form className="form" onSubmit={handleSubmit(handleSignup)}>
-                <Form.Group as={Row} controlId="email" className="mb-3">
-                  <Form.Label column md={4}>Email</Form.Label>
-                  <Col sm={8}>
-                    <Form.Control type="text" {...register('email')} isInvalid={!!errors.email} />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.email?.message}
-                    </Form.Control.Feedback>
-                  </Col>
-                </Form.Group>
+      <div className="sign-up-wrapper">
+        <div className="sign-up-container">
+          <Row className="sign-up-inner">
+            <Col
+              md={5}
+              className="left-section d-flex flex-column align-items-center justify-content-center"
+            >
+              <Image
+                src="/spire.png"
+                alt="Spire Logo"
+                className="logo mb-3"
+                style={{ maxWidth: '80%', height: 'auto' }}
+                width={300}
+                height={300}
+                priority
+              />
+            </Col>
+            <Col md={7}>
+              <Card className="dflex align-items-center">
+                <Card.Body>
+                  <Form className="form" onSubmit={handleSubmit(handleSignup)}>
+                    <Form.Group as={Row} controlId="email" className="mb-3">
+                      <Form.Label column md={4}>Email</Form.Label>
+                      <Col sm={8}>
+                        <Form.Control type="text" {...register('email')} isInvalid={!!errors.email} />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.email?.message}
+                        </Form.Control.Feedback>
+                      </Col>
+                    </Form.Group>
 
-                <Form.Group as={Row} controlId="username" className="mb-3">
-                  <Form.Label column md={4}>Username</Form.Label>
-                  <Col sm={8}>
-                    <Form.Control type="text" {...register('username')} isInvalid={!!errors.username} />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.username?.message}
-                    </Form.Control.Feedback>
-                  </Col>
-                </Form.Group>
+                    <Form.Group as={Row} controlId="username" className="mb-3">
+                      <Form.Label column md={4}>Username</Form.Label>
+                      <Col sm={8}>
+                        <Form.Control type="text" {...register('username')} isInvalid={!!errors.username} />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.username?.message}
+                        </Form.Control.Feedback>
+                      </Col>
+                    </Form.Group>
 
-                <Form.Group as={Row} controlId="password" className="mb-3">
-                  <Form.Label column md={4}>Password</Form.Label>
-                  <Col sm={8}>
-                    <Form.Control type="password" {...register('password')} isInvalid={!!errors.password} />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.password?.message}
-                    </Form.Control.Feedback>
-                  </Col>
-                </Form.Group>
+                    <Form.Group as={Row} controlId="password" className="mb-3">
+                      <Form.Label column md={4}>Password</Form.Label>
+                      <Col sm={8}>
+                        <Form.Control type="password" {...register('password')} isInvalid={!!errors.password} />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.password?.message}
+                        </Form.Control.Feedback>
+                      </Col>
+                    </Form.Group>
 
-                <Form.Group as={Row} controlId="confirmPassword" className="mb-3">
-                  <Form.Label column md={4}>Confirm Password</Form.Label>
-                  <Col sm={8}>
-                    <Form.Control
-                      type="password"
-                      {...register('confirmPassword')}
-                      isInvalid={!!errors.confirmPassword}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.confirmPassword?.message}
-                    </Form.Control.Feedback>
-                  </Col>
-                </Form.Group>
+                    <Form.Group as={Row} controlId="confirmPassword" className="mb-3">
+                      <Form.Label column md={4}>Confirm Password</Form.Label>
+                      <Col sm={8}>
+                        <Form.Control
+                          type="password"
+                          {...register('confirmPassword')}
+                          isInvalid={!!errors.confirmPassword}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.confirmPassword?.message}
+                        </Form.Control.Feedback>
+                      </Col>
+                    </Form.Group>
 
-                <Form.Group as={Row} controlId="companyIni" className="mb-3">
-                  <Form.Label column md={4}>Company Name</Form.Label>
-                  <Col sm={8}>
-                    <OverlayTrigger
-                      placement="right"
-                      overlay={(
-                        <Tooltip id="company-tooltip">
-                          Ex: Spire, Walmart, etc
-                        </Tooltip>
-                      )}
-                      trigger={['focus']}
-                    >
-                      <Form.Control
-                        type="text"
-                        value={typedCompany}
-                        onChange={handleCompanyChange}
-                        isInvalid={!!errors.companyIni}
-                      />
-                    </OverlayTrigger>
-                    <Form.Control.Feedback type="invalid">
-                      {errors.companyIni?.message}
-                    </Form.Control.Feedback>
+                    <Form.Group as={Row} controlId="companyIni" className="mb-3">
+                      <Form.Label column md={4}>Company Name</Form.Label>
+                      <Col sm={8}>
+                        <OverlayTrigger
+                          placement="right"
+                          overlay={<Tooltip id="company-tooltip">Ex: Spire, Walmart, etc</Tooltip>}
+                          trigger={['focus']}
+                        >
+                          <Form.Control
+                            type="text"
+                            value={typedCompany}
+                            onChange={handleCompanyChange}
+                            isInvalid={!!errors.companyIni}
+                          />
+                        </OverlayTrigger>
+                        <Form.Control.Feedback type="invalid">
+                          {errors.companyIni?.message}
+                        </Form.Control.Feedback>
 
-                    {companySuggestions.length > 0 && (
-                      <ListGroup className="autocomplete-dropdown">
-                        {companySuggestions.map((company) => (
-                          <ListGroup.Item
-                            key={company}
-                            action
-                            onClick={() => handleCompanySelect(company)}
-                          >
-                            {company}
-                          </ListGroup.Item>
-                        ))}
-                      </ListGroup>
-                    )}
-                  </Col>
-                </Form.Group>
+                        {companySuggestions.length > 0 && (
+                          <ListGroup className="autocomplete-dropdown">
+                            {companySuggestions.map((company) => (
+                              <ListGroup.Item
+                                key={company}
+                                action
+                                onClick={() => handleCompanySelect(company)}
+                              >
+                                {company}
+                              </ListGroup.Item>
+                            ))}
+                          </ListGroup>
+                        )}
+                      </Col>
+                    </Form.Group>
 
-                <Button type="submit" className="w-100">Register</Button>
-              </Form>
+                    <Button type="submit" className="w-100">Register</Button>
+                  </Form>
 
-              {signupSubmitted && (
-                <Alert variant="success" className="mt-3 text-center">
-                  Signup request submitted! Your account is pending admin approval.
-                </Alert>
-              )}
-            </Card.Body>
-            <Card.Footer>
-              Already have an account?
-              <br />
-              <a href="/auth/signin">Sign in</a>
-            </Card.Footer>
-          </Card>
-        </Col>
-      </Row>
+                  {signupSubmitted && (
+                    <Alert variant="success" className="mt-3 text-center">
+                      Signup request submitted! Your account is pending admin approval.
+                    </Alert>
+                  )}
+                </Card.Body>
+                <Card.Footer>
+                  Already have an account?
+                  <br />
+                  <a href="/auth/signin">Sign in</a>
+                </Card.Footer>
+              </Card>
+            </Col>
+          </Row>
+        </div>
+      </div>
     </Container>
   );
 };

@@ -7,52 +7,61 @@
     background-color: #f7f7f7;
 }
 
-/* Container with Flexbox */
-.sign-up-container {
+/* Outer wrapper for clean black outline around everything */
+.sign-up-wrapper {
+    padding: 0px; /* space between black border and gradient container */
+    outline: 5px solid black;
+    outline-offset: 2px;
     display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign-up-container {
+    position: relative;
+    z-index: 1;
+    padding: 10px; /* thickness of the gradient border */
+    background: transparent;
+  }
+  
+  /* Inner actual content box */
+  .sign-up-inner {
     background: #d9eaf4;
-    border-radius: 0px;
-    padding: 40px;
-    max-width: 800px;
+    border-radius: 0;
+    padding: 10px;
     width: 100%;
-
-    /* Gradient border */
-    border: 5px solid;
-    border-image: linear-gradient(135deg, #7da8d6, #f09c3d, #9b84bd) 1;
-    
-    /* Black outline around border */
-    outline: 3px solid black;
-    outline-offset: px;
-
-    /* Animation base */
-    animation: borderGlow 5s linear infinite;
-}
-
-/* Animate the gradient background inside the border */
-@keyframes borderGlow {
-    0% {
-        border-image-source: linear-gradient(135deg, #7da8d6, #f09c3d, #9b84bd);
-    }
-    50% {
-        border-image-source: linear-gradient(135deg, #f09c3d, #9b84bd, #7da8d6);
-    }
-    100% {
-        border-image-source: linear-gradient(135deg, #7da8d6, #f09c3d, #9b84bd);
-    }
-}
-
-/* Gradient Border Wrapper */
-.sign-up-container::before {
+    margin-left: 0px;
+    max-width: 800px;
+    display: flex;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Gradient border behind content */
+  .sign-up-container::before {
     content: '';
     position: absolute;
-    top: -4px;
-    left: -4px;
-    right: -4px;
-    bottom: -4px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, #7da8d6, #f09c3d, #9b84bd);
+    background-size: 300% 300%;
+    animation: gradientShift 6s ease infinite;
     z-index: -1;
-    background: linear-gradient(135deg, #1a237e, #673ab7, #d32f2f);
-    border-radius: 14px;
-}
+  }
+  
+/* Animate the gradient border */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }}
 
 /* Left Section */
 .left-section {
@@ -60,16 +69,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 50px;
-    font-weight: bold;
-    color: #202124;
 }
 
-/* Logo Styling inside Left Section */
-.left-section .logo {
-    max-width: 80%;
+/* Spire Sign-Up Image Styling */
+.signup-image,
+.spire-logo {
+    max-width: 100%;
     height: auto;
-    margin-bottom: 20px;
+    object-fit: contain;
 }
 
 /* Right Section */
@@ -138,11 +145,4 @@ button:hover {
 
 .signup-link a:hover {
     text-decoration: underline;
-}
-
-/* Spire Sign-Up Image Styling */
-.signup-image {
-    max-width: 100%;
-    height: auto;
-    object-fit: contain;
 }
