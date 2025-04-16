@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    const { stressTests, companyId }: StressTestRequest = body;
+    const { stressTests }: StressTestRequest = body;
 
     if (!stressTests) {
       return NextResponse.json({ error: 'Invalid or missing stressTests data' }, { status: 400 });
@@ -32,7 +32,7 @@ export async function POST(req: NextRequest) {
 
     const results: any[] = [];
 
-    const getMissingData = async (testName: string, companyId: string) => {
+    const getMissingData = async (testName: string) => {
       if (testName === 'simulateDropInInvestmentReturnRate') {
         const stressEffectData = await prisma.stressEffect.findUnique({
           where: { companyId },
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
           where: { companyId },
           select: {
             expense: true,
-            eventYear: true
+            eventYear: true,
           },
         });
         return expenseData || {};
@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
             loanAmount: true,
             loanPeriod: true,
             baselineInterestRate: true,
-            stressTestInterestRate: true
+            stressTestInterestRate: true,
           },
         });
         return bondReturnData || {};
@@ -97,31 +97,31 @@ export async function POST(req: NextRequest) {
 
     if (stressTests.simulateDropInInvestmentReturnRate) {
       const params = stressTests.simulateDropInInvestmentReturnRate;
-      const finalParams = params || await getMissingData('simulateDropInInvestmentReturnRate', companyId);
+      const finalParams = params || await getMissingData('simulateDropInInvestmentReturnRate');
       results.push(await simulateDropInInvestmentReturnRate(finalParams));
     }
 
     if (stressTests.simulateDropInRevenueReturnRate) {
       const params = stressTests.simulateDropInRevenueReturnRate;
-      const finalParams = params || await getMissingData('simulateDropInRevenueReturnRate', companyId);
+      const finalParams = params || await getMissingData('simulateDropInRevenueReturnRate');
       results.push(await simulateDropInRevenueReturnRate(finalParams));
     }
 
     if (stressTests.simulateOneTimeEventExpense) {
       const params = stressTests.simulateOneTimeEventExpense;
-      const finalParams = params || await getMissingData('simulateOneTimeEventExpense', companyId);
+      const finalParams = params || await getMissingData('simulateOneTimeEventExpense');
       results.push(await simulateOneTimeEventExpense(finalParams));
     }
 
     if (stressTests.simulateIncreaseInOperatingExpenses) {
       const params = stressTests.simulateIncreaseInOperatingExpenses;
-      const finalParams = params || await getMissingData('simulateIncreaseInOperatingExpenses', companyId);
+      const finalParams = params || await getMissingData('simulateIncreaseInOperatingExpenses');
       results.push(await simulateIncreaseInOperatingExpenses(finalParams));
     }
 
     if (stressTests.simulateDecreaseInBondReturn) {
       const params = stressTests.simulateDecreaseInBondReturn;
-      const finalParams = params || await getMissingData('simulateDecreaseInBondReturn', companyId);
+      const finalParams = params || await getMissingData('simulateDecreaseInBondReturn');
       results.push(await simulateDecreaseInBondReturn(finalParams));
     }
 
