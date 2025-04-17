@@ -1,10 +1,9 @@
-import { PrismaClient, Role } from '@prisma/client';
+import { PrismaClient, Role, Prisma } from '@prisma/client';
 import { hash } from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 async function main() {
-  //* * Phat's logic for new data seeding */
   const users = [
     { email: 'client@gmail.com',
       username: 'client',
@@ -63,7 +62,6 @@ async function main() {
         role: user.role,
         status: user.status,
         companyIni: user.companyIni,
-
       },
     });
   }
@@ -71,18 +69,44 @@ async function main() {
   for (const company of companies) {
     await prisma.company.upsert({
       where: { name: company.name },
-      update: {
-      },
+      update: {},
       create: {
         name: company.name,
       },
     });
   }
 
-  console.log('Seeding completed for Phat\'s Data!');
+  // Seed StressTest model with dummy data
+  const company1 = await prisma.company.findUnique({ where: { name: 'Company 1' } });
+  const adminUser = await prisma.user.findUnique({ where: { email: 'admin@gmail.com' } });
 
-  //* * END  */
+  if (company1 && adminUser) {
+    await prisma.stressTest.create({
+      data: {
+        companyId: company1.id,
+        userId: adminUser.id,
+        investmentAmount: 1000000,
+        interestRate: new Prisma.Decimal(5),
+        interestRateDrop: new Prisma.Decimal(2),
+        impactedYears: 5,
+        reinvestmentPercentage: new Prisma.Decimal(0.02),
+
+        investmentRate: new Prisma.Decimal(0.03),
+        investmentRateDrop: new Prisma.Decimal(0.01),
+
+        expensesAndYear: JSON.stringify({ year2023: 50000, year2024: 55000 }),
+        increasePercentage: new Prisma.Decimal(0.05),
+
+        loanPeriod: 10,
+        baselineInterestRate: new Prisma.Decimal(4),
+        stressTestInterestRate: new Prisma.Decimal(6),
+      },
+    });
+  } else {
+    console.error('Error: Unable to find Company 1 or Admin user to associate StressTest');
+  }
 }
+
 main()
   .then(() => prisma.$disconnect())
   .catch(async (e) => {
