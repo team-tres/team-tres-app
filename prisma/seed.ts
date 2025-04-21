@@ -84,6 +84,7 @@ for (const user of users) {
 //   const company1 = await prisma.company.findUnique({ where: { name: 'Company 1' } });
 //   const adminUser = await prisma.user.findUnique({ where: { email: 'admin@gmail.com' } });
 
+
 //   if (company1 && adminUser) {
 //     await prisma.stressTest.create({
 //       data: {
