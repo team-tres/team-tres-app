@@ -122,28 +122,74 @@ model Company {
     users User[]
 
     FinancialCompilation FinancialCompilation[]
-    StressTest           StressTest?
+    StressTest           StressTest[]
 }
 
 model StressTest {
-    id      Int     @id @default(autoincrement())
-    company Company @relation(fields: [companyId], references: [id])
-    user    User    @relation(fields: [userId], references: [id])
+    id                Int                                  @id @default(autoincrement())
+    company           Company                              @relation(fields: [companyId], references: [id])
+    companyId         Int
+    user              User                                 @relation(fields: [userId], references: [id])
+    userId            Int
+    type              StressTestType
+    createdAt         DateTime                             @default(now())
+    investmentDrop    SimulateDropInInvestmentReturnRate?
+    revenueDrop       SimulateDropInRevenueReturnRate?
+    oneTimeEvent      SimulateOneTimeEventExpense?
+    operatingIncrease SimulateIncreaseInOperatingExpenses?
+    bondReturnDrop    SimulateDecreaseInBondReturn?
+}
 
-    userId                 Int
-    companyId              Int     @unique
+enum StressTestType {
+    DROP_INVESTMENT_RETURN
+    DROP_REVENUE_RETURN
+    ONE_TIME_EVENT_EXPENSE
+    INCREASE_OPERATING_EXPENSE
+    DECREASE_BOND_RETURN
+}
+
+model SimulateDropInInvestmentReturnRate {
+    id           Int        @id @default(autoincrement())
+    stressTestId Int        @unique
+    stressTest   StressTest @relation(fields: [stressTestId], references: [id])
+
     investmentAmount       Int
     interestRate           Decimal
     interestRateDrop       Decimal
     impactedYears          Int
     reinvestmentPercentage Decimal
+}
 
+model SimulateDropInRevenueReturnRate {
+    id                 Int        @id @default(autoincrement())
+    stressTestId       Int        @unique
+    stressTest         StressTest @relation(fields: [stressTestId], references: [id])
+    netSales           Json
     investmentRate     Decimal
     investmentRateDrop Decimal
+}
 
-    expensesAndYear    Json
+model SimulateOneTimeEventExpense {
+    id           Int        @id @default(autoincrement())
+    stressTestId Int        @unique
+    stressTest   StressTest @relation(fields: [stressTestId], references: [id])
+    expense      Int
+    eventYear    Int
+}
+
+model SimulateIncreaseInOperatingExpenses {
+    id                 Int        @id @default(autoincrement())
+    stressTestId       Int        @unique
+    stressTest         StressTest @relation(fields: [stressTestId], references: [id])
+    expensesByYear     Json
     increasePercentage Decimal
+}
 
+model SimulateDecreaseInBondReturn {
+    id                     Int        @id @default(autoincrement())
+    stressTestId           Int        @unique
+    stressTest             StressTest @relation(fields: [stressTestId], references: [id])
+    loanAmount             Int
     loanPeriod             Int
     baselineInterestRate   Decimal
     stressTestInterestRate Decimal
