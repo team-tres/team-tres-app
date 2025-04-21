@@ -52,7 +52,25 @@ async function callStressTestAPI(payload: StressTestRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { settings, multipliers, companyId, stressTests } = body;
+    const { userId } = body;
+    if (!userId) {
+      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    }
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      return NextResponse.json({ error: `User with ID ${userId} not found` }, { status: 404 });
+    }
+    if (!user.companyId) {
+      return NextResponse.json({ error: `User with ID ${userId} doesn't have a company id` }, { status: 404 });
+    }
+    const { companyId } = user;
+
+
+
+
+    const { settings, multipliers, stressTests } = body;
 
     if (
       !settings || typeof settings !== 'object'
