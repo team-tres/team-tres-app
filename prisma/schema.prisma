@@ -123,6 +123,72 @@ model Company {
 
     FinancialCompilation FinancialCompilation[]
     StressTest           StressTest[]
+    setting              CompanySetting?
+    multiplier           CompanyMultiplier?
+}
+
+model CompanySetting {
+    id        Int     @id @default(autoincrement())
+    company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    companyId Int     @unique
+
+    revenue                     String
+    costOfContracting           String
+    overhead                    String
+    salariesAndBenefits         String
+    rentAndOverhead             String
+    depreciationAndAmortization String
+    interest                    String
+    profitFromOperations        String
+    interestIncome              String
+    interestExpense             String
+    gainOnDisposalOfAssets      String
+    otherIncome                 String
+    incomeTaxes                 String
+    cashAndCashEquivalents      String
+    accountsReceivable          String
+    inventory                   String
+    propertyPlantAndEquipment   String
+    investment                  String
+    accountsPayable             String
+    taxesPayable                String
+    currentDebtService          String
+    loansPayable                String
+    longDebtService             String
+    equityCapital               String
+    retainedEarnings            String
+}
+
+model CompanyMultiplier {
+    id        Int     @id @default(autoincrement())
+    company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    companyId Int     @unique
+
+    revenue                     Decimal
+    costOfContracting           Decimal
+    overhead                    Decimal
+    salariesAndBenefits         Decimal
+    rentAndOverhead             Decimal
+    depreciationAndAmortization Decimal
+    interest                    Decimal
+    profitFromOperations        Decimal
+    interestIncome              Decimal
+    interestExpense             Decimal
+    gainOnDisposalOfAssets      Decimal
+    otherIncome                 Decimal
+    incomeTaxes                 Decimal
+    cashAndCashEquivalents      Decimal
+    accountsReceivable          Decimal
+    inventory                   Decimal
+    propertyPlantAndEquipment   Decimal
+    investment                  Decimal
+    accountsPayable             Decimal
+    taxesPayable                Decimal
+    currentDebtService          Decimal
+    loansPayable                Decimal
+    longDebtService             Decimal
+    equityCapital               Decimal
+    retainedEarnings            Decimal
 }
 
 model StressTest {
