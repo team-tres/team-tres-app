@@ -181,15 +181,7 @@ const FinancialInputForm: React.FC = () => {
                           />
                           <div className="invalid-feedback">{errors.gainOnDisposalOfAssets?.message}</div>
                         </Form.Group>
-                        <Form.Group>
-                          <Form.Label>Gain on Disposal of Assets</Form.Label>
-                          <input
-                            type="number"
-                            {...register('gainOnDisposalAssets')}
-                            className={`form-control ${errors.gainOnDisposalAssets ? 'is-invalid' : ''}`}
-                          />
-                          <div className="invalid-feedback">{errors.gainOnDisposalAssets?.message}</div>
-                        </Form.Group>
+
                         <Form.Group>
                           <Form.Label>Other Income</Form.Label>
                           <input
@@ -315,15 +307,7 @@ const FinancialInputForm: React.FC = () => {
                     <Row className="pb-3">
                       <Card className="pt-3">
                         <Card.Title className="text-center">Long-term Liabilities</Card.Title>
-                        <Form.Group>
-                          <Form.Label>Loans Payable</Form.Label>
-                          <input
-                            type="number"
-                            {...register('loansPayable')}
-                            className={`form-control ${errors.loansPayable ? 'is-invalid' : ''}`}
-                          />
-                          <div className="invalid-feedback">{errors.loansPayable?.message}</div>
-                        </Form.Group>
+
                         <Form.Group>
                           <Form.Label>Debt Service</Form.Label>
                           <input
@@ -334,15 +318,15 @@ const FinancialInputForm: React.FC = () => {
                           <div className="invalid-feedback">{errors.currentDebtService?.message}</div>
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>Loan Payable</Form.Label>
+                          <Form.Label>Loans Payable</Form.Label>
                           <div className="pb-3">
                             <input
                               type="number"
-                              {...register('loanPayable')}
-                              className={`form-control ${errors.loanPayable ? 'is-invalid' : ''}`}
+                              {...register('loansPayable')}
+                              className={`form-control ${errors.loansPayable ? 'is-invalid' : ''}`}
                             />
                           </div>
-                          <div className="invalid-feedback">{errors.loanPayable?.message}</div>
+                          <div className="invalid-feedback">{errors.loansPayable?.message}</div>
                         </Form.Group>
                       </Card>
                     </Row>
