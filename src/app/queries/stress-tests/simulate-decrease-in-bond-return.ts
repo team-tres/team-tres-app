@@ -57,6 +57,7 @@ export default function simulateDecreaseInBondReturn({
   const residualEffects = calculateResidualEffects(stressEffects);
 
   return {
+    name: 'decreaseInBondReturn',
     stressEffects,
     residualEffects,
   } as {

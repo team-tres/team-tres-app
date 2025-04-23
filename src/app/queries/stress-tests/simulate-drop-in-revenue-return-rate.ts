@@ -57,6 +57,7 @@ const simulateDropInRevenueReturnRate = ({
   const residualEffects = calculateResidualEffects(stressEffects);
 
   return {
+    name: 'dropInRevenueReturnRate',
     stressEffects,
     residualEffects,
   } as {

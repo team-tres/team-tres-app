@@ -40,6 +40,7 @@ const simulateOneTimeEventExpense = ({ expense, eventYear }: ResidualEffectData)
   const residualEffects = calculateResidualEffects3({ expense, eventYear });
 
   return {
+    name: 'oneTimeEventExpense',
     stressEffects,
     residualEffects,
   } as {
