@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Container, Table, Spinner, Image } from 'react-bootstrap';
 import { Chart } from 'chart.js/auto';
 import './page.css';
@@ -9,7 +9,8 @@ import { useSession } from 'next-auth/react';
 
 const SM = () => {
   const { data: session, status } = useSession();
-
+  const [stressTest, setStressTest] = useState();
+  const [loading2, setLoading2] = useState(true);
   interface ForecastData {
     year: number;
     revenue: number;
@@ -167,10 +168,15 @@ const SM = () => {
         body: JSON.stringify({ userId: Number(session.user.id) }),
       });
       const data: any = await res.json();
-      console.log("Phat's new fetched data:", data);
+      setStressTest(data);
+      setLoading2(false);
     };
     fetchStressTestData();
   }, [status, session?.user?.id]);
+
+  useEffect(() => {
+    console.log('stressTest state updated →', stressTest);
+  }, [stressTest]);
 
   const chartRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null),
     useRef(null), useRef(null), useRef(null), useRef(null)];
@@ -1176,7 +1182,7 @@ const SM = () => {
         <div className="d-flex justify-content-center py-5 grey-bg">
           <Table striped="columns" bordered responsive hover className="financial-table w-85">
             <thead>
-              {loading && (
+              {(loading && loading2) && (
                 <tr>
                   <td colSpan={forecast.length + 1} className="text-center px-4">
                     <Spinner animation="border" role="status">
@@ -1233,73 +1239,44 @@ const SM = () => {
                 ))}
               </tr>
 
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 1 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
+              {stressTest?.stressTestResults.data.map((scenario) => (
+                <React.Fragment key={scenario.name}>
+                  <tr>
+                    <td>
+                      {scenario.name}
+                      {' '}
+                      – Stress
+                    </td>
+                    {scenario.stressEffects.map((value) => <td>{value.toFixed(2)}</td>)}
+                  </tr>
+                  <tr>
+                    <td>
+                      {scenario.name}
+                      {' '}
+                      – Residual
+                    </td>
+                    {scenario.residualEffects.map((value) => <td>{value.toFixed(2)}</td>)}
+                  </tr>
+                </React.Fragment>
+              ))}
 
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 1 - Residual Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
+              {/* <tr className="table-primary">
+                  {stressTest?.forecast.map((forecast) => (
+                <td className="px-4 left">{forecast.name} - Residual Effect</td>
+                  ))}
+                {stressTest?.forecast.map((forecast) => (
+                  <td key={forecast.year} className="px-4 grey-bg text-end">
+                    {stressTest?.forecast.map((forecast) => (
+                    {{forecast.residualEffects}}
+                ))}
                   </td>
                 ))}
-              </tr>
-
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 2 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
-
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 2 - Residual Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
-
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 3 - Residual Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
-
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 4 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
-
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 4 - Residual Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
+              </tr> */}
 
               <tr className="table-striped bold">
                 <td className="px-4 left">Net Sales</td>
                 {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
+                  <td key={forecast.year} className="px-4 grey-bg text-end">
                     {data.netSales
                       ? data.netSales.toLocaleString('en-US', {
                         minimumFractionDigits: 0,
