@@ -285,10 +285,10 @@ const FinancialInputForm: React.FC = () => {
                           <Form.Label>Debt Service</Form.Label>
                           <input
                             type="text"
-                            {...register('longDebtService')}
-                            className={`form-control ${errors.longDebtService ? 'is-invalid' : ''}`}
+                            {...register('currentDebtService')}
+                            className={`form-control ${errors.currentDebtService ? 'is-invalid' : ''}`}
                           />
-                          <div className="invalid-feedback">{errors.longDebtService?.message}</div>
+                          <div className="invalid-feedback">{errors.currentDebtService?.message}</div>
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>Taxes Payable</Form.Label>
@@ -312,10 +312,10 @@ const FinancialInputForm: React.FC = () => {
                           <Form.Label>Debt Service</Form.Label>
                           <input
                             type="text"
-                            {...register('currentDebtService')}
-                            className={`form-control ${errors.currentDebtService ? 'is-invalid' : ''}`}
+                            {...register('longDebtService')}
+                            className={`form-control ${errors.longDebtService ? 'is-invalid' : ''}`}
                           />
-                          <div className="invalid-feedback">{errors.currentDebtService?.message}</div>
+                          <div className="invalid-feedback">{errors.longDebtService?.message}</div>
                         </Form.Group>
                         <Form.Group>
                           <Form.Label>Loans Payable</Form.Label>
