@@ -44,7 +44,7 @@ const SignIn = () => {
     const email = target.email.value;
     const password = target.password.value;
     const result = await signIn('credentials', {
-      redirect: false,
+      redirect: true,
       email,
       password,
     });
