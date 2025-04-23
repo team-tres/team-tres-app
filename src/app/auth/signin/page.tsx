@@ -10,6 +10,7 @@ const SignIn = () => {
   const { data: session } = useSession();
   const router = useRouter();
   const [showError, setShowError] = useState(false);
+
   useEffect(() => {
     if (session?.user) {
       const userWithRole = session.user as { email: string; randomKey: string };
@@ -34,32 +35,24 @@ const SignIn = () => {
     }
   }, [session, router]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null); // Clear any previous errors
+    const target = e.target as typeof e.target & {
+      email: { value: string };
+      password: { value: string };
+    };
+
+    const email = target.email.value;
+    const password = target.password.value;
 
     const result = await signIn('credentials', {
       redirect: false,
-      email: formData.email,
-      password: formData.password,
+      email,
+      password,
     });
 
     if (result?.error) {
-      console.error('Sign in failed: ', result.error);
-      setError('Invalid email or password. Please try again.');
-      // Clear the password field but keep the email for convenience
-      setFormData(prev => ({
-        ...prev,
-        password: '',
-      }));
+      setShowError(true);
     }
   };
 
@@ -71,40 +64,38 @@ const SignIn = () => {
             <h1>Sign In</h1>
           </Col>
 
-        <Col md={8}>
-          <Card className="d-flex align-items-center">
-            <Card.Body>
-              {error && (
-                <Alert variant="danger" className="mb-3">
-                  {error}
-                </Alert>
-              )}
-              <Form className="form" onSubmit={handleSubmit}>
-                <Form.Group as={Row} controlId="email" className="mb-3">
-                  <Form.Label column sm={4}>Email</Form.Label>
-                  <Col md={8}>
-                    <Form.Control
-                      type="text"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Col>
-                </Form.Group>
+          <Col md={8}>
+            <Card className="d-flex align-items-center">
+              <Card.Body>
+                <Form className="form" onSubmit={handleSubmit}>
+                  <Form.Group as={Row} controlId="email" className="mb-3">
+                    <Form.Label column sm={4}>Email</Form.Label>
+                    <Col md={8}>
+                      <Form.Control
+                        type="text"
+                        name="email"
+                        required
+                        onChange={() => setShowError(false)}
+                      />
+                    </Col>
+                  </Form.Group>
 
-                <Form.Group as={Row} controlId="password" className="mb-3">
-                  <Form.Label column sm={4}>Password</Form.Label>
-                  <Col md={8}>
-                    <Form.Control
-                      type="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      required
-                    />
-                  </Col>
-                </Form.Group>
+                  <Form.Group as={Row} controlId="password" className="mb-3">
+                    <Form.Label column sm={4}>Password</Form.Label>
+                    <Col md={8}>
+                      <Form.Control
+                        type="password"
+                        name="password"
+                        required
+                        onChange={() => setShowError(false)}
+                      />
+                    </Col>
+                  </Form.Group>
+
+                  <Button type="submit" className="w-100">Sign In</Button>
+                </Form>
+              </Card.Body>
+
               <Card.Footer className="text-center signup-link">
                 Don&apos;t have an account?
                 <a href="/auth/signup"> Sign up</a>
