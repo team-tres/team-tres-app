@@ -199,7 +199,7 @@ export async function POST(req: NextRequest) {
       stressTests: updatedStressTests,
     };
 
-    const stressTestResults = await allStresscTestAPI(payload);
+    const stressTestResults = await callStressTestAPI(payload);
 
     return NextResponse.json({
       success: true,
