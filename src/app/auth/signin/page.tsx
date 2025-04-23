@@ -2,19 +2,14 @@
 
 import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Button, Card, Col, Container, Form, Row, Alert } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Button, Card, Col, Container, Form, Row, Toast, ToastContainer } from 'react-bootstrap';
 import './page.css';
-import { useEffect, useState } from 'react';
 
 const SignIn = () => {
   const { data: session } = useSession();
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: '',
-  });
-
+  const [showError, setShowError] = useState(false);
   useEffect(() => {
     if (session?.user) {
       const userWithRole = session.user as { email: string; randomKey: string };
@@ -69,11 +64,12 @@ const SignIn = () => {
   };
 
   return (
-    <Container fluid className="d-flex justify-content-center align-items-center background">
-      <Row className="sign-in-container">
-        <Col md={5} className="left-section d-flex align-items-center justify-content-center">
-          <h1>Sign In</h1>
-        </Col>
+    <>
+      <Container fluid className="d-flex justify-content-center align-items-center background">
+        <Row className="sign-in-container">
+          <Col md={5} className="left-section d-flex align-items-center justify-content-center">
+            <h1>Sign In</h1>
+          </Col>
 
         <Col md={8}>
           <Card className="d-flex align-items-center">
@@ -109,19 +105,32 @@ const SignIn = () => {
                     />
                   </Col>
                 </Form.Group>
+              <Card.Footer className="text-center signup-link">
+                Don&apos;t have an account?
+                <a href="/auth/signup"> Sign up</a>
+              </Card.Footer>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
 
-                <Button type="submit" className="w-100">Sign In</Button>
-              </Form>
-            </Card.Body>
-
-            <Card.Footer className="text-center">
-              Don&apos;t have an account?
-              <a href="/auth/signup"> Sign up</a>
-            </Card.Footer>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+      <ToastContainer position="bottom-end" className="p-3">
+        <Toast
+          show={showError}
+          onClose={() => setShowError(false)}
+          delay={4000}
+          autohide
+          className="custom-toast"
+        >
+          <Toast.Header>
+            <strong className="me-auto">Login Error</strong>
+          </Toast.Header>
+          <Toast.Body className="text-white">
+            Invalid email or password. Please try again.
+          </Toast.Body>
+        </Toast>
+      </ToastContainer>
+    </>
   );
 };
 
