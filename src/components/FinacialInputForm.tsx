@@ -318,7 +318,7 @@ const FinancialInputForm: React.FC = () => {
                           <div className="invalid-feedback">{errors.longDebtService?.message}</div>
                         </Form.Group>
                         <Form.Group>
-                          <Form.Label>Loan Payable</Form.Label>
+                          <Form.Label>Loans Payable</Form.Label>
                           <div className="pb-3">
                             <input
                               type="number"

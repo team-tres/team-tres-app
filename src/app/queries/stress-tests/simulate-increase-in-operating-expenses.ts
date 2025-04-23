@@ -50,6 +50,7 @@ const simulateIncreaseInOperatingExpenses = ({
   const residualEffects = calculateResidualEffects(stressEffects);
 
   return {
+    name: 'Increase in Operating Expense',
     stressEffects,
     residualEffects,
   } as {

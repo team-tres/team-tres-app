@@ -52,8 +52,104 @@ async function callStressTestAPI(payload: StressTestRequest) {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { settings, multipliers, companyId, stressTests } = body;
+    const { userId } = body;
+    if (!userId) {
+      return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
+    }
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+    if (!user) {
+      return NextResponse.json({ error: `User with ID ${userId} not found` }, { status: 404 });
+    }
+    if (!user.companyId) {
+      return NextResponse.json({ error: `User with ID ${userId} doesn't have a company id` }, { status: 404 });
+    }
+    const companyIdInit = user.companyId;
+    // console.log('hello comp id', companyIdInit)
+    const companyWithSettings = await prisma.company.findUnique({
+      where: { id: companyIdInit },
+      include: {
+        setting: true,
+        multiplier: true,
+        StressTest: {
+          include: {
+            investmentDrop: true,
+            revenueDrop: true,
+            oneTimeEvent: true,
+            operatingIncrease: true,
+            bondReturnDrop: true,
+          },
+        },
+      },
+    });
+    if (!companyWithSettings?.setting) {
+      return NextResponse.json(
+        { error: `company with id ${companyIdInit} doesn't have setting setup in the database` },
+        { status: 404 },
+      );
+    }
+    if (!companyWithSettings?.multiplier) {
+      return NextResponse.json(
+        { error: `company with id ${companyIdInit} doesn't have multiplier setup in the database` },
+        { status: 404 },
+      );
+    }
+    if (!companyWithSettings?.StressTest) {
+      return NextResponse.json(
+        { error: `company with id ${companyIdInit} doesn't have any stresstest setup in the database` },
+        { status: 404 },
+      );
+    }
+    const settings = { ...companyWithSettings.setting };
+    const multipliers = { ...companyWithSettings.multiplier };
+    const stressTestsArr = { ...companyWithSettings.StressTest };
+    const stressTestInit = stressTestsArr[0];
+    const stressTests: Record<string, any> = {};
 
+    if (stressTestInit.investmentDrop) {
+      stressTests.simulateDropInInvestmentReturnRate = {
+        investmentAmount: stressTestInit.investmentDrop.investmentAmount,
+        interestRate: stressTestInit.investmentDrop.interestRate.toNumber(),
+        interestRateDrop: stressTestInit.investmentDrop.interestRateDrop.toNumber(),
+        impactedYears: stressTestInit.investmentDrop.impactedYears,
+        reinvestmentPercentage: stressTestInit.investmentDrop.reinvestmentPercentage.toNumber(),
+      };
+    }
+
+    if (stressTestInit.revenueDrop) {
+      stressTests.simulateDropInRevenueReturnRate = {
+        netSales: stressTestInit.revenueDrop.netSales,
+        investmentRate: stressTestInit.revenueDrop.investmentRate.toNumber(),
+        investmentRateDrop: stressTestInit.revenueDrop.investmentRateDrop.toNumber(),
+      };
+    }
+
+    if (stressTestInit.oneTimeEvent) {
+      stressTests.simulateOneTimeEventExpense = {
+        expense: stressTestInit.oneTimeEvent.expense,
+        eventYear: stressTestInit.oneTimeEvent.eventYear,
+      };
+    }
+
+    if (stressTestInit.operatingIncrease) {
+      stressTests.simulateIncreaseInOperatingExpenses = {
+        expensesByYear: stressTestInit.operatingIncrease.expensesByYear,
+        increasePercentage: stressTestInit.operatingIncrease.increasePercentage.toNumber(),
+      };
+    }
+
+    if (stressTestInit.bondReturnDrop) {
+      stressTests.simulateDecreaseInBondReturn = {
+        loanAmount: stressTestInit.bondReturnDrop.loanAmount,
+        loanPeriod: stressTestInit.bondReturnDrop.loanPeriod,
+        baselineInterestRate: stressTestInit.bondReturnDrop.baselineInterestRate.toNumber(),
+        stressTestInterestRate: stressTestInit.bondReturnDrop.stressTestInterestRate.toNumber(),
+      };
+    }
+
+    const companyId = companyIdInit.toString();
+    // console.log(stressTests);
     if (
       !settings || typeof settings !== 'object'
       || !multipliers || typeof multipliers !== 'object'
