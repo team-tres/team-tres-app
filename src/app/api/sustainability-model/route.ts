@@ -105,36 +105,48 @@ export async function POST(req: NextRequest) {
     const multipliers = { ...companyWithSettings.multiplier };
     const stressTestsArr = { ...companyWithSettings.StressTest };
     const stressTestInit = stressTestsArr[0];
-    const stressTests = {
+    const stressTests: Record<string, any> = {};
 
-      simulateDropInInvestmentReturnRate: {
-        investmentAmount: stressTestInit.investmentDrop?.investmentAmount,
-        interestRate: stressTestInit.investmentDrop?.interestRate.toNumber(),
-        interestRateDrop: stressTestInit.investmentDrop?.interestRateDrop.toNumber(),
-        impactedYears: stressTestInit.investmentDrop?.impactedYears,
-        reinvestmentPercentage: stressTestInit.investmentDrop?.reinvestmentPercentage.toNumber(),
-      },
-      simulateDropInRevenueReturnRate: {
-        netSales: stressTestInit.revenueDrop?.netSales,
-        investmentRate: stressTestInit.revenueDrop?.investmentRate.toNumber(),
-        investmentRateDrop: stressTestInit.revenueDrop?.investmentRateDrop.toNumber(),
-      },
-      simulateOneTimeEventExpense: {
-        expense: stressTestInit.oneTimeEvent?.expense,
-        eventYear: stressTestInit.oneTimeEvent?.eventYear,
-      },
-      simulateIncreaseInOperatingExpenses: {
-        expensesByYear: stressTestInit.operatingIncrease?.expensesByYear,
-        increasePercentage: stressTestInit.operatingIncrease?.increasePercentage.toNumber(),
-      },
-      simulateDecreaseInBondReturn: {
-        loanAmount: stressTestInit.bondReturnDrop?.loanAmount,
-        loanPeriod: stressTestInit.bondReturnDrop?.loanPeriod,
-        baselineInterestRate: stressTestInit.bondReturnDrop?.baselineInterestRate.toNumber(),
-        stressTestInterestRate: stressTestInit.bondReturnDrop?.stressTestInterestRate.toNumber(),
-      },
+    if (stressTestInit.investmentDrop) {
+      stressTests.simulateDropInInvestmentReturnRate = {
+        investmentAmount: stressTestInit.investmentDrop.investmentAmount,
+        interestRate: stressTestInit.investmentDrop.interestRate.toNumber(),
+        interestRateDrop: stressTestInit.investmentDrop.interestRateDrop.toNumber(),
+        impactedYears: stressTestInit.investmentDrop.impactedYears,
+        reinvestmentPercentage: stressTestInit.investmentDrop.reinvestmentPercentage.toNumber(),
+      };
+    }
 
-    };
+    if (stressTestInit.revenueDrop) {
+      stressTests.simulateDropInRevenueReturnRate = {
+        netSales: stressTestInit.revenueDrop.netSales,
+        investmentRate: stressTestInit.revenueDrop.investmentRate.toNumber(),
+        investmentRateDrop: stressTestInit.revenueDrop.investmentRateDrop.toNumber(),
+      };
+    }
+
+    if (stressTestInit.oneTimeEvent) {
+      stressTests.simulateOneTimeEventExpense = {
+        expense: stressTestInit.oneTimeEvent.expense,
+        eventYear: stressTestInit.oneTimeEvent.eventYear,
+      };
+    }
+
+    if (stressTestInit.operatingIncrease) {
+      stressTests.simulateIncreaseInOperatingExpenses = {
+        expensesByYear: stressTestInit.operatingIncrease.expensesByYear,
+        increasePercentage: stressTestInit.operatingIncrease.increasePercentage.toNumber(),
+      };
+    }
+
+    if (stressTestInit.bondReturnDrop) {
+      stressTests.simulateDecreaseInBondReturn = {
+        loanAmount: stressTestInit.bondReturnDrop.loanAmount,
+        loanPeriod: stressTestInit.bondReturnDrop.loanPeriod,
+        baselineInterestRate: stressTestInit.bondReturnDrop.baselineInterestRate.toNumber(),
+        stressTestInterestRate: stressTestInit.bondReturnDrop.stressTestInterestRate.toNumber(),
+      };
+    }
 
     const companyId = companyIdInit.toString();
     // console.log(stressTests);
