@@ -184,7 +184,7 @@ const ClientDashboard = () => {
     <main>
       <Container fluid id="client-dashboard">
         <Row className="full-height">
-          <Col xs={2} className="left-section">
+          <Col xs={12} sm={4} md={3} lg={2} className="left-section">
             <h1 className="heading-left">
               Welcome
               {' '}
@@ -197,7 +197,7 @@ const ClientDashboard = () => {
             <br />
             <Button className="white-button">Select Executive</Button>
           </Col>
-          <Col xs={10} className="right-section">
+          <Col xs={12} sm={8} md={9} lg={10} className="right-section">
             <div className="dashboard">
               <h2 className="h2">Financial Forecast</h2>
               <div className="mb-3 text-start">

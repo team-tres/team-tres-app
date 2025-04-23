@@ -144,7 +144,7 @@ h2 {
 .green-input {
     background-color: lightgreen !important;
     border: 1px solid black !important;
-    min-width: 60px;
+    min-width: 7vh;
     border-left: none !important;
 }
 
@@ -161,7 +161,7 @@ h2 {
 }
 
 .font {
-    font-size: 12px;
+    font-size: 1.5vh;
 }
 
 .title {
@@ -171,7 +171,7 @@ h2 {
 }
 
 .button {
-    font-size: 10px !important;
+    font-size: 1.5vh !important;
 }
 
 .left {
