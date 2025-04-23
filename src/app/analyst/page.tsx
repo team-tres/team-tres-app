@@ -144,7 +144,7 @@ const ClientDashboard = () => {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({
-            companyId: '1', // Company ID is set to 1
+            companyId: '1',
             settings,
             multipliers,
           }),
