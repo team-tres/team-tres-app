@@ -155,7 +155,9 @@ const SM = () => {
 
     fetchForecastData();
   }, [settings, multipliers]);
-// Phat's new useEffect for fetching stresstest data
+
+  // Phat's new useEffect for fetching stresstest data
+
   useEffect(() => {
     if (status !== 'authenticated') return;
     const fetchStressTestData = async () => {
