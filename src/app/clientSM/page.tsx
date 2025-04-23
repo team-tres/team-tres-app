@@ -9,7 +9,16 @@ import { useSession } from 'next-auth/react';
 
 const SM = () => {
   const { data: session, status } = useSession();
-  const [stressTest, setStressTest] = useState();
+  interface StressTestResults {
+    stressTestResults: {
+      data: Array<{
+        stressEffects: number[];
+        residualEffects?: number[];
+      }>;
+    };
+  }
+
+  const [stressTest, setStressTest] = useState<StressTestResults | null>(null);
   const [loading2, setLoading2] = useState(true);
   interface ForecastData {
     year: number;
@@ -1239,26 +1248,117 @@ const SM = () => {
                 ))}
               </tr>
 
-              {stressTest?.stressTestResults.data.map((scenario) => (
-                <React.Fragment key={scenario.name}>
-                  <tr>
-                    <td>
-                      {scenario.name}
-                      {' '}
-                      – Stress
+              {stressTest?.stressTestResults?.data?.[0] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 1 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[0].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
                     </td>
-                    {scenario.stressEffects.map((value) => <td>{value.toFixed(2)}</td>)}
-                  </tr>
-                  <tr>
-                    <td>
-                      {scenario.name}
-                      {' '}
-                      – Residual
+                  ))}
+                </tr>
+              )}
+
+              {stressTest?.stressTestResults?.data?.[0] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 1 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[0].residualEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
                     </td>
-                    {scenario.residualEffects.map((value) => <td>{value.toFixed(2)}</td>)}
-                  </tr>
-                </React.Fragment>
-              ))}
+                  ))}
+                </tr>
+              )}
+
+              {stressTest?.stressTestResults?.data?.[1] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 2 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[1].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {stressTest?.stressTestResults?.data?.[1] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 2 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[1].residualEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {stressTest?.stressTestResults?.data?.[2] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 3 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[2].residualEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {stressTest?.stressTestResults?.data?.[3] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 4 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[3].residualEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {stressTest?.stressTestResults?.data?.[4] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 5 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[4].residualEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
 
               {/* <tr className="table-primary">
                   {stressTest?.forecast.map((forecast) => (
@@ -1276,7 +1376,7 @@ const SM = () => {
               <tr className="table-striped bold">
                 <td className="px-4 left">Net Sales</td>
                 {forecast.map((data) => (
-                  <td key={forecast.year} className="px-4 grey-bg text-end">
+                  <td key={data.year} className="px-4 grey-bg text-end">
                     {data.netSales
                       ? data.netSales.toLocaleString('en-US', {
                         minimumFractionDigits: 0,
@@ -1437,32 +1537,55 @@ const SM = () => {
                   </td>
                 ))}
               </tr>
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 3 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
 
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 4 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
+              {stressTest?.stressTestResults?.data?.[2] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 3 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[2].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
 
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 5 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
+              {stressTest?.stressTestResults?.data?.[3] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 4 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[3].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {stressTest?.stressTestResults?.data?.[4] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 5 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[4].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
               <tr className="table-light bold">
                 <td className="px-4 left">Total Operating Expenses:</td>
                 {forecast.map((data) => (
@@ -1688,23 +1811,37 @@ const SM = () => {
                   </td>
                 ))}
               </tr>
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 3 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
+              {stressTest?.stressTestResults?.data?.[2] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 3 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[2].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
 
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 4 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
+              {stressTest?.stressTestResults?.data?.[3] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 4 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[3].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
               <tr className="table-light bold">
                 <td className="px-4 left">Total Current Assets</td>
                 {forecast.map((data) => (
@@ -1749,23 +1886,37 @@ const SM = () => {
                   </td>
                 ))}
               </tr>
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 1 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
+              {stressTest?.stressTestResults?.data?.[0] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 1 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[0].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
 
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 2 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
+              {stressTest?.stressTestResults?.data?.[1] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 2 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[1].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
               <tr className="table-light bold">
                 <td className="px-4 left">Total Long-term Asset</td>
                 {forecast.map((data) => (
@@ -1893,14 +2044,21 @@ const SM = () => {
                   </td>
                 ))}
               </tr>
-              <tr className="table-primary">
-                <td className="px-4 left">Scenario 5 - Stress Effect</td>
-                {forecast.map((data) => (
-                  <td key={data.year} className="px-4 grey-bg text-end">
-                    0
-                  </td>
-                ))}
-              </tr>
+              {stressTest?.stressTestResults?.data?.[4] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 5 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[4].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
               <tr className="table-light bold">
                 <td className="px-4 left">Total Long-term Liabilities</td>
                 {forecast.map((data) => (
