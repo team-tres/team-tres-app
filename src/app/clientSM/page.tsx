@@ -1,7 +1,9 @@
+/* eslint-disable react/no-array-index-key */
+
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Container, Table, Spinner, Image } from 'react-bootstrap';
+import { Container, Table, Spinner, Image, Dropdown, Form } from 'react-bootstrap';
 import { Chart } from 'chart.js/auto';
 import './page.css';
 import zoomPlugin from 'chartjs-plugin-zoom';
@@ -1177,6 +1179,16 @@ const SM = () => {
     };
   }, [forecast]);
 
+  const [showStressEffect1, setShowStressEffect1] = useState(false);
+  const [showResidualEffect1, setShowResidualEffect1] = useState(false);
+  const [showStressEffect2, setShowStressEffect2] = useState(false);
+  const [showResidualEffect2, setShowResidualEffect2] = useState(false);
+  const [showResidualEffect3, setShowResidualEffect3] = useState(false);
+  const [showResidualEffect4, setShowResidualEffect4] = useState(false);
+  const [showResidualEffect5, setShowResidualEffect5] = useState(false);
+  const [showStressEffect3, setShowStressEffect3] = useState(false);
+  const [showStressEffect4, setShowStressEffect4] = useState(false);
+  const [showStressEffect5, setShowStressEffect5] = useState(false);
   return (
     <main>
       <Container id="dashboard" fluid className="text-center">
@@ -1188,7 +1200,7 @@ const SM = () => {
           height={5}
           className="spire-logo"
         />
-        <div className="d-flex justify-content-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg rounded-3">
           <Table striped="columns" bordered responsive hover className="financial-table w-85">
             <thead>
               {(loading && loading2) && (
@@ -1248,7 +1260,7 @@ const SM = () => {
                 ))}
               </tr>
 
-              {stressTest?.stressTestResults?.data?.[0] && (
+              {showStressEffect1 && stressTest?.stressTestResults?.data?.[0] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 1 - Stress Effect</td>
                   {stressTest.stressTestResults.data[0].stressEffects.map((value, index) => (
@@ -1264,10 +1276,10 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[0] && (
+              {showResidualEffect1 && stressTest?.stressTestResults?.data?.[0] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 1 - Residual Effect</td>
-                  {stressTest.stressTestResults.data[0].residualEffects.map((value, index) => (
+                  {stressTest.stressTestResults.data[0].residualEffects?.map((value, index) => (
                     <td key={index} className="px-4 grey-bg text-end">
                       {value
                         ? value.toLocaleString('en-US', {
@@ -1280,7 +1292,7 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[1] && (
+              {showStressEffect2 && stressTest?.stressTestResults?.data?.[1] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 2 - Stress Effect</td>
                   {stressTest.stressTestResults.data[1].stressEffects.map((value, index) => (
@@ -1296,10 +1308,10 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[1] && (
+              {showResidualEffect2 && stressTest?.stressTestResults?.data?.[1] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 2 - Residual Effect</td>
-                  {stressTest.stressTestResults.data[1].residualEffects.map((value, index) => (
+                  {stressTest.stressTestResults.data[1].residualEffects?.map((value, index) => (
                     <td key={index} className="px-4 grey-bg text-end">
                       {value
                         ? value.toLocaleString('en-US', {
@@ -1312,10 +1324,10 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[2] && (
+              {showResidualEffect3 && stressTest?.stressTestResults?.data?.[2] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 3 - Residual Effect</td>
-                  {stressTest.stressTestResults.data[2].residualEffects.map((value, index) => (
+                  {stressTest.stressTestResults.data[2].residualEffects?.map((value, index) => (
                     <td key={index} className="px-4 grey-bg text-end">
                       {value
                         ? value.toLocaleString('en-US', {
@@ -1328,10 +1340,10 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[3] && (
+              {showResidualEffect4 && stressTest?.stressTestResults?.data?.[3] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 4 - Residual Effect</td>
-                  {stressTest.stressTestResults.data[3].residualEffects.map((value, index) => (
+                  {stressTest.stressTestResults.data[3].residualEffects?.map((value, index) => (
                     <td key={index} className="px-4 grey-bg text-end">
                       {value
                         ? value.toLocaleString('en-US', {
@@ -1344,10 +1356,10 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[4] && (
+              {showResidualEffect5 && stressTest?.stressTestResults?.data?.[4] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 5 - Residual Effect</td>
-                  {stressTest.stressTestResults.data[4].residualEffects.map((value, index) => (
+                  {stressTest.stressTestResults.data[4].residualEffects?.map((value, index) => (
                     <td key={index} className="px-4 grey-bg text-end">
                       {value
                         ? value.toLocaleString('en-US', {
@@ -1359,19 +1371,6 @@ const SM = () => {
                   ))}
                 </tr>
               )}
-
-              {/* <tr className="table-primary">
-                  {stressTest?.forecast.map((forecast) => (
-                <td className="px-4 left">{forecast.name} - Residual Effect</td>
-                  ))}
-                {stressTest?.forecast.map((forecast) => (
-                  <td key={forecast.year} className="px-4 grey-bg text-end">
-                    {stressTest?.forecast.map((forecast) => (
-                    {{forecast.residualEffects}}
-                ))}
-                  </td>
-                ))}
-              </tr> */}
 
               <tr className="table-striped bold">
                 <td className="px-4 left">Net Sales</td>
@@ -1389,7 +1388,65 @@ const SM = () => {
             </tbody>
           </Table>
         </div>
-        <div className="d-flex justify-content-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
+          <Dropdown>
+            <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+              Show Stress or Residual Effect
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="px-3 custom_dropdown">
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 1 - Stress Effect"
+                checked={showStressEffect1}
+                onChange={() => setShowStressEffect1((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 1 - Residual Effect"
+                checked={showResidualEffect1}
+                onChange={() => setShowResidualEffect1((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 2 - Stress Effect"
+                checked={showStressEffect2}
+                onChange={() => setShowStressEffect2((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 2 - Residual Effect"
+                checked={showResidualEffect2}
+                onChange={() => setShowResidualEffect2((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 3 - Residual Effect"
+                checked={showResidualEffect3}
+                onChange={() => setShowResidualEffect3((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 4 - Residual Effect"
+                checked={showResidualEffect4}
+                onChange={() => setShowResidualEffect4((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 5 - Residual Effect"
+                checked={showResidualEffect5}
+                onChange={() => setShowResidualEffect5((prev) => !prev)}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1471,7 +1528,7 @@ const SM = () => {
             </tbody>
           </Table>
         </div>
-        <div className="d-flex justify-content-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1538,7 +1595,7 @@ const SM = () => {
                 ))}
               </tr>
 
-              {stressTest?.stressTestResults?.data?.[2] && (
+              {showStressEffect3 && stressTest?.stressTestResults?.data?.[2] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 3 - Stress Effect</td>
                   {stressTest.stressTestResults.data[2].stressEffects.map((value, index) => (
@@ -1554,7 +1611,7 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[3] && (
+              {showStressEffect4 && stressTest?.stressTestResults?.data?.[3] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 4 - Stress Effect</td>
                   {stressTest.stressTestResults.data[3].stressEffects.map((value, index) => (
@@ -1570,7 +1627,7 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[4] && (
+              {showStressEffect5 && stressTest?.stressTestResults?.data?.[4] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 5 - Stress Effect</td>
                   {stressTest.stressTestResults.data[4].stressEffects.map((value, index) => (
@@ -1641,7 +1698,37 @@ const SM = () => {
             </tbody>
           </Table>
         </div>
-        <div className="d-flex justify-content-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
+          <Dropdown>
+            <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+              Show Stress or Residual Effect
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="px-3 custom_dropdown">
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 3 - Stress Effect"
+                checked={showStressEffect3}
+                onChange={() => setShowStressEffect3((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 4 - Stress Effect"
+                checked={showStressEffect4}
+                onChange={() => setShowStressEffect4((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 5 - Stress Effect"
+                checked={showStressEffect5}
+                onChange={() => setShowStressEffect5((prev) => !prev)}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1749,7 +1836,7 @@ const SM = () => {
             </tbody>
           </Table>
         </div>
-        <div className="d-flex justify-content-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr className="table-primary">
@@ -1811,7 +1898,7 @@ const SM = () => {
                   </td>
                 ))}
               </tr>
-              {stressTest?.stressTestResults?.data?.[2] && (
+              {showStressEffect3 && stressTest?.stressTestResults?.data?.[2] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 3 - Stress Effect</td>
                   {stressTest.stressTestResults.data[2].stressEffects.map((value, index) => (
@@ -1827,7 +1914,7 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[3] && (
+              {showStressEffect4 && stressTest?.stressTestResults?.data?.[3] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 4 - Stress Effect</td>
                   {stressTest.stressTestResults.data[3].stressEffects.map((value, index) => (
@@ -1886,7 +1973,7 @@ const SM = () => {
                   </td>
                 ))}
               </tr>
-              {stressTest?.stressTestResults?.data?.[0] && (
+              {showStressEffect1 && stressTest?.stressTestResults?.data?.[0] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 1 - Stress Effect</td>
                   {stressTest.stressTestResults.data[0].stressEffects.map((value, index) => (
@@ -1902,7 +1989,7 @@ const SM = () => {
                 </tr>
               )}
 
-              {stressTest?.stressTestResults?.data?.[1] && (
+              {showStressEffect2 && stressTest?.stressTestResults?.data?.[1] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 2 - Stress Effect</td>
                   {stressTest.stressTestResults.data[1].stressEffects.map((value, index) => (
@@ -1946,7 +2033,44 @@ const SM = () => {
             </tbody>
           </Table>
         </div>
-        <div className="d-flex justify-content-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
+          <Dropdown>
+            <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+              Show Stress or Residual Effect
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="px-3 custom_dropdown">
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 3 - Stress Effect"
+                checked={showStressEffect3}
+                onChange={() => setShowStressEffect3((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 4 - Stress Effect"
+                checked={showStressEffect4}
+                onChange={() => setShowStressEffect4((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 1 - Stress Effect"
+                checked={showStressEffect1}
+                onChange={() => setShowStressEffect1((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 2 - Stress Effect"
+                checked={showStressEffect2}
+                onChange={() => setShowStressEffect2((prev) => !prev)}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
+        </div>
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -2044,7 +2168,7 @@ const SM = () => {
                   </td>
                 ))}
               </tr>
-              {stressTest?.stressTestResults?.data?.[4] && (
+              {showStressEffect5 && stressTest?.stressTestResults?.data?.[4] && (
                 <tr className="table-primary">
                   <td className="px-4 left">Scenario 5 - Stress Effect</td>
                   {stressTest.stressTestResults.data[4].stressEffects.map((value, index) => (
@@ -2142,6 +2266,22 @@ const SM = () => {
               </tr>
             </tbody>
           </Table>
+        </div>
+        <div className="d-flex justify-content-center py-3 grey-bg">
+          <Dropdown>
+            <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+              Show Stress or Residual Effect
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="px-3 custom_dropdown">
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 5 - Stress Effect"
+                checked={showStressEffect5}
+                onChange={() => setShowStressEffect5((prev) => !prev)}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </Container>
     </main>
