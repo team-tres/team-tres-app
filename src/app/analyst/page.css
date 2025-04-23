@@ -2,15 +2,8 @@
     min-height: 100vh;
 }
 
-@media (min-width: 768px) {
-    .full-height {
-      display: flex;
-    }
-  }
-
 .left-section {
     color: black;
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content:first baseline;
@@ -54,7 +47,6 @@
 
 .right-section {
     background-color: #F8F8F8;
-    display: flex;
     flex-direction: column;
     text-align: center;
     align-items: stretch;
@@ -144,7 +136,7 @@ h2 {
 .green-input {
     background-color: lightgreen !important;
     border: 1px solid black !important;
-    min-width: 7vh;
+    min-width: 15vh;
     border-left: none !important;
 }
 
