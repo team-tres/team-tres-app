@@ -1,5 +1,3 @@
-/* eslint-disable max-len */
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -58,6 +56,7 @@ const NavBar: React.FC = () => {
                 </Nav.Link>
               )}
               {role === 'AUDITOR' && (
+              <>
                 <Nav.Link
                   id="financial-stuff-nav"
                   href="/financial"
@@ -66,6 +65,15 @@ const NavBar: React.FC = () => {
                 >
                   INPUT FINANCIALS
                 </Nav.Link>
+                <Nav.Link
+                  id="stress-test-nav"
+                  href="/stressTest"
+                  active={pathName === '/stressTest'}
+                  className="font-nav"
+                >
+                  STRESS TEST
+                </Nav.Link>
+              </>
               )}
               {role === 'ANALYST' && (
                 <Nav.Link
