@@ -2,3 +2,20 @@
     font-size: 1.1em;
     font-style: Roboto;
 }
+
+.custom-navbar {
+    transition: all 0.3s ease-in-out;
+    padding: 20px 40px; /* Enlarged padding */
+    background-color: white;
+  }
+  
+  .custom-navbar.scrolled {
+    padding: 10px 40px; /* Reduced padding */
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .img-logo {
+    transition: width 0.3s ease-in-out, height 0.3s ease-in-out;
+  }
+  

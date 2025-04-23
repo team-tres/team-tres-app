@@ -4,13 +4,35 @@ import { useSession, signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import './page.css';
+import { useEffect } from 'react';
 
 const SignIn = () => {
   const { data: session } = useSession();
-  const currentUser = session?.user?.email;
-  const userWithRole = session?.user as { email: string; randomKey: string };
-  const role = userWithRole?.randomKey;
   const router = useRouter();
+
+  useEffect(() => {
+    if (session?.user) {
+      const userWithRole = session.user as { email: string; randomKey: string };
+      const role = userWithRole?.randomKey;
+
+      switch (role) {
+        case 'CLIENT':
+          router.push('/clientDashboard');
+          break;
+        case 'AUDITOR':
+          router.push('/financial');
+          break;
+        case 'ANALYST':
+          router.push('/analyst');
+          break;
+        case 'ADMIN':
+          router.push('/admin');
+          break;
+        default:
+          router.push('/clientDashboard');
+      }
+    }
+  }, [session, router]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -22,32 +44,13 @@ const SignIn = () => {
     const email = target.email.value;
     const password = target.password.value;
     const result = await signIn('credentials', {
-      redirect: false,
+      redirect: true,
       email,
       password,
     });
 
     if (result?.error) {
       console.error('Sign in failed: ', result.error);
-    }
-
-    if (currentUser) {
-      switch (role) {
-        case 'CLIENT':
-          await router.push('/clientDashboard');
-          break;
-        case 'AUDITOR':
-          await router.push('/financial');
-          break;
-        case 'ANALYST':
-          await router.push('/analyst');
-          break;
-        case 'ADMIN':
-          await router.push('/admin');
-          break;
-        default:
-          router.push('/clientDashboard');
-      }
     }
   };
 

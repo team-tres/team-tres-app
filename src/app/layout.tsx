@@ -21,7 +21,7 @@ export default function RootLayout({
   const classString = `${inter.className} wrapper`;
   return (
     <html lang="en">
-      <body className={classString}>
+      <body className={classString} style={{ paddingTop: '60px' }}>
         <Providers>
           <NavBar />
           {children}
