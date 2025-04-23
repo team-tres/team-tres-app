@@ -1,11 +1,11 @@
+'use client';
+
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
-import { hash } from 'bcryptjs'; // changed to bcryptjs to avoid SSR issues
 import { useSession } from 'next-auth/react';
-import { prisma } from '@/lib/prisma';
 
 const ChangePassword = () => {
   const { data: session } = useSession();
@@ -29,12 +29,24 @@ const ChangePassword = () => {
   } = useForm({ resolver: yupResolver(validationSchema) });
 
   const onSubmit = async (data) => {
-    const hashedPassword = await hash(data.password, 10);
-    await prisma.user.update({
-      where: { email },
-      data: { password: hashedPassword },
+    const response = await fetch('/api/change-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password: data.password,
+      }),
     });
-    await swal('Success!', 'Your password has been updated.', 'success');
+
+    const result = await response.json();
+
+    if (result.success) {
+      await swal('Success!', 'Your password has been updated.', 'success');
+    } else {
+      await swal('Error!', result.error || 'Something went wrong.', 'error');
+    }
   };
 
   return (

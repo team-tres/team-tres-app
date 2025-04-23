@@ -7,10 +7,7 @@ import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
-import { PrismaClient } from '@prisma/client';
 import LoadingSpinner from '@/components/LoadingSpinner';
-
-const prisma = new PrismaClient();
 
 const ChangeUsername = () => {
   const { data: session, status } = useSession();
@@ -37,13 +34,26 @@ const ChangeUsername = () => {
   });
 
   const onSubmit = async (data) => {
-    await prisma.user.update({
-      where: { email },
-      data: { username: data.newUsername },
+    const response = await fetch('/api/change-username', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        newUsername: data.newUsername,
+      }),
     });
-    await swal('Username Changed', 'Your username has been updated', 'success', { timer: 2000 });
-    reset();
-    router.push('/account-settings');
+
+    const result = await response.json();
+
+    if (result.success) {
+      await swal('Username Changed', 'Your username has been updated', 'success', { timer: 2000 });
+      reset();
+      router.push('/account-settings');
+    } else {
+      await swal('Error', result.error || 'Something went wrong.', 'error');
+    }
   };
 
   if (status === 'loading') {
