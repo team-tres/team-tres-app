@@ -5,8 +5,11 @@ import { Container, Table, Spinner, Image } from 'react-bootstrap';
 import { Chart } from 'chart.js/auto';
 import './page.css';
 import zoomPlugin from 'chartjs-plugin-zoom';
+import { useSession } from 'next-auth/react';
 
 const SM = () => {
+  const { data: session, status } = useSession();
+
   interface ForecastData {
     year: number;
     revenue: number;
@@ -152,6 +155,20 @@ const SM = () => {
 
     fetchForecastData();
   }, [settings, multipliers]);
+// Phat's new useEffect for fetching stresstest data
+  useEffect(() => {
+    if (status !== 'authenticated') return;
+    const fetchStressTestData = async () => {
+      const res = await fetch('/api/sustainability-model', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: Number(session.user.id) }),
+      });
+      const data: any = await res.json();
+      console.log("Phat's new fetched data:", data);
+    };
+    fetchStressTestData();
+  }, [status, session?.user?.id]);
 
   const chartRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null),
     useRef(null), useRef(null), useRef(null), useRef(null)];
@@ -159,6 +176,9 @@ const SM = () => {
     null, null]);
 
   useEffect(() => {
+    console.log('here is session', session);
+    console.log('here is status', status);
+
     const data1 = {
       labels: forecast.map((item) => item.year),
       datasets: [
