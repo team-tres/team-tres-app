@@ -37,7 +37,7 @@ describe('Stress Test 4 - Edge Cases', () => {
         increasePercentage: 0.025,
       };
       expect(() => simulateIncreaseInOperatingExpenses(data))
-        .toThrowError('Invalid input: Array should contain at least 12 elements.');
+        .toThrowError(`Invalid input: Array should contain at least ${MAX_FORECAST_SIZE} elements.`);
     });
 
     it('NaN value in array, throws error', () => {

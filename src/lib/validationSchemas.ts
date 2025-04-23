@@ -5,72 +5,61 @@ export const FinancialCompilationSchema = Yup.object({
   year: Yup.number()
     .positive('Year must be a positive number')
     .required('Year is required'),
+
   userId: Yup.number()
     .positive('User Id must be a positive number')
     .required('User ID is required'),
 
   gainOnDisposalOfAssets: Yup.number()
-    .positive('gainOnDisposalOfAssets must be a positive number')
-    .required('gainOnDisposalOfAssets is required'),
-
-  income: Yup.number()
-    .positive('Income must be a positive number')
-    .required('Income is required'),
-
-  expenses: Yup.number()
-    .positive('Expenses must be a positive number')
-    .required('Expenses are required'),
+    .min(0, 'Gain on Disposal of Assets must be 0 or a positive number')
+    .required('Gain on Disposal of Assets is required'),
 
   revenue: Yup.number()
     .positive('Revenue must be a positive number')
     .required('Revenue is required'),
 
   costOfContracting: Yup.number()
-    .positive('Cost of contracting must be a positive number')
-    .required('Cost of contracting is required'),
+    .positive('Cost of Contracting must be a positive number')
+    .required('Cost of Contracting is required'),
 
   overhead: Yup.number()
     .positive('Overhead must be a positive number')
     .required('Overhead is required'),
 
   salariesAndBenefits: Yup.number()
-    .positive('Salaries and benefits must be a positive number')
-    .required('Salaries and benefits are required'),
+    .positive('Salaries and Benefits must be a positive number')
+    .required('Salaries and Benefits are required'),
 
   rentAndOverhead: Yup.number()
-    .positive('Rent and overhead must be a positive number')
-    .required('Rent and overhead is required'),
+    .positive('Rent and Overhead must be a positive number')
+    .required('Rent and Overhead is required'),
 
   depreciationAndAmortization: Yup.number()
-    .positive('Depreciation and amortization must be a positive number')
-    .required('Depreciation and amortization is required'),
+    .positive('Depreciation and Amortization must be a positive number')
+    .required('Depreciation and Amortization is required'),
 
   interest: Yup.number()
     .positive('Interest must be a positive number')
     .required('Interest is required'),
 
   interestIncome: Yup.number()
-    .positive('Interest income must be a positive number')
+    .min(0, 'Interest income must be 0 or a positive number')
     .required('Interest income is required'),
 
   interestExpense: Yup.number()
-    .positive('Interest expense must be a positive number')
+    .min(0, 'Interest Expense must be 0 or a positive number')
     .required('Interest expense is required'),
 
-  gainOnDisposalAssets: Yup.number()
-    .positive('Gain on disposal of assets must be a positive number')
-    .required('Gain on disposal of assets is required'),
-
   incomeTaxes: Yup.number()
-    .positive('incomeTaxes of assets must be a positive number')
-    .required('incomeTaxes of assets is required'),
+    .positive('Income Taxes of assets must be a positive number')
+    .required('Income Taxes of assets is required'),
 
   cashAndCashEquivalents: Yup.number()
-    .positive('cashAndCashEquivalents of assets must be a positive number')
-    .required('cashAndCashEquivalents of assets is required'),
+    .positive('Cash and Cash Equivalents of assets must be a positive number')
+    .required('Cash and Cash Equivalents of assets is required'),
 
   otherIncome: Yup.number()
-    .positive('Other income must be a positive number')
+    .min(0, 'Other income must be 0 or a positive number')
     .required('Other income is required'),
 
   accountsReceivable: Yup.number()
@@ -102,16 +91,12 @@ export const FinancialCompilationSchema = Yup.object({
     .required('Long debt service is required'),
 
   loansPayable: Yup.number()
-    .positive('loansPayable service must be a positive number')
-    .required('loansPayable service is required'),
+    .positive('Loans Payable service must be a positive number')
+    .required('Loans Payable service is required'),
 
   currentDebtService: Yup.number()
     .positive('Current debt service must be a positive number')
     .required('Current debt service is required'),
-
-  loanPayable: Yup.number()
-    .positive('Loan payable must be a positive number')
-    .required('Loan payable is required'),
 
   equityCapital: Yup.number()
     .positive('Equity capital must be a positive number')

@@ -122,28 +122,131 @@ model Company {
     users User[]
 
     FinancialCompilation FinancialCompilation[]
-    StressTest           StressTest?
+    StressTest           StressTest[]
+    setting              CompanySetting?
+    multiplier           CompanyMultiplier?
+}
+
+model CompanySetting {
+    id        Int     @id @default(autoincrement())
+    company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    companyId Int     @unique
+
+    revenue                     String
+    costOfContracting           String
+    overhead                    String
+    salariesAndBenefits         String
+    rentAndOverhead             String
+    depreciationAndAmortization String
+    interest                    String
+    profitFromOperations        String
+    interestIncome              String
+    interestExpense             String
+    gainOnDisposalOfAssets      String
+    otherIncome                 String
+    incomeTaxes                 String
+    cashAndCashEquivalents      String
+    accountsReceivable          String
+    inventory                   String
+    propertyPlantAndEquipment   String
+    investment                  String
+    accountsPayable             String
+    taxesPayable                String
+    currentDebtService          String
+    loansPayable                String
+    longDebtService             String
+    equityCapital               String
+    retainedEarnings            String
+}
+
+model CompanyMultiplier {
+    id        Int     @id @default(autoincrement())
+    company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+    companyId Int     @unique
+
+    revenue                     Decimal
+    costOfContracting           Decimal
+    overhead                    Decimal
+    salariesAndBenefits         Decimal
+    rentAndOverhead             Decimal
+    depreciationAndAmortization Decimal
+    interest                    Decimal
+    profitFromOperations        Decimal
+    interestIncome              Decimal
+    interestExpense             Decimal
+    gainOnDisposalOfAssets      Decimal
+    otherIncome                 Decimal
+    incomeTaxes                 Decimal
+    cashAndCashEquivalents      Decimal
+    accountsReceivable          Decimal
+    inventory                   Decimal
+    propertyPlantAndEquipment   Decimal
+    investment                  Decimal
+    accountsPayable             Decimal
+    taxesPayable                Decimal
+    currentDebtService          Decimal
+    loansPayable                Decimal
+    longDebtService             Decimal
+    equityCapital               Decimal
+    retainedEarnings            Decimal
 }
 
 model StressTest {
-    id      Int     @id @default(autoincrement())
-    company Company @relation(fields: [companyId], references: [id])
-    user    User    @relation(fields: [userId], references: [id])
+    id                Int                                  @id @default(autoincrement())
+    company           Company                              @relation(fields: [companyId], references: [id])
+    companyId         Int                                  @unique
+    user              User                                 @relation(fields: [userId], references: [id])
+    userId            Int
+    createdAt         DateTime                             @default(now())
+    investmentDrop    SimulateDropInInvestmentReturnRate?
+    revenueDrop       SimulateDropInRevenueReturnRate?
+    oneTimeEvent      SimulateOneTimeEventExpense?
+    operatingIncrease SimulateIncreaseInOperatingExpenses?
+    bondReturnDrop    SimulateDecreaseInBondReturn?
+}
 
-    userId                 Int
-    companyId              Int     @unique
+model SimulateDropInInvestmentReturnRate {
+    id           Int        @id @default(autoincrement())
+    stressTestId Int        @unique
+    stressTest   StressTest @relation(fields: [stressTestId], references: [id])
+
     investmentAmount       Int
     interestRate           Decimal
     interestRateDrop       Decimal
     impactedYears          Int
     reinvestmentPercentage Decimal
+}
 
+model SimulateDropInRevenueReturnRate {
+    id                 Int        @id @default(autoincrement())
+    stressTestId       Int        @unique
+    stressTest         StressTest @relation(fields: [stressTestId], references: [id])
+    netSales           Json
     investmentRate     Decimal
     investmentRateDrop Decimal
+}
 
-    expensesAndYear    Json
+model SimulateOneTimeEventExpense {
+    id           Int        @id @default(autoincrement())
+    stressTestId Int        @unique
+    stressTest   StressTest @relation(fields: [stressTestId], references: [id])
+    expense      Int
+    eventYear    Int
+}
+
+model SimulateIncreaseInOperatingExpenses {
+    id                 Int        @id @default(autoincrement())
+    stressTestId       Int        @unique
+    stressTest         StressTest @relation(fields: [stressTestId], references: [id])
+    expensesByYear     Json
     increasePercentage Decimal
+}
 
+model SimulateDecreaseInBondReturn {
+    id                     Int        @id @default(autoincrement())
+    stressTestId           Int        @unique
+    stressTest             StressTest @relation(fields: [stressTestId], references: [id])
+    loanAmount             Int
     loanPeriod             Int
     baselineInterestRate   Decimal
     stressTestInterestRate Decimal
