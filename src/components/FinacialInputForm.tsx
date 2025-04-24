@@ -178,6 +178,7 @@ const FinancialInputForm: React.FC = () => {
                             type="text"
                             {...register('gainOnDisposalOfAssets')}
                             className={`form-control ${errors.gainOnDisposalOfAssets ? 'is-invalid' : ''}`}
+>>>>>>>>> Temporary merge branch 2
                           />
                           <div className="invalid-feedback">{errors.gainOnDisposalOfAssets?.message}</div>
                         </Form.Group>
