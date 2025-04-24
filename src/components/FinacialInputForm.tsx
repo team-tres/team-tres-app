@@ -359,6 +359,8 @@ const FinancialInputForm: React.FC = () => {
                   </Col>
                 </Row>
                 <input type="hidden" {...register('userId')} value={currentUserId} />
+                <input type="hidden" {...register('income')} value={1} />
+                <input type="hidden" {...register('expenses')} value={1} />
                 <Form.Group className="form-group">
                   <Row className="pt-3">
                     <Col>
