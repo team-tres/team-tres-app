@@ -27,7 +27,7 @@ const SearchBar = () => {
       </InputGroup.Text>
       <Form.Control
         type="text"
-        placeholder="Search clients..."
+        placeholder="Search users..."
         defaultValue={query}
         onChange={handleSearch}
       />
