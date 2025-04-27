@@ -80,3 +80,31 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
+
+export async function GET(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const companyId = searchParams.get('companyId');
+
+    if (!companyId) {
+      return NextResponse.json({ error: 'companyId is required as query param' }, { status: 400 });
+    }
+
+    const companyMultiplier = await prisma.companyMultiplier.findUnique({
+      where: { companyId: parseInt(companyId, 10) },
+    });
+
+    const companySetting = await prisma.companySetting.findUnique({
+      where: { companyId: parseInt(companyId, 10) },
+    });
+
+    if (!companyMultiplier || !companySetting) {
+      return NextResponse.json({ error: 'Company settings not found' }, { status: 404 });
+    }
+
+    return NextResponse.json({ companyMultiplier, companySetting }, { status: 200 });
+  } catch (error) {
+    console.error('[forecast-settings GET] Error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
+}
