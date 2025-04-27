@@ -2,24 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import simulateDropInInvestmentReturnRate from '@/app/queries/stress-tests/simulate-drop-in-investment-return-rate';
-import simulateDropInInvestmentReturnRate from '@/app/queries/stress-tests/simulate-drop-in-investment-return-rate';
 import simulateDropInRevenueReturnRate from '@/app/queries/stress-tests/simulate-drop-in-revenue-return-rate';
-import simulateOneTimeEventExpense from '@/app/queries/stress-tests/simulate-one-time-event-expense';
-import simulateIncreaseInOperatingExpenses from '@/app/queries/stress-tests/simulate-increase-in-operating-expenses';
-import simulateDecreaseInBondReturn from '@/app/queries/stress-tests/simulate-decrease-in-bond-return';
-
-export interface StressTestRequest {
-  companyId: string;
-  settings: any;
-  multipliers: any;
-  stressTests: {
-    simulateDropInInvestmentReturnRate?: any;
-    simulateDropInRevenueReturnRate?: any;
-    simulateOneTimeEventExpense?: any;
-    simulateIncreaseInOperatingExpenses?: any;
-    simulateDecreaseInBondReturn?: any;
-  };
-}
 import simulateOneTimeEventExpense from '@/app/queries/stress-tests/simulate-one-time-event-expense';
 import simulateIncreaseInOperatingExpenses from '@/app/queries/stress-tests/simulate-increase-in-operating-expenses';
 import simulateDecreaseInBondReturn from '@/app/queries/stress-tests/simulate-decrease-in-bond-return';
