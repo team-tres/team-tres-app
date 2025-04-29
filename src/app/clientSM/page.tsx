@@ -1192,14 +1192,16 @@ const SM = () => {
   return (
     <main>
       <Container id="dashboard" fluid className="text-center">
-        <h1>Sustainability Model</h1>
-        <Image
-          src="/spirebar.png"
-          alt="Spire Bar"
-          width={70}
-          height={5}
-          className="spire-logo"
-        />
+        <div className="justify-content-center py-4">
+          <h1>Sustainability Model</h1>
+          <Image
+            src="/spirebar.png"
+            alt="Spire Bar"
+            width={70}
+            height={5}
+            className="spire-logo"
+          />
+        </div>
         <div className="d-flex justify-content-center py-4 grey-bg rounded-3">
           <Table striped="columns" bordered responsive hover className="financial-table w-85">
             <thead>
