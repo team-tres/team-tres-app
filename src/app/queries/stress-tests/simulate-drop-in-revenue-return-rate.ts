@@ -44,7 +44,7 @@ const simulateDropInRevenueReturnRate = ({
   validateValue(investmentRate, 'interestRate');
   const clampedInvestmentRateDrop = validateAndClampPercentage(investmentRateDrop);
   // The effective drop in return rate per a year
-  const reducedInvestmentRate = investmentRate * (1 - clampedInvestmentRateDrop);
+  const reducedInvestmentRate = investmentRate * clampedInvestmentRateDrop;
 
   isValidArray(netSales, 'number');
 
