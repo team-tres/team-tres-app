@@ -129,7 +129,5 @@ export async function POST(req: NextRequest) {
   } catch (error) {
     console.error('Stress Test API Error:', error);
     return NextResponse.json({ error: 'An error occurred while running the tests' }, { status: 500 });
-    console.error('Stress Test API Error:', error);
-    return NextResponse.json({ error: 'An error occurred while running the tests' }, { status: 500 });
   }
 }
