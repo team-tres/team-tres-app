@@ -95,3 +95,18 @@ button:hover {
 .signup-link a:hover {
     text-decoration: underline;
 }
+
+.custom-toast {
+    background-color: #9cdaf7; 
+    color: #fff;
+  }
+  
+  .custom-toast .toast-header {
+    background-color: #1865e2;
+    color: #e7e7e7;
+  }
+  
+  .custom-toast .toast-body {
+    color: #ffffff;
+  }
+  

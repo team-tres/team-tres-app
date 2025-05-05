@@ -56,24 +56,24 @@ const NavBar: React.FC = () => {
                 </Nav.Link>
               )}
               {role === 'AUDITOR' && (
-              <>
-                <Nav.Link
-                  id="financial-stuff-nav"
-                  href="/financial"
-                  active={pathName === '/financial'}
-                  className="font-nav"
-                >
-                  INPUT FINANCIALS
-                </Nav.Link>
-                <Nav.Link
-                  id="stress-test-nav"
-                  href="/stressTest"
-                  active={pathName === '/stressTest'}
-                  className="font-nav"
-                >
-                  STRESS TEST
-                </Nav.Link>
-              </>
+                <>
+                  <Nav.Link
+                    id="financial-stuff-nav"
+                    href="/financial"
+                    active={pathName === '/financial'}
+                    className="font-nav"
+                  >
+                    INPUT FINANCIALS
+                  </Nav.Link>
+                  <Nav.Link
+                    id="audited-data-nav"
+                    href="/auditor"
+                    active={pathName === '/auditor'}
+                    className="font-nav"
+                  >
+                    AUDITED DATA
+                  </Nav.Link>
+                </>
               )}
               {role === 'ANALYST' && (
                 <Nav.Link
