@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Col, Form, Button } from 'react-bootstrap';
+import './page.css';
 
 const ContactUs = () => {
   const [formData, setFormData] = useState({
