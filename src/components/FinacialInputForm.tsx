@@ -63,7 +63,7 @@ const FinancialInputForm: React.FC = () => {
                 <Form.Group>
                   <Form.Label>Year</Form.Label>
                   <input
-                    type="number"
+                    type="text"
                     {...register('year')}
                     className={`form-control ${errors.year ? 'is-invalid' : ''}`}
                   />
@@ -72,7 +72,7 @@ const FinancialInputForm: React.FC = () => {
                 <Form.Group>
                   <Form.Label>Revenue</Form.Label>
                   <input
-                    type="number"
+                    type="text"
                     {...register('revenue')}
                     className={`form-control ${errors.revenue ? 'is-invalid' : ''}`}
                   />
@@ -87,7 +87,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Cost of Contracting</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('costOfContracting')}
                             className={`form-control ${errors.costOfContracting ? 'is-invalid' : ''}`}
                           />
@@ -97,7 +97,7 @@ const FinancialInputForm: React.FC = () => {
                           <Form.Label>Overhead</Form.Label>
                           <div className="pb-3">
                             <input
-                              type="number"
+                              type="text"
                               {...register('overhead')}
                               className={`form-control ${errors.overhead ? 'is-invalid' : ''}`}
                             />
@@ -113,7 +113,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Salaries and Benefits</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('salariesAndBenefits')}
                             className={`form-control ${errors.salariesAndBenefits ? 'is-invalid' : ''}`}
                           />
@@ -122,7 +122,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Rent and Overhead</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('rentAndOverhead')}
                             className={`form-control ${errors.rentAndOverhead ? 'is-invalid' : ''}`}
                           />
@@ -131,7 +131,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Depreciation And Amortization</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('depreciationAndAmortization')}
                             className={`form-control ${errors.depreciationAndAmortization ? 'is-invalid' : ''}`}
                           />
@@ -141,7 +141,7 @@ const FinancialInputForm: React.FC = () => {
                           <Form.Label>Interest</Form.Label>
                           <div className="pb-3">
                             <input
-                              type="number"
+                              type="text"
                               {...register('interest')}
                               className={`form-control ${errors.interest ? 'is-invalid' : ''}`}
                             />
@@ -156,7 +156,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Interest Income</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('interestIncome')}
                             className={`form-control ${errors.interestIncome ? 'is-invalid' : ''}`}
                           />
@@ -165,7 +165,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Interest Expense</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('interestExpense')}
                             className={`form-control ${errors.interestExpense ? 'is-invalid' : ''}`}
                           />
@@ -174,17 +174,17 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Gain on Disposal of Assets</Form.Label>
                           <input
-                            type="number"
-                            {...register('gainOnDisposalAssets')}
-                            className={`form-control ${errors.gainOnDisposalAssets ? 'is-invalid' : ''}`}
+                            type="text"
+                            {...register('gainOnDisposalOfAssets')}
+                            className={`form-control ${errors.gainOnDisposalOfAssets ? 'is-invalid' : ''}`}
                           />
-                          <div className="invalid-feedback">{errors.gainOnDisposalAssets?.message}</div>
+                          <div className="invalid-feedback">{errors.gainOnDisposalOfAssets?.message}</div>
                         </Form.Group>
 
                         <Form.Group>
                           <Form.Label>Other Income</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('otherIncome')}
                             className={`form-control ${errors.otherIncome ? 'is-invalid' : ''}`}
                           />
@@ -194,7 +194,7 @@ const FinancialInputForm: React.FC = () => {
                           <Form.Label>Income Taxes</Form.Label>
                           <div className="pb-3">
                             <input
-                              type="number"
+                              type="text"
                               {...register('incomeTaxes')}
                               className={`form-control ${errors.incomeTaxes ? 'is-invalid' : ''}`}
                             />
@@ -213,7 +213,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Cash and Cash Equivalents</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('cashAndCashEquivalents')}
                             className={`form-control ${errors.cashAndCashEquivalents ? 'is-invalid' : ''}`}
                           />
@@ -222,7 +222,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Accounts Receivable</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('accountsReceivable')}
                             className={`form-control ${errors.accountsReceivable ? 'is-invalid' : ''}`}
                           />
@@ -232,7 +232,7 @@ const FinancialInputForm: React.FC = () => {
                           <Form.Label>Inventory</Form.Label>
                           <div className="pb-3">
                             <input
-                              type="number"
+                              type="text"
                               {...register('inventory')}
                               className={`form-control ${errors.inventory ? 'is-invalid' : ''}`}
                             />
@@ -248,7 +248,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Property, Plant, and Equipment</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('propertyPlantAndEquipment')}
                             className={`form-control ${errors.propertyPlantAndEquipment ? 'is-invalid' : ''}`}
                           />
@@ -258,7 +258,7 @@ const FinancialInputForm: React.FC = () => {
                           <Form.Label>Investment</Form.Label>
                           <div className="pb-3">
                             <input
-                              type="number"
+                              type="text"
                               {...register('investment')}
                               className={`form-control ${errors.investment ? 'is-invalid' : ''}`}
                             />
@@ -274,7 +274,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Accounts Payable</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('accountsPayable')}
                             className={`form-control ${errors.accountsPayable ? 'is-invalid' : ''}`}
                           />
@@ -283,7 +283,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Debt Service</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('currentDebtService')}
                             className={`form-control ${errors.currentDebtService ? 'is-invalid' : ''}`}
                           />
@@ -293,7 +293,7 @@ const FinancialInputForm: React.FC = () => {
                           <Form.Label>Taxes Payable</Form.Label>
                           <div className="pb-3">
                             <input
-                              type="number"
+                              type="text"
                               {...register('taxesPayable')}
                               className={`form-control ${errors.taxesPayable ? 'is-invalid' : ''}`}
                             />
@@ -310,7 +310,7 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Debt Service</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('longDebtService')}
                             className={`form-control ${errors.longDebtService ? 'is-invalid' : ''}`}
                           />
@@ -320,7 +320,7 @@ const FinancialInputForm: React.FC = () => {
                           <Form.Label>Loans Payable</Form.Label>
                           <div className="pb-3">
                             <input
-                              type="number"
+                              type="text"
                               {...register('loansPayable')}
                               className={`form-control ${errors.loansPayable ? 'is-invalid' : ''}`}
                             />
@@ -335,28 +335,29 @@ const FinancialInputForm: React.FC = () => {
                         <Form.Group>
                           <Form.Label>Equity Capital</Form.Label>
                           <input
-                            type="number"
+                            type="text"
                             {...register('equityCapital')}
                             className={`form-control ${errors.equityCapital ? 'is-invalid' : ''}`}
                           />
                           <div className="invalid-feedback">{errors.equityCapital?.message}</div>
                         </Form.Group>
-                        <Form.Group>
-                          <Form.Label>Retained Earnings</Form.Label>
-                          <input
-                            type="number"
-                            {...register('retainedEarnings')}
-                            className={`form-control ${errors.retainedEarnings ? 'is-invalid' : ''}`}
-                          />
-                          <div className="invalid-feedback">{errors.retainedEarnings?.message}</div>
-                        </Form.Group>
+                        <div className="pb-3">
+                          <Form.Group>
+                            <Form.Label>Retained Earnings</Form.Label>
+
+                            <input
+                              type="text"
+                              {...register('retainedEarnings')}
+                              className={`form-control ${errors.retainedEarnings ? 'is-invalid' : ''}`}
+                            />
+                            <div className="invalid-feedback">{errors.retainedEarnings?.message}</div>
+                          </Form.Group>
+                        </div>
                       </Card>
                     </Row>
                   </Col>
                 </Row>
                 <input type="hidden" {...register('userId')} value={currentUserId} />
-                <input type="hidden" {...register('income')} value={1} />
-                <input type="hidden" {...register('expenses')} value={1} />
                 <Form.Group className="form-group">
                   <Row className="pt-3">
                     <Col>
