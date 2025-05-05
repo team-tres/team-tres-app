@@ -1,12 +1,27 @@
+/* eslint-disable react/no-array-index-key */
+
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { Container, Table, Spinner, Dropdown, Form, Image } from 'react-bootstrap';
+import React, { useEffect, useRef, useState } from 'react';
+import { Container, Table, Spinner, Image, Dropdown, Form } from 'react-bootstrap';
 import { Chart } from 'chart.js/auto';
 import './page.css';
 import zoomPlugin from 'chartjs-plugin-zoom';
+import { useSession } from 'next-auth/react';
 
-const Forecast = () => {
+const SM = () => {
+  const { data: session, status } = useSession();
+  interface StressTestResults {
+    stressTestResults: {
+      data: Array<{
+        stressEffects: number[];
+        residualEffects?: number[];
+      }>;
+    };
+  }
+
+  const [stressTest, setStressTest] = useState<StressTestResults | null>(null);
+  const [loading2, setLoading2] = useState(true);
   interface ForecastData {
     year: number;
     revenue: number;
@@ -153,12 +168,36 @@ const Forecast = () => {
     fetchForecastData();
   }, [settings, multipliers]);
 
+  // Phat's new useEffect for fetching stresstest data
+
+  useEffect(() => {
+    if (status !== 'authenticated') return;
+    const fetchStressTestData = async () => {
+      const res = await fetch('/api/sustainability-model', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: Number(session.user.id) }),
+      });
+      const data: any = await res.json();
+      setStressTest(data);
+      setLoading2(false);
+    };
+    fetchStressTestData();
+  }, [status, session?.user?.id]);
+
+  useEffect(() => {
+    console.log('stressTest state updated →', stressTest);
+  }, [stressTest]);
+
   const chartRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null),
     useRef(null), useRef(null), useRef(null), useRef(null)];
   const chartInstances = useRef<Array<Chart | null>>([null, null, null, null, null, null, null, null,
     null, null]);
 
   useEffect(() => {
+    console.log('here is session', session);
+    console.log('here is status', status);
+
     const data1 = {
       labels: forecast.map((item) => item.year),
       datasets: [
@@ -1140,34 +1179,20 @@ const Forecast = () => {
     };
   }, [forecast]);
 
-  const [showContracting, setShowContracting] = useState(false);
-  const [showOverhead, setShowOverhead] = useState(false);
-  const [showSalaries, setShowSalaries] = useState(false);
-  const [showRent, setShowRent] = useState(false);
-  const [showDeprecation, setShowDeprecation] = useState(false);
-  const [showInterest, setShowInterest] = useState(false);
-  const [showInterestIncome, setShowInterestIncome] = useState(false);
-  const [showInterestExpense, setShowInterestExpense] = useState(false);
-  const [showGain, setShowGain] = useState(false);
-  const [showOtherIncome, setShowOtherIncome] = useState(false);
-  const [showIncomeTaxes, setShowIncomeTaxes] = useState(false);
-  const [showCash, setShowCash] = useState(false);
-  const [showReceivable, setShowReceivable] = useState(false);
-  const [showInventory, setInventory] = useState(false);
-  const [showProperty, setShowProperty] = useState(false);
-  const [showInvestment, setShowInvestment] = useState(false);
-  const [showAccountsPayable, setShowAccountsPayable] = useState(false);
-  const [showCurrentDebt, setShowCurrentDebt] = useState(false);
-  const [showCurrentTaxes, setShowCurrentTaxes] = useState(false);
-  const [showLongDebt, setShowLongDebt] = useState(false);
-  const [showLongLoans, setShowLongLoans] = useState(false);
-  const [showEquityCapital, setShowEquityCapital] = useState(false);
-  const [showRetainedEarnings, setShowRetainedEarnings] = useState(false);
-
+  const [showStressEffect1, setShowStressEffect1] = useState(false);
+  const [showResidualEffect1, setShowResidualEffect1] = useState(false);
+  const [showStressEffect2, setShowStressEffect2] = useState(false);
+  const [showResidualEffect2, setShowResidualEffect2] = useState(false);
+  const [showResidualEffect3, setShowResidualEffect3] = useState(false);
+  const [showResidualEffect4, setShowResidualEffect4] = useState(false);
+  const [showResidualEffect5, setShowResidualEffect5] = useState(false);
+  const [showStressEffect3, setShowStressEffect3] = useState(false);
+  const [showStressEffect4, setShowStressEffect4] = useState(false);
+  const [showStressEffect5, setShowStressEffect5] = useState(false);
   return (
     <main>
       <Container id="dashboard" fluid className="text-center">
-        <h1>12-Year Financial Forecast</h1>
+        <h1>Sustainability Model</h1>
         <Image
           src="/spirebar.png"
           alt="Spire Bar"
@@ -1175,10 +1200,10 @@ const Forecast = () => {
           height={5}
           className="spire-logo"
         />
-        <div className="d-flex justify-content-center py-5 grey-bg rounded-3">
+        <div className="d-flex justify-content-center py-4 grey-bg rounded-3">
           <Table striped="columns" bordered responsive hover className="financial-table w-85">
             <thead>
-              {loading && (
+              {(loading && loading2) && (
                 <tr>
                   <td colSpan={forecast.length + 1} className="text-center px-4">
                     <Spinner animation="border" role="status">
@@ -1188,7 +1213,7 @@ const Forecast = () => {
                 </tr>
               )}
               <tr className="table-primary">
-                <th colSpan={forecast.length + 1} className="company left text-uppercase text-center">
+                <th colSpan={forecast.length + 1} className="company left text-center">
                   Company Name
                 </th>
               </tr>
@@ -1207,7 +1232,7 @@ const Forecast = () => {
 
             <thead>
               <tr className="table-success">
-                <th colSpan={forecast.length + 1} className="income-statement left text-uppercase text-center">
+                <th colSpan={forecast.length + 1} className="income-statement left text-center">
                   Income Statement
                 </th>
               </tr>
@@ -1235,6 +1260,118 @@ const Forecast = () => {
                 ))}
               </tr>
 
+              {showStressEffect1 && stressTest?.stressTestResults?.data?.[0] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 1 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[0].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {showResidualEffect1 && stressTest?.stressTestResults?.data?.[0] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 1 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[0].residualEffects?.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {showStressEffect2 && stressTest?.stressTestResults?.data?.[1] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 2 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[1].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {showResidualEffect2 && stressTest?.stressTestResults?.data?.[1] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 2 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[1].residualEffects?.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {showResidualEffect3 && stressTest?.stressTestResults?.data?.[2] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 3 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[2].residualEffects?.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {showResidualEffect4 && stressTest?.stressTestResults?.data?.[3] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 4 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[3].residualEffects?.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
+              {showResidualEffect5 && stressTest?.stressTestResults?.data?.[4] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 5 - Residual Effect</td>
+                  {stressTest.stressTestResults.data[4].residualEffects?.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
+                          minimumFractionDigits: 0,
+                          maximumFractionDigits: 0,
+                        })
+                        : '-'}
+                    </td>
+                  ))}
+                </tr>
+              )}
+
               <tr className="table-striped bold">
                 <td className="px-4 left">Net Sales</td>
                 {forecast.map((data) => (
@@ -1251,10 +1388,65 @@ const Forecast = () => {
             </tbody>
           </Table>
         </div>
-        <div className="dark-background rounded-3">
-          <canvas ref={chartRefs[0]} />
+        <div className="d-flex justify-content-center py-4 grey-bg">
+          <Dropdown>
+            <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+              Show Stress or Residual Effect
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="px-3 custom_dropdown">
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 1 - Stress Effect"
+                checked={showStressEffect1}
+                onChange={() => setShowStressEffect1((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 1 - Residual Effect"
+                checked={showResidualEffect1}
+                onChange={() => setShowResidualEffect1((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 2 - Stress Effect"
+                checked={showStressEffect2}
+                onChange={() => setShowStressEffect2((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 2 - Residual Effect"
+                checked={showResidualEffect2}
+                onChange={() => setShowResidualEffect2((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 3 - Residual Effect"
+                checked={showResidualEffect3}
+                onChange={() => setShowResidualEffect3((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 4 - Residual Effect"
+                checked={showResidualEffect4}
+                onChange={() => setShowResidualEffect4((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 5 - Residual Effect"
+                checked={showResidualEffect5}
+                onChange={() => setShowResidualEffect5((prev) => !prev)}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1268,39 +1460,32 @@ const Forecast = () => {
                   </td>
                 ))}
               </tr>
-
-              {showContracting && (
-                <tr className="table-light">
-                  <td className="px-4 left">Cost of Contracting</td>
-                  {forecast.map((data) => (
-                    <td key={`contracting-${data.year}`} className="px-4 grey-bg text-end">
-                      {data.costOfContracting
-                        ? data.costOfContracting.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-
-              {showOverhead && (
-                <tr className="table-light">
-                  <td className="px-4 left">Overhead</td>
-                  {forecast.map((data) => (
-                    <td key={`overhead-${data.year}`} className="px-4 grey-bg text-end">
-                      {data.overhead
-                        ? data.overhead.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-
+              <tr className="table-light">
+                <td className="px-4 left">Cost of Contracting</td>
+                {forecast.map((data) => (
+                  <td key={`contracting-${data.year}`} className="px-4 grey-bg text-end">
+                    {data.costOfContracting
+                      ? data.costOfContracting.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Overhead</td>
+                {forecast.map((data) => (
+                  <td key={`overhead-${data.year}`} className="px-4 grey-bg text-end">
+                    {data.overhead
+                      ? data.overhead.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
               <tr className="table-light bold">
                 <td className="px-4 left">Cost of Goods Sold:</td>
                 {forecast.map((data) => (
@@ -1342,40 +1527,8 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-contracting"
-                    label="Cost of Contracting"
-                    checked={showContracting}
-                    onChange={() => setShowContracting((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-overhead"
-                    label="Overhead"
-                    checked={showOverhead}
-                    onChange={() => setShowOverhead((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </div>
         </div>
-        <div className="dark-background rounded-top">
-          <canvas ref={chartRefs[7]} />
-        </div>
-        <div className="dark-background rounded-bottom">
-          <canvas ref={chartRefs[3]} />
-        </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1389,13 +1542,66 @@ const Forecast = () => {
                   </td>
                 ))}
               </tr>
-              {showSalaries && (
-                <tr className="table-light">
-                  <td className="px-4 left">Salaries and Benefits</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.salariesAndBenefits
-                        ? data.salariesAndBenefits.toLocaleString('en-US', {
+              <tr className="table-light">
+                <td className="px-4 left">Salaries and Benefits</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.salariesAndBenefits
+                      ? data.salariesAndBenefits.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Rent and Overhead</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.rentAndOverhead
+                      ? data.rentAndOverhead.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Deprecation and Amortization</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.depreciationAndAmortization
+                      ? data.depreciationAndAmortization.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Interest</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.interest
+                      ? data.interest.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+
+              {showStressEffect3 && stressTest?.stressTestResults?.data?.[2] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 3 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[2].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
                         })
@@ -1404,13 +1610,14 @@ const Forecast = () => {
                   ))}
                 </tr>
               )}
-              {showRent && (
-                <tr className="table-light">
-                  <td className="px-4 left">Rent and Overhead</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.rentAndOverhead
-                        ? data.rentAndOverhead.toLocaleString('en-US', {
+
+              {showStressEffect4 && stressTest?.stressTestResults?.data?.[3] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 4 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[3].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
                         })
@@ -1419,13 +1626,14 @@ const Forecast = () => {
                   ))}
                 </tr>
               )}
-              {showDeprecation && (
-                <tr className="table-light">
-                  <td className="px-4 left">Deprecation and Amortization</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.depreciationAndAmortization
-                        ? data.depreciationAndAmortization.toLocaleString('en-US', {
+
+              {showStressEffect5 && stressTest?.stressTestResults?.data?.[4] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 5 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[4].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
                         })
@@ -1434,21 +1642,7 @@ const Forecast = () => {
                   ))}
                 </tr>
               )}
-              {showInterest && (
-                <tr className="table-light">
-                  <td className="px-4 left">Interest</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.interest
-                        ? data.interest.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
+
               <tr className="table-light bold">
                 <td className="px-4 left">Total Operating Expenses:</td>
                 {forecast.map((data) => (
@@ -1503,54 +1697,38 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-salaries"
-                    label="Salaries and Benefits"
-                    checked={showSalaries}
-                    onChange={() => setShowSalaries((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-rent"
-                    label="Rent and Overhead"
-                    checked={showRent}
-                    onChange={() => setShowRent((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-deprecation"
-                    label="Deprecation and Amortization"
-                    checked={showDeprecation}
-                    onChange={() => setShowDeprecation((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-interest"
-                    label="Interest"
-                    checked={showInterest}
-                    onChange={() => setShowInterest((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </div>
         </div>
-        <div className="dark-background rounded-top">
-          <canvas ref={chartRefs[8]} />
+        <div className="d-flex justify-content-center py-4 grey-bg">
+          <Dropdown>
+            <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+              Show Stress or Residual Effect
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="px-3 custom_dropdown">
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 3 - Stress Effect"
+                checked={showStressEffect3}
+                onChange={() => setShowStressEffect3((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 4 - Stress Effect"
+                checked={showStressEffect4}
+                onChange={() => setShowStressEffect4((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 5 - Stress Effect"
+                checked={showStressEffect5}
+                onChange={() => setShowStressEffect5((prev) => !prev)}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
-        <div className="dark-background rounded-bottom">
-          <canvas ref={chartRefs[1]} />
-        </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1564,66 +1742,6 @@ const Forecast = () => {
                   </td>
                 ))}
               </tr>
-              {showInterestIncome && (
-                <tr className="table-light">
-                  <td className="px-4 left">Interest Income</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.interestIncome
-                        ? data.interestIncome.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-              {showInterestExpense && (
-                <tr className="table-light">
-                  <td className="px-4 left">Interest Expense</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.interestExpense
-                        ? data.interestExpense.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-              {showGain && (
-                <tr className="table-light">
-                  <td className="px-4 left">Gain (loss) on Disposal of Assets</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.gainOnDisposalOfAssets
-                        ? data.gainOnDisposalOfAssets.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-              {showOtherIncome && (
-                <tr className="table-light">
-                  <td className="px-4 left">Other Income (expense)</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.otherIncome
-                        ? data.otherIncome.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
               <tr className="table-light bold">
                 <td className="px-4 left">Total Other Income (expense)</td>
                 {forecast.map((data) => (
@@ -1676,21 +1794,19 @@ const Forecast = () => {
                   </td>
                 ))}
               </tr>
-              {showIncomeTaxes && (
-                <tr className="table-light">
-                  <td className="px-4 left">Income Taxes</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.incomeTaxes
-                        ? data.incomeTaxes.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
+              <tr className="table-light">
+                <td className="px-4 left">Income Taxes</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.incomeTaxes
+                      ? data.incomeTaxes.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
               <tr className="table-light bold">
                 <td className="px-4 left">Net Income (loss)</td>
                 {forecast.map((data) => (
@@ -1719,65 +1835,12 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-interestIncome"
-                    label="Interest Income"
-                    checked={showInterestIncome}
-                    onChange={() => setShowInterestIncome((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-interestExpense"
-                    label="Interest Expense"
-                    checked={showInterestExpense}
-                    onChange={() => setShowInterestExpense((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-gain"
-                    label="Gain (loss) on Displosal of Assets"
-                    checked={showGain}
-                    onChange={() => setShowGain((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-otherIncome"
-                    label="Other Income"
-                    checked={showOtherIncome}
-                    onChange={() => setShowOtherIncome((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-incomeTaxes"
-                    label="Income Taxes"
-                    checked={showIncomeTaxes}
-                    onChange={() => setShowIncomeTaxes((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </div>
         </div>
-        <div className="dark-background rounded-top">
-          <canvas ref={chartRefs[2]} />
-        </div>
-        <div className="dark-background rounded-bottom">
-          <canvas ref={chartRefs[9]} />
-        </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr className="table-primary">
-                <th colSpan={forecast.length + 1} className="balance-sheet left text-uppercase text-center">
+                <th colSpan={forecast.length + 1} className="balance-sheet left text-center">
                   Balance Sheet
                 </th>
               </tr>
@@ -1796,13 +1859,52 @@ const Forecast = () => {
                   Current Assets
                 </th>
               </tr>
-              {showCash && (
-                <tr className="table-light">
-                  <td className="px-4 left">Cash and Cash Equivalents</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.cashAndCashEquivalents
-                        ? data.cashAndCashEquivalents.toLocaleString('en-US', {
+              <tr className="table-light">
+                <td className="px-4 left">Cash and Cash Equivalents</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.cashAndCashEquivalents
+                      ? data.cashAndCashEquivalents.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Account Receivable</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.accountsReceivable
+                      ? data.accountsReceivable.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Inventory</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.inventory
+                      ? data.inventory.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              {showStressEffect3 && stressTest?.stressTestResults?.data?.[2] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 3 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[2].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
                         })
@@ -1811,28 +1913,14 @@ const Forecast = () => {
                   ))}
                 </tr>
               )}
-              {showReceivable && (
-                <tr className="table-light">
-                  <td className="px-4 left">Account Receivable</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.accountsReceivable
-                        ? data.accountsReceivable.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-              {showInventory && (
-                <tr className="table-light">
-                  <td className="px-4 left">Inventory</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.inventory
-                        ? data.inventory.toLocaleString('en-US', {
+
+              {showStressEffect4 && stressTest?.stressTestResults?.data?.[3] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 4 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[3].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
                         })
@@ -1859,13 +1947,39 @@ const Forecast = () => {
                   Long-term Assets
                 </th>
               </tr>
-              {showProperty && (
-                <tr className="table-light">
-                  <td className="px-4 left">Property, Plant, and Equiptment</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.propertyPlantAndEquipment
-                        ? data.propertyPlantAndEquipment.toLocaleString('en-US', {
+              <tr className="table-light">
+                <td className="px-4 left">Property, Plant, and Equiptment</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.propertyPlantAndEquipment
+                      ? data.propertyPlantAndEquipment.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Investment</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.investment
+                      ? data.investment.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              {showStressEffect1 && stressTest?.stressTestResults?.data?.[0] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 1 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[0].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
                         })
@@ -1874,13 +1988,14 @@ const Forecast = () => {
                   ))}
                 </tr>
               )}
-              {showInvestment && (
-                <tr className="table-light">
-                  <td className="px-4 left">Investment</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.investment
-                        ? data.investment.toLocaleString('en-US', {
+
+              {showStressEffect2 && stressTest?.stressTestResults?.data?.[1] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 2 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[1].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
                         })
@@ -1917,58 +2032,45 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-cash"
-                    label="Cash and Cash Equivalents"
-                    checked={showCash}
-                    onChange={() => setShowCash((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-receivable"
-                    label="Account Receivable"
-                    checked={showReceivable}
-                    onChange={() => setShowReceivable((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-inventory"
-                    label="Inventory"
-                    checked={showInventory}
-                    onChange={() => setInventory((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-property"
-                    label="Property, Plant, and Equiptment"
-                    checked={showProperty}
-                    onChange={() => setShowProperty((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-investment"
-                    label="Investment"
-                    checked={showInvestment}
-                    onChange={() => setShowInvestment((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </div>
         </div>
-        <div className="dark-background rounded-3">
-          <canvas ref={chartRefs[4]} />
+        <div className="d-flex justify-content-center py-4 grey-bg">
+          <Dropdown>
+            <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+              Show Stress or Residual Effect
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="px-3 custom_dropdown">
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 3 - Stress Effect"
+                checked={showStressEffect3}
+                onChange={() => setShowStressEffect3((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 4 - Stress Effect"
+                checked={showStressEffect4}
+                onChange={() => setShowStressEffect4((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 1 - Stress Effect"
+                checked={showStressEffect1}
+                onChange={() => setShowStressEffect1((prev) => !prev)}
+              />
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 2 - Stress Effect"
+                checked={showStressEffect2}
+                onChange={() => setShowStressEffect2((prev) => !prev)}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex justify-content-center py-4 grey-bg">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1985,51 +2087,45 @@ const Forecast = () => {
               <tr>
                 <td className="bold left">Current Liabilities (due within 1 year)</td>
               </tr>
-              {showAccountsPayable && (
-                <tr className="table-light">
-                  <td className="px-4 left">Accounts Payable</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.accountsPayable
-                        ? data.accountsPayable.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-              {showCurrentDebt && (
-                <tr className="table-light">
-                  <td className="px-4 left">Debt Service</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.currentDebtService
-                        ? data.currentDebtService.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-              {showCurrentTaxes && (
-                <tr className="table-light">
-                  <td className="px-4 left">Taxes Payable</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.taxesPayable
-                        ? data.taxesPayable.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
+              <tr className="table-light">
+                <td className="px-4 left">Accounts Payable</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.accountsPayable
+                      ? data.accountsPayable.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Debt Service</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.currentDebtService
+                      ? data.currentDebtService.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Taxes Payable</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.taxesPayable
+                      ? data.taxesPayable.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
               <tr className="table-light bold">
                 <td className="px-4 left">Total Current Liabilities</td>
                 {forecast.map((data) => (
@@ -2046,28 +2142,39 @@ const Forecast = () => {
               <tr className="bold left">
                 <td>Long-term Liabilities (due after one year)</td>
               </tr>
-              {showLongDebt && (
-                <tr className="table-light">
-                  <td className="px-4 left">Debt Service</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.longDebtService
-                        ? data.longDebtService.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-              {showLongLoans && (
-                <tr className="table-light">
-                  <td className="px-4 left">Loans Payable</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.loansPayable
-                        ? data.loansPayable.toLocaleString('en-US', {
+              <tr className="table-light">
+                <td className="px-4 left">Debt Service</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.longDebtService
+                      ? data.longDebtService.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Loans Payable</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.loansPayable
+                      ? data.loansPayable.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              {showStressEffect5 && stressTest?.stressTestResults?.data?.[4] && (
+                <tr className="table-primary">
+                  <td className="px-4 left">Scenario 5 - Stress Effect</td>
+                  {stressTest.stressTestResults.data[4].stressEffects.map((value, index) => (
+                    <td key={index} className="px-4 grey-bg text-end">
+                      {value
+                        ? value.toLocaleString('en-US', {
                           minimumFractionDigits: 0,
                           maximumFractionDigits: 0,
                         })
@@ -2105,36 +2212,32 @@ const Forecast = () => {
               <tr className="bold left">
                 <td>Stockholder&apos;s Equity</td>
               </tr>
-              {showEquityCapital && (
-                <tr className="table-light">
-                  <td className="px-4 left">Equity Capital</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.equityCapital
-                        ? data.equityCapital.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
-              {showRetainedEarnings && (
-                <tr className="table-light">
-                  <td className="px-4 left">Retained Earnings</td>
-                  {forecast.map((data) => (
-                    <td key={data.year} className="px-4 grey-bg text-end">
-                      {data.retainedEarnings
-                        ? data.retainedEarnings.toLocaleString('en-US', {
-                          minimumFractionDigits: 0,
-                          maximumFractionDigits: 0,
-                        })
-                        : '-'}
-                    </td>
-                  ))}
-                </tr>
-              )}
+              <tr className="table-light">
+                <td className="px-4 left">Equity Capital</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.equityCapital
+                      ? data.equityCapital.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
+              <tr className="table-light">
+                <td className="px-4 left">Retained Earnings</td>
+                {forecast.map((data) => (
+                  <td key={data.year} className="px-4 grey-bg text-end">
+                    {data.retainedEarnings
+                      ? data.retainedEarnings.toLocaleString('en-US', {
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      })
+                      : '-'}
+                  </td>
+                ))}
+              </tr>
               <tr className="table-light bold">
                 <td className="px-4 left">Total Stockholder&apos;s Equity</td>
                 {forecast.map((data) => (
@@ -2163,77 +2266,26 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-accountPayable"
-                    label="Accounts Payable"
-                    checked={showAccountsPayable}
-                    onChange={() => setShowAccountsPayable((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-currentDebt"
-                    label="Current Debt Service"
-                    checked={showCurrentDebt}
-                    onChange={() => setShowCurrentDebt((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-currentTaxes"
-                    label="Current Taxes Payable"
-                    checked={showCurrentTaxes}
-                    onChange={() => setShowCurrentTaxes((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-longDebt"
-                    label="Long-term Debt Service"
-                    checked={showLongDebt}
-                    onChange={() => setShowLongDebt((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-longLoans"
-                    label="Long-term Loans Payable"
-                    checked={showLongLoans}
-                    onChange={() => setShowLongLoans((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-equityCapital"
-                    label="Equity Capital"
-                    checked={showEquityCapital}
-                    onChange={() => setShowEquityCapital((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-retainedEarnings"
-                    label="Retained Earnings"
-                    checked={showRetainedEarnings}
-                    onChange={() => setShowRetainedEarnings((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
-          </div>
         </div>
-        <div className="dark-background rounded-top">
-          <canvas ref={chartRefs[5]} />
-        </div>
-        <div className="dark-background rounded-bottom">
-          <canvas ref={chartRefs[6]} />
+        <div className="d-flex justify-content-center py-3 grey-bg">
+          <Dropdown>
+            <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+              Show Stress or Residual Effect
+            </Dropdown.Toggle>
+            <Dropdown.Menu className="px-3 custom_dropdown">
+              <Form.Check
+                type="checkbox"
+                id="toggle-contracting"
+                label="Scenario 5 - Stress Effect"
+                checked={showStressEffect5}
+                onChange={() => setShowStressEffect5((prev) => !prev)}
+              />
+            </Dropdown.Menu>
+          </Dropdown>
         </div>
       </Container>
     </main>
   );
 };
 
-export default Forecast;
+export default SM;

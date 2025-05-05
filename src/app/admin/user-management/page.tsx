@@ -31,11 +31,11 @@ const AdminPage = async ({ searchParams = {} }: { searchParams?: { query?: strin
     );
 
   return (
-    <main style={{ backgroundColor: '#f5f5dc', minHeight: '100vh', paddingTop: '20px' }}>
+    <main style={{ backgroundColor: '#051C2C', minHeight: '100vh', paddingTop: '20px' }}>
       <Container id="list" fluid className="py-3">
         <Row className="align-items-center mb-3">
           <Col md={6}>
-            <h1 className="text-dark">Clients</h1>
+            <h1 className="text-light">All Users</h1>
           </Col>
           <Col md={6}>
             <SearchBar />
@@ -47,7 +47,7 @@ const AdminPage = async ({ searchParams = {} }: { searchParams?: { query?: strin
             {/* Show clients in a table */}
             {users.length === 0 ? (
               <div className="text-center">
-                <p>No clients found.</p>
+                <p>No users found.</p>
               </div>
             ) : (
               <Table striped bordered hover className="shadow bg-white">
