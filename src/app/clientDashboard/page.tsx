@@ -52,6 +52,14 @@ const ClientDashboard = () => {
               its impact on your organization&apos;s financial health.
             </h3>
             <Button className="purple-button">
+              <Link href="/stressTest" passHref legacyBehavior>
+                <a href="/stressTest">Input Stress Test</a>
+              </Link>
+            </Button>
+            <h3>
+              Input information for stress tests. You can create up to 5 different stress tests.
+            </h3>
+            <Button className="purple-button">
               <Link href="/clientForecasts" passHref legacyBehavior>
                 <a href="/clientForecasts">View Forecasts</a>
               </Link>
