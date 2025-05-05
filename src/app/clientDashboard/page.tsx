@@ -46,7 +46,12 @@ const ClientDashboard = () => {
               View your company&apos;s fiscal sustainability model which incorporates inputs
               from your financial forecast and stress test scenario options.
             </h3>
-            <Button className="pink-button">View Stress Tests</Button>
+            <Button className="purple-button">
+              <Link href="/clientViewStress" passHref legacyBehavior>
+                <a href="/clientViewStres">View Stress Tests</a>
+              </Link>
+            </Button>
+
             <h3>
               Apply different stess test scenarios against for financial forecast to understand
               its impact on your organization&apos;s financial health.
