@@ -8,6 +8,7 @@ import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { useRouter } from 'next/navigation';
 import LoadingSpinner from '@/components/LoadingSpinner';
+import './page.css';
 
 const ChangeUsername = () => {
   const { data: session, status } = useSession();

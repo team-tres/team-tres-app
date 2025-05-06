@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
 import { useSession } from 'next-auth/react';
+import './page.css';
 
 const ChangePassword = () => {
   const { data: session } = useSession();
