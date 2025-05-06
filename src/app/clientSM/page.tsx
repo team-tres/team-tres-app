@@ -340,6 +340,7 @@ const SM = () => {
             height={5}
             className="spire-logo"
           />
+        </div>
         <h3>To visualize the stress and residual effects of each scenario, select them from the dropdowns below.</h3>
         <div className="dark-background rounded-3">
           <canvas id="stressChart" />
