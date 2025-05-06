@@ -1167,14 +1167,16 @@ const Forecast = () => {
   return (
     <main>
       <Container id="dashboard" fluid className="text-center">
-        <h1>12-Year Financial Forecast</h1>
-        <Image
-          src="/spirebar.png"
-          alt="Spire Bar"
-          width={70}
-          height={5}
-          className="spire-logo"
-        />
+        <div className="justify-content-center py-4">
+          <h1>12-Year Financial Forecast</h1>
+          <Image
+            src="/spirebar.png"
+            alt="Spire Bar"
+            width={70}
+            height={5}
+            className="spire-logo"
+          />
+        </div>
         <div className="d-flex justify-content-center py-5 grey-bg rounded-3">
           <Table striped="columns" bordered responsive hover className="financial-table w-85">
             <thead>
@@ -1254,7 +1256,7 @@ const Forecast = () => {
         <div className="dark-background rounded-3">
           <canvas ref={chartRefs[0]} />
         </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex flex-column justify-content-center py-5 grey-bg rounded-3">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1342,31 +1344,29 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
+          <div className="mb-3 d-flex justify-content-center">
+            <Dropdown>
+              <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+                Select Details
+              </Dropdown.Toggle>
 
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-contracting"
-                    label="Cost of Contracting"
-                    checked={showContracting}
-                    onChange={() => setShowContracting((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-overhead"
-                    label="Overhead"
-                    checked={showOverhead}
-                    onChange={() => setShowOverhead((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+              <Dropdown.Menu className="px-3 custom_dropdown">
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-contracting"
+                  label="Cost of Contracting"
+                  checked={showContracting}
+                  onChange={() => setShowContracting((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-overhead"
+                  label="Overhead"
+                  checked={showOverhead}
+                  onChange={() => setShowOverhead((prev) => !prev)}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
         <div className="dark-background rounded-top">
@@ -1375,7 +1375,7 @@ const Forecast = () => {
         <div className="dark-background rounded-bottom">
           <canvas ref={chartRefs[3]} />
         </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex flex-column justify-content-center py-5 grey-bg rounded-3">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1503,45 +1503,43 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
+          <div className="mb-3 d-flex justify-content-center">
+            <Dropdown>
+              <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+                Select Details
+              </Dropdown.Toggle>
 
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-salaries"
-                    label="Salaries and Benefits"
-                    checked={showSalaries}
-                    onChange={() => setShowSalaries((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-rent"
-                    label="Rent and Overhead"
-                    checked={showRent}
-                    onChange={() => setShowRent((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-deprecation"
-                    label="Deprecation and Amortization"
-                    checked={showDeprecation}
-                    onChange={() => setShowDeprecation((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-interest"
-                    label="Interest"
-                    checked={showInterest}
-                    onChange={() => setShowInterest((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+              <Dropdown.Menu className="px-3 custom_dropdown">
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-salaries"
+                  label="Salaries and Benefits"
+                  checked={showSalaries}
+                  onChange={() => setShowSalaries((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-rent"
+                  label="Rent and Overhead"
+                  checked={showRent}
+                  onChange={() => setShowRent((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-deprecation"
+                  label="Deprecation and Amortization"
+                  checked={showDeprecation}
+                  onChange={() => setShowDeprecation((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-interest"
+                  label="Interest"
+                  checked={showInterest}
+                  onChange={() => setShowInterest((prev) => !prev)}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
         <div className="dark-background rounded-top">
@@ -1550,7 +1548,7 @@ const Forecast = () => {
         <div className="dark-background rounded-bottom">
           <canvas ref={chartRefs[1]} />
         </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex flex-column justify-content-center py-5 grey-bg rounded-3">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -1719,52 +1717,50 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
+          <div className="mb-3 d-flex justify-content-center">
+            <Dropdown>
+              <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+                Select Details
+              </Dropdown.Toggle>
 
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-interestIncome"
-                    label="Interest Income"
-                    checked={showInterestIncome}
-                    onChange={() => setShowInterestIncome((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-interestExpense"
-                    label="Interest Expense"
-                    checked={showInterestExpense}
-                    onChange={() => setShowInterestExpense((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-gain"
-                    label="Gain (loss) on Displosal of Assets"
-                    checked={showGain}
-                    onChange={() => setShowGain((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-otherIncome"
-                    label="Other Income"
-                    checked={showOtherIncome}
-                    onChange={() => setShowOtherIncome((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-incomeTaxes"
-                    label="Income Taxes"
-                    checked={showIncomeTaxes}
-                    onChange={() => setShowIncomeTaxes((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+              <Dropdown.Menu className="px-3 custom_dropdown">
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-interestIncome"
+                  label="Interest Income"
+                  checked={showInterestIncome}
+                  onChange={() => setShowInterestIncome((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-interestExpense"
+                  label="Interest Expense"
+                  checked={showInterestExpense}
+                  onChange={() => setShowInterestExpense((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-gain"
+                  label="Gain (loss) on Displosal of Assets"
+                  checked={showGain}
+                  onChange={() => setShowGain((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-otherIncome"
+                  label="Other Income"
+                  checked={showOtherIncome}
+                  onChange={() => setShowOtherIncome((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-incomeTaxes"
+                  label="Income Taxes"
+                  checked={showIncomeTaxes}
+                  onChange={() => setShowIncomeTaxes((prev) => !prev)}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
         <div className="dark-background rounded-top">
@@ -1773,7 +1769,7 @@ const Forecast = () => {
         <div className="dark-background rounded-bottom">
           <canvas ref={chartRefs[9]} />
         </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex flex-column justify-content-center py-5 grey-bg rounded-3">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr className="table-primary">
@@ -1917,58 +1913,56 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
+          <div className="mb-3 d-flex justify-content-center">
+            <Dropdown>
+              <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+                Select Details
+              </Dropdown.Toggle>
 
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-cash"
-                    label="Cash and Cash Equivalents"
-                    checked={showCash}
-                    onChange={() => setShowCash((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-receivable"
-                    label="Account Receivable"
-                    checked={showReceivable}
-                    onChange={() => setShowReceivable((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-inventory"
-                    label="Inventory"
-                    checked={showInventory}
-                    onChange={() => setInventory((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-property"
-                    label="Property, Plant, and Equiptment"
-                    checked={showProperty}
-                    onChange={() => setShowProperty((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-investment"
-                    label="Investment"
-                    checked={showInvestment}
-                    onChange={() => setShowInvestment((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+              <Dropdown.Menu className="px-3 custom_dropdown">
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-cash"
+                  label="Cash and Cash Equivalents"
+                  checked={showCash}
+                  onChange={() => setShowCash((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-receivable"
+                  label="Account Receivable"
+                  checked={showReceivable}
+                  onChange={() => setShowReceivable((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-inventory"
+                  label="Inventory"
+                  checked={showInventory}
+                  onChange={() => setInventory((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-property"
+                  label="Property, Plant, and Equiptment"
+                  checked={showProperty}
+                  onChange={() => setShowProperty((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-investment"
+                  label="Investment"
+                  checked={showInvestment}
+                  onChange={() => setShowInvestment((prev) => !prev)}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
         <div className="dark-background rounded-3">
           <canvas ref={chartRefs[4]} />
         </div>
-        <div className="d-flex flex-column align-items-center py-5 grey-bg">
+        <div className="d-flex flex-column justify-content-center py-5 grey-bg rounded-3">
           <Table striped="columns" responsive hover bordered className="financial-table rounded w-85">
             <thead>
               <tr />
@@ -2163,66 +2157,64 @@ const Forecast = () => {
               </tr>
             </tbody>
           </Table>
-          <div className="mb-3">
-            <div className="mb-3">
-              <Dropdown>
-                <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
-                  Select Details
-                </Dropdown.Toggle>
+          <div className="mb-3 d-flex justify-content-center">
+            <Dropdown>
+              <Dropdown.Toggle className="custom_dropdown" variant="secondary" id="dropdown-basic">
+                Select Details
+              </Dropdown.Toggle>
 
-                <Dropdown.Menu className="px-3 custom_dropdown">
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-accountPayable"
-                    label="Accounts Payable"
-                    checked={showAccountsPayable}
-                    onChange={() => setShowAccountsPayable((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-currentDebt"
-                    label="Current Debt Service"
-                    checked={showCurrentDebt}
-                    onChange={() => setShowCurrentDebt((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-currentTaxes"
-                    label="Current Taxes Payable"
-                    checked={showCurrentTaxes}
-                    onChange={() => setShowCurrentTaxes((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-longDebt"
-                    label="Long-term Debt Service"
-                    checked={showLongDebt}
-                    onChange={() => setShowLongDebt((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-longLoans"
-                    label="Long-term Loans Payable"
-                    checked={showLongLoans}
-                    onChange={() => setShowLongLoans((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-equityCapital"
-                    label="Equity Capital"
-                    checked={showEquityCapital}
-                    onChange={() => setShowEquityCapital((prev) => !prev)}
-                  />
-                  <Form.Check
-                    type="checkbox"
-                    id="toggle-retainedEarnings"
-                    label="Retained Earnings"
-                    checked={showRetainedEarnings}
-                    onChange={() => setShowRetainedEarnings((prev) => !prev)}
-                  />
-                </Dropdown.Menu>
-              </Dropdown>
-            </div>
+              <Dropdown.Menu className="px-3 custom_dropdown">
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-accountPayable"
+                  label="Accounts Payable"
+                  checked={showAccountsPayable}
+                  onChange={() => setShowAccountsPayable((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-currentDebt"
+                  label="Current Debt Service"
+                  checked={showCurrentDebt}
+                  onChange={() => setShowCurrentDebt((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-currentTaxes"
+                  label="Current Taxes Payable"
+                  checked={showCurrentTaxes}
+                  onChange={() => setShowCurrentTaxes((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-longDebt"
+                  label="Long-term Debt Service"
+                  checked={showLongDebt}
+                  onChange={() => setShowLongDebt((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-longLoans"
+                  label="Long-term Loans Payable"
+                  checked={showLongLoans}
+                  onChange={() => setShowLongLoans((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-equityCapital"
+                  label="Equity Capital"
+                  checked={showEquityCapital}
+                  onChange={() => setShowEquityCapital((prev) => !prev)}
+                />
+                <Form.Check
+                  type="checkbox"
+                  id="toggle-retainedEarnings"
+                  label="Retained Earnings"
+                  checked={showRetainedEarnings}
+                  onChange={() => setShowRetainedEarnings((prev) => !prev)}
+                />
+              </Dropdown.Menu>
+            </Dropdown>
           </div>
         </div>
         <div className="dark-background rounded-top">

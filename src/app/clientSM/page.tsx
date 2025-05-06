@@ -331,14 +331,16 @@ const SM = () => {
   return (
     <main>
       <Container id="dashboard" fluid className="text-center">
-        <h1>Sustainability Model</h1>
-        <Image
-          src="/spirebar.png"
-          alt="Spire Bar"
-          width={70}
-          height={5}
-          className="spire-logo"
-        />
+        <div className="justify-content-center py-4">
+          <h1>Sustainability Model</h1>
+          <Image
+            src="/spirebar.png"
+            alt="Spire Bar"
+            width={70}
+            height={5}
+            className="spire-logo"
+          />
+        </div>
         <h3>To visualize the stress and residual effects of each scenario, select them from the dropdowns below.</h3>
         <div className="dark-background rounded-3">
           <canvas id="stressChart" />
