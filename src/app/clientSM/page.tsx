@@ -2,7 +2,7 @@
 
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Container, Table, Spinner, Image, Dropdown, Form } from 'react-bootstrap';
 import { Chart } from 'chart.js/auto';
 import './page.css';
@@ -189,996 +189,6 @@ const SM = () => {
     console.log('stressTest state updated →', stressTest);
   }, [stressTest]);
 
-  const chartRefs = [useRef(null), useRef(null), useRef(null), useRef(null), useRef(null), useRef(null),
-    useRef(null), useRef(null), useRef(null), useRef(null)];
-  const chartInstances = useRef<Array<Chart | null>>([null, null, null, null, null, null, null, null,
-    null, null]);
-
-  useEffect(() => {
-    console.log('here is session', session);
-    console.log('here is status', status);
-
-    const data1 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Revenue',
-          data: forecast.map((item) => item.revenue),
-          fill: false,
-          borderColor: '#B01E8C',
-          tension: 0.1,
-          pointHoverBackgroundColor: '#B01E8C',
-        },
-        {
-          label: 'Net Sales',
-          data: forecast.map((item) => item.netSales),
-          fill: false,
-          borderColor: '#FFAF00',
-          tension: 0.1,
-          pointHoverBackgroundColor: '#FFAF00',
-        },
-      ],
-    };
-
-    const data2 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Salaries and Benefits',
-          data: forecast.map((item) => item.salariesAndBenefits),
-          backgroundColor: '#F6861E',
-        },
-        {
-          label: 'Rent and Overhead',
-          data: forecast.map((item) => item.rentAndOverhead),
-          backgroundColor: '#B01E8C',
-        },
-        {
-          label: 'Depreciation and Amortization',
-          data: forecast.map((item) => item.depreciationAndAmortization),
-          backgroundColor: '#6360AA',
-        },
-        {
-          label: 'Interest',
-          data: forecast.map((item) => item.interest),
-          backgroundColor: '#2252FE',
-        },
-      ],
-    };
-
-    const data3 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Net Income',
-          data: forecast.map((item) => item.netIncome),
-          fill: false,
-          borderColor: '#2252FE',
-          tension: 0.1,
-          pointHoverBackgroundColor: '#05AFCA',
-        },
-      ],
-    };
-
-    const data4 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Costs of Contracting',
-          data: forecast.map((item) => item.costOfContracting),
-          backgroundColor: '#F6861E',
-        },
-        {
-          label: 'Overhead',
-          data: forecast.map((item) => item.overhead),
-          backgroundColor: '#B01E8C',
-        },
-        {
-          label: 'Costs of Goods Sold',
-          data: forecast.map((item) => item.inventory),
-          backgroundColor: '#6360AA',
-        },
-      ],
-    };
-
-    const data5 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Total Current Assets',
-          data: forecast.map((item) => item.totalCurrentAssets),
-          fill: false,
-          borderColor: '#B01E8C',
-          tension: 0.1,
-          pointHoverBackgroundColor: '#B01E8C',
-        },
-        {
-          label: 'Total Long-term Assets',
-          data: forecast.map((item) => item.totalLongTermAssets),
-          fill: false,
-          borderColor: '#FFAF00',
-          tension: 0.1,
-          pointHoverBackgroundColor: '#FFAF00',
-        },
-      ],
-    };
-
-    const data6 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Accounts Payable',
-          data: forecast.map((item) => item.accountsPayable),
-          backgroundColor: '#F6861E',
-        },
-        {
-          label: 'Debt Service',
-          data: forecast.map((item) => item.currentDebtService),
-          backgroundColor: '#B01E8C',
-        },
-        {
-          label: 'Taxes Payable',
-          data: forecast.map((item) => item.taxesPayable),
-          backgroundColor: '#6360AA',
-        },
-      ],
-    };
-
-    const data7 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Debt Service',
-          data: forecast.map((item) => item.longDebtService),
-          backgroundColor: '#F6861E',
-        },
-        {
-          label: 'Loans Payable',
-          data: forecast.map((item) => item.loansPayable),
-          backgroundColor: '#B01E8C',
-        },
-      ],
-    };
-
-    const data8 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Cost of Goods Sold',
-          data: forecast.map((item) => item.costOfGoodsSold),
-          fill: false,
-          borderColor: '#B01E8C',
-          tension: 0.1,
-          pointHoverBackgroundColor: '#B01E8C',
-        },
-        {
-          label: 'Gross Profit',
-          data: forecast.map((item) => item.grossProfit),
-          fill: false,
-          borderColor: '#FFAF00',
-          tension: 0.1,
-          pointHoverBackgroundColor: '#FFAF00',
-        },
-      ],
-    };
-
-    const data9 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Total Operating Expenses Overtime',
-          data: forecast.map((item) => item.totalOperatingExpenses),
-          fill: false,
-          borderColor: '#B01E8C',
-          tension: 0.1,
-          pointHoverBackgroundColor: '#B01E8C',
-        },
-      ],
-    };
-
-    const data10 = {
-      labels: forecast.map((item) => item.year),
-      datasets: [
-        {
-          label: 'Interest Income',
-          data: forecast.map((item) => item.interestIncome),
-          backgroundColor: '#F6861E',
-        },
-        {
-          label: 'Interest Expense',
-          data: forecast.map((item) => item.interestExpense),
-          backgroundColor: '#B01E8C',
-        },
-        {
-          label: 'Gain on Disposal of Assets',
-          data: forecast.map((item) => item.gainOnDisposalOfAssets),
-          backgroundColor: '#6360AA',
-        },
-        {
-          label: 'Other Income',
-          data: forecast.map((item) => item.otherIncome),
-          backgroundColor: '#2252FE',
-        },
-      ],
-    };
-
-    const chartConfigs = [
-      {
-        type: 'line' as const,
-        data: data1,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Revenue vs. Net Sales',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: { size: 18 },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              ticks: {
-                color: 'white',
-                font: { size: 16 },
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              ticks: {
-                color: 'white',
-                font: { size: 16 },
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'bar' as const,
-        data: data2,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Breakdown of Operating Expenses',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: {
-                  size: 18,
-                },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'line' as const,
-        data: data3,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Net Income Over Time',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: {
-                  size: 18,
-                },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              ticks: {
-                color: 'white',
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              ticks: {
-                color: 'white',
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'bar' as const,
-        data: data4,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Breakdown of Costs of Goods Sold',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: {
-                  size: 18,
-                },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'line' as const,
-        data: data5,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Current vs. Long-term Assets',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: { size: 18 },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              ticks: {
-                color: 'white',
-                font: { size: 16 },
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              ticks: {
-                color: 'white',
-                font: { size: 16 },
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'bar' as const,
-        data: data6,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Current Liabilities',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: {
-                  size: 18,
-                },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'bar' as const,
-        data: data7,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Long-term Liabilities',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: {
-                  size: 18,
-                },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'line' as const,
-        data: data8,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Cost of Goods Sold vs. Gross Profit',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: { size: 18 },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              ticks: {
-                color: 'white',
-                font: { size: 16 },
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              ticks: {
-                color: 'white',
-                font: { size: 16 },
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'line' as const,
-        data: data9,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Total Operating Expenses',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: { size: 18 },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              ticks: {
-                color: 'white',
-                font: { size: 16 },
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              ticks: {
-                color: 'white',
-                font: { size: 16 },
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-      {
-        type: 'bar' as const,
-        data: data10,
-        options: {
-          responsive: true,
-          interaction: {
-            mode: 'index' as const,
-            intersect: false,
-          },
-          plugins: {
-            zoom: {
-              zoom: {
-                wheel: {
-                  enabled: true,
-                },
-                pinch: {
-                  enabled: true,
-                },
-                mode: 'y' as const,
-              },
-            },
-            title: {
-              display: true,
-              text: 'Summary of Other Income',
-              font: { size: 25, weight: 700 },
-              color: 'white',
-            },
-            legend: {
-              display: true,
-              position: 'bottom' as 'bottom',
-              labels: {
-                color: 'white',
-                font: {
-                  size: 18,
-                },
-              },
-            },
-            tooltip: {
-              bodyColor: 'white',
-              titleColor: 'white',
-            },
-          },
-          scales: {
-            x: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              title: {
-                display: true,
-                text: 'Year',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-            y: {
-              stacked: true,
-              ticks: {
-                color: 'white',
-              },
-              beginAtZero: true,
-              title: {
-                display: true,
-                text: 'Dollars ($)',
-                font: { size: 20 },
-                color: 'white',
-              },
-              grid: {
-                color: 'rgba(255, 255, 255, 0.2)',
-              },
-            },
-          },
-        },
-      },
-    ];
-
-    chartRefs.forEach((ref, chartIndex) => {
-      if (ref.current) {
-        if (chartInstances.current[chartIndex]) {
-          chartInstances.current[chartIndex]?.destroy();
-        }
-        chartInstances.current[chartIndex] = new Chart(ref.current, chartConfigs[chartIndex]);
-      }
-    });
-
-    return () => {
-      chartInstances.current.forEach((chart) => chart?.destroy());
-    };
-  }, [forecast]);
-
   const [showStressEffect1, setShowStressEffect1] = useState(false);
   const [showResidualEffect1, setShowResidualEffect1] = useState(false);
   const [showStressEffect2, setShowStressEffect2] = useState(false);
@@ -1189,6 +199,135 @@ const SM = () => {
   const [showStressEffect3, setShowStressEffect3] = useState(false);
   const [showStressEffect4, setShowStressEffect4] = useState(false);
   const [showStressEffect5, setShowStressEffect5] = useState(false);
+
+  const chartRef = useRef<Chart | null>(null);
+
+  useEffect(() => {
+    if (!stressTest?.stressTestResults?.data?.length) return;
+    const ctx = document.getElementById('stressChart') as HTMLCanvasElement;
+    // Destroy previous chart instance if it exists
+    if (chartRef.current) {
+      chartRef.current.destroy();
+    }
+    const labels = forecast.map((d) => d.year);
+    const visibilityFlags = [
+      { showStress: showStressEffect1, showResidual: showResidualEffect1 },
+      { showStress: showStressEffect2, showResidual: showResidualEffect2 },
+      { showStress: showStressEffect3, showResidual: showResidualEffect3 },
+      { showStress: showStressEffect4, showResidual: showResidualEffect4 },
+      { showStress: showStressEffect5, showResidual: showResidualEffect5 },
+    ];
+    const datasets = stressTest.stressTestResults.data.flatMap((scenario, index) => {
+      const baseHue = (index * 60) % 360;
+      const scenarioFlags = visibilityFlags[index];
+      const scenarioDatasets = [];
+      if (scenarioFlags?.showStress) {
+        scenarioDatasets.push({
+          label: `Scenario ${index + 1} - Stress`,
+          data: scenario.stressEffects,
+          borderColor: `hsl(${baseHue}, 70%, 50%)`,
+          backgroundColor: `hsl(${baseHue}, 70%, 80%)`,
+          tension: 0.4,
+          fill: false,
+        });
+      }
+      if (scenarioFlags?.showResidual && scenario.residualEffects) {
+        scenarioDatasets.push({
+          label: `Scenario ${index + 1} - Residual`,
+          data: scenario.residualEffects,
+          borderColor: `hsl(${(baseHue + 30) % 360}, 70%, 50%)`,
+          backgroundColor: `hsl(${(baseHue + 30) % 360}, 70%, 80%)`,
+          tension: 0.4,
+          fill: false,
+        });
+      }
+      return scenarioDatasets;
+    });
+    chartRef.current = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels,
+        datasets,
+      },
+      options: {
+        responsive: true,
+        interaction: {
+          mode: 'nearest',
+          axis: 'x',
+          intersect: false,
+        },
+        plugins: {
+          zoom: {
+            zoom: {
+              wheel: { enabled: true },
+              pinch: { enabled: true },
+              mode: 'y',
+            },
+            pan: {
+              enabled: true,
+              mode: 'y',
+            },
+          },
+          title: {
+            display: true,
+            text: 'Stress and Residual Effects Over Time',
+            font: { size: 25, weight: 700 },
+            color: 'white',
+          },
+          legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+              color: 'white',
+              font: {
+                size: 18,
+              },
+              usePointStyle: true,
+            },
+          },
+        },
+        scales: {
+          x: {
+            ticks: {
+              color: 'white',
+            },
+            title: {
+              display: true,
+              text: 'Year',
+              font: { size: 20 },
+              color: 'white',
+            },
+          },
+          y: {
+            ticks: {
+              color: 'white',
+            },
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Dollars ($)',
+              font: { size: 20 },
+              color: 'white',
+            },
+          },
+        },
+      },
+    });
+  }, [
+    stressTest,
+    forecast,
+    showStressEffect1,
+    showResidualEffect1,
+    showStressEffect2,
+    showResidualEffect2,
+    showStressEffect3,
+    showResidualEffect3,
+    showStressEffect4,
+    showResidualEffect4,
+    showStressEffect5,
+    showResidualEffect5,
+  ]);
+
   return (
     <main>
       <Container id="dashboard" fluid className="text-center">
@@ -1201,6 +340,9 @@ const SM = () => {
             height={5}
             className="spire-logo"
           />
+        <h3>To visualize the stress and residual effects of each scenario, select them from the dropdowns below.</h3>
+        <div className="dark-background rounded-3">
+          <canvas id="stressChart" />
         </div>
         <div className="d-flex justify-content-center py-4 grey-bg rounded-3">
           <Table striped="columns" bordered responsive hover className="financial-table w-85">
