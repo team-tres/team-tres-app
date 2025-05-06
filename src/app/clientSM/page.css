@@ -1,0 +1,91 @@
+.grey-bg {
+    background-color: #F8F8F8!important;
+}
+
+.bold {
+    font-weight: bolder;
+}
+
+.underline {
+    text-decoration: underline 1px solid #051C2C;
+}
+
+.font {
+    font-size: large;
+    padding: 5%;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+    font-style: italic;
+}
+
+.company {
+    background-color: #051C2C !important;
+    color: white !important;
+}
+
+.income-statement {
+    background-color: #051C2C !important;
+    color: white !important;
+}
+
+.balance-sheet{
+    background-color: #051C2C !important;
+    color: white !important;
+}
+
+canvas {
+    width: 90% !important;
+    height: auto !important;
+    display: block;
+    margin: auto;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+h1 {
+    font-family: Arial, sans-serif;;
+    font-weight: 700;
+    font-size: 3rem;
+    padding-top: 3%;
+    color: #051C2C
+}
+
+h2 {
+    padding-top: 12%;
+    padding-bottom: 6%;
+    font-family: Arial, sans-serif;;
+    font-size: 3rem;
+}
+
+.buttons {
+    padding-bottom: 20% !important;
+    padding:  2.5%!important;
+}
+
+td {
+    font-size: large;
+}
+
+.dark-background {
+    background-color: #051C2C;
+}
+
+tr {
+    padding: 7%;
+}
+
+th {
+    padding: 5%;
+    font-size: x-large;
+    font-family: Arial, sans-serif;;
+}
+
+.custom_dropdown {
+    width: 150%;
+}

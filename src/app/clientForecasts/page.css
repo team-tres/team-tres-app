@@ -7,7 +7,7 @@
 }
 
 .underline {
-    text-decoration: underline 1px solid black;
+    text-decoration: underline 1px solid #051C2C;
 }
 
 .font {
@@ -25,42 +25,41 @@
 }
 
 .company {
-    background-color: #F6861E !important;
+    background-color: #051C2C !important;
     color: white !important;
 }
 
 .income-statement {
-    background-color: #B01E8C !important;
+    background-color: #051C2C !important;
     color: white !important;
 }
 
 .balance-sheet{
-    background-color: #6460AA !important;
+    background-color: #051C2C !important;
     color: white !important;
 }
 
 canvas {
-    width: 60% !important;
+    width: 90% !important;
     height: auto !important;
     display: block;
     margin: auto;
-    padding-top: 10%;
+    padding-top: 5%;
     padding-bottom: 5%;
 }
 
 h1 {
-    font-family: 'Times New Roman';
-    font-weight: bold;
-    font-size: 4rem;
-    padding-bottom: 10%;
-    padding-top: 5%;
+    font-family: Arial, sans-serif;;
+    font-weight: 700;
+    font-size: 3rem;
+    padding-top: 3%;
+    color: #051C2C
 }
 
 h2 {
     padding-top: 12%;
     padding-bottom: 6%;
-    font-family: 'Times New Roman';
-    font-weight: bold;
+    font-family: Arial, sans-serif;;
     font-size: 3rem;
 }
 
@@ -84,5 +83,9 @@ tr {
 th {
     padding: 5%;
     font-size: x-large;
-    font-family: 'Times New Roman';
+    font-family: Arial, sans-serif;;
+}
+
+.custom_dropdown {
+    width: 150%;
 }

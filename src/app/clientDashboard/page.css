@@ -1,9 +1,16 @@
 .full-height {
-    display: flex;
+    min-height: 100vh;
 }
 
+@media (min-width: 768px) {
+    .full-height {
+      display: flex;
+    }
+  }
+
 .left-section {
-    background-color: #25479D !important;
+    background: url('/fish.jpg');
+    background-size: cover;
     color: white;
     display: flex;
     flex-direction: column;
@@ -15,23 +22,25 @@
 }
 
 .heading-left {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 3vw;
+    font-family: 'Roboto', sans-serif;
+    font-size: 4vh;
     font-weight: bold;
     margin-bottom: 1.5%;
     padding-bottom: 2.5%;
 }
 
 .date-text {
-    font-size: 1.7rem;
+    font-size: 3vh;
     margin-bottom: 30px;
+    font-family: Arial, sans-serif;
 }
 
 .white-button {
     background-color: white;
     color: black;
     border: none;
-    font-size: 1.5vw;
+    font-size: 2.5vh;
+    font-family: Arial, sans-serif;
     padding: 3% 5%;
     margin: 2% 0;
     width: 75%;
@@ -53,57 +62,57 @@
 }
 
 .orange-button {
-    background-color: #F6861E;
+    background-color: black;
     color: white;
-    font-size: 2.5vw;
+    font-size: 2.5vh;
     padding: 3% 5%;
     border: none;
     margin: 6% 0;
     width: 60%;
     text-align: center;
     transition: 0.3s ease-in-out;
-    font-family: 'Times New Roman';
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
 }
 
 .pink-button {
-    background-color: #B01E8C;
+    background-color: black;
     color: white;
-    font-size: 2.5vw;
+    font-size: 2.5vh;
     padding: 3% 5%;
     border: none;
     margin: 6% 0;
     width: 60%;
     text-align: center;
     transition: 0.3s ease-in-out;
-    font-family: 'Times New Roman';
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
 }
 
 .purple-button {
-    background-color: #6360AA;
+    background-color: black;
     color: white;
-    font-size: 2.5vw;
+    font-size: 2.5vh;
     padding: 3% 5%;
     border: none;
     margin: 6% 0;
     width: 60%;
     text-align: center;
     transition: 0.3s ease-in-out;
-    font-family: 'Times New Roman';
+    font-family: 'Roboto', sans-serif;
     font-weight: bold;
 }
 
 .orange-button:hover {
-    background-color: black;
+    background-color: #E64B38;
 }
 
 .pink-button:hover {
-    background-color: black;
+    background-color: #E64B38;
 }
 
 .purple-button:hover {
-    background-color: black;
+    background-color: #E64B38;
 }
 
 .purple-button a {
@@ -113,3 +122,23 @@
     width: 100%;
     height: 100%;
 }
+
+.orange-button a {
+    color: white !important;
+    text-decoration: none !important;
+    display: block; 
+    width: 100%;
+    height: 100%;
+}
+
+h3 {
+    font-size: 2vh;
+    font-family: 'Roboto', sans-serif;
+    color: 'black';
+}
+
+@media (max-width: 768px) {
+    h3 {
+      padding: 0 5%;
+    }
+  }

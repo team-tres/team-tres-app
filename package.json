@@ -9,7 +9,21 @@
     "start": "next start",
     "lint": "next lint",
     "playwright-development": "npx playwright test",
-    "playwright-ci": "next dev && npx playwright test"
+    "playwright-ci": "next dev && npx playwright test",
+    "test:fin-comp": "vitest run src/app/queries/financial-comp/**/*.test.ts",
+    "test:forecast": "vitest run src/app/queries/forecasts/**/*.test.ts",
+    "test:dropininvestmentreturnrate": "vitest run src/app/queries/stress-tests/tests/simulate-drop-in-investment-return-rate.test.ts",
+    "test:dropinrevenuereturnrate": "vitest run src/app/queries/stress-tests/tests/simulate-drop-in-revenue-return-rate.test.ts",
+    "test:onetimeeventexpense": "vitest run src/app/queries/stress-tests/tests/simulate-one-time-event-expense.test.ts",
+    "test:increaseinoperatingexpenses": "vitest run src/app/queries/stress-tests/tests/simulate-increase-in-operating-expenses.test.ts --watch",
+    "test:decreaseinbondreturn": "vitest run src/app/queries/stress-tests/tests/simulate-decrease-in-bond-return.test.ts",
+    "test:investment-balance": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/simulate-investment-balance.test.ts",
+    "test:ipmt-utils": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/ipmt-utils.test.ts",
+    "test:loan-balance": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/simulate-loan-balance.test.ts",
+    "test:loan-utils": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/loan-utils.test.ts",
+    "test:principal-utils": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/principal-utils.test.ts",
+    "test:residual-effects-3": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/residual-effects-3.test.ts",
+    "test:residual-effects": "vitest run src/app/queries/stress-tests/stress-test-utils/tests/residual-effects.test.ts"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
@@ -22,9 +36,11 @@
     "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.8",
+    "chartjs-plugin-zoom": "^2.2.0",
     "multiselect-react-dropdown": "^2.0.25",
-    "next": "14.2.10",
+    "next": "^14.2.28",
     "next-auth": "^4.24.7",
+    "node-fetch": "^3.3.2",
     "react": "^18",
     "react-bootstrap": "^2.10.9",
     "react-bootstrap-icons": "^1.11.4",
@@ -48,6 +64,7 @@
     "prettier": "^3.3.1",
     "prettier-eslint": "^16.3.0",
     "prisma": "^5.19.1",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "vitest": "^3.1.1"
   }
 }

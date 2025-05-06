@@ -65,7 +65,7 @@ export function generateForecast(
 
     forecast.push(forecastEntry);
   }
-
+  console.log(forecast);
   return forecast;
 }
 
