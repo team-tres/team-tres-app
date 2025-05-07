@@ -34,7 +34,7 @@ const ChangeUsername = () => {
     resolver: yupResolver(validationSchema),
   });
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: any) => {
     const response = await fetch('/api/change-username', {
       method: 'POST',
       headers: {
@@ -91,20 +91,16 @@ const ChangeUsername = () => {
                   </Form.Group>
 
                   <Form.Group className="form-group py-3">
-                    <Row>
-                      <Col>
-                        <Button type="submit" className="btn btn-primary">Change</Button>
-                      </Col>
-                      <Col>
-                        <Button
-                          type="button"
-                          onClick={() => reset()}
-                          className="btn btn-warning float-right"
-                        >
-                          Reset
-                        </Button>
-                      </Col>
-                    </Row>
+                    <div className="form-buttons">
+                      <Button type="submit" className="btn btn-primary">Change</Button>
+                      <Button
+                        type="button"
+                        onClick={() => reset()}
+                        className="btn btn-warning"
+                      >
+                        Reset
+                      </Button>
+                    </div>
                   </Form.Group>
                 </Form>
               </Card.Body>
