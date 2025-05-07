@@ -3,9 +3,9 @@ import { adminProtectedPage } from '@/lib/page-protection';
 import authOptions from '@/lib/authOptions';
 import getUsers from '@/app/queries/admin/getUser';
 import getCompanies from '@/app/queries/admin/getCompanies';
-import AdminClientManagementClient from '@/components/AdminClientManagementClient';
+import AdminCompanyManagementClient from '@/components/AdminCompanyManagementClient';
 
-const ClientManagementPage = async () => {
+const CompanyManagementPage = async () => {
   const session = await getServerSession(authOptions);
   adminProtectedPage(
     session as {
@@ -16,13 +16,10 @@ const ClientManagementPage = async () => {
   // Fetch all users
   const users = await getUsers();
 
-  // Filter to get only clients
-  const clients = users.filter(user => user.role === 'CLIENT');
-
   // Fetch all companies
   const companies = await getCompanies();
 
-  return <AdminClientManagementClient initialClients={clients} companies={companies} />;
+  return <AdminCompanyManagementClient initialCompanies={companies} users={users} />;
 };
 
-export default ClientManagementPage;
+export default CompanyManagementPage;
