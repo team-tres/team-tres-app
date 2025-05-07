@@ -5,6 +5,7 @@ export function calculateAverageForecast(pastValues: number[]): number {
 
 export function calculateMultiplierForecast(pastValues: number[], multiplier: number): number {
   if (pastValues.length === 0) return 0;
+  const numericMultiplier = parseFloat(multiplier);
   const lastPastValue = pastValues[pastValues.length - 1];
-  return lastPastValue * (1 + multiplier);
+  return lastPastValue * (1 + numericMultiplier);
 }
