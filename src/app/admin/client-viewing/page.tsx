@@ -28,11 +28,11 @@ const ClientViewingPage = async ({ searchParams = {} }: { searchParams?: { query
     : true));
 
   return (
-    <main style={{ backgroundColor: '#f5f5dc', minHeight: '100vh', paddingTop: '20px' }}>
+    <main style={{ backgroundColor: '#051C2C', minHeight: '100vh', paddingTop: '20px' }}>
       <Container id="list" fluid className="py-3">
         <Row className="align-items-center mb-3">
           <Col md={6}>
-            <h1 className="text-dark">Clients</h1>
+            <h1 className="text-light">Clients</h1>
           </Col>
           <Col md={6}>
             <SearchBar />

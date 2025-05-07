@@ -1,0 +1,200 @@
+.full-height {
+    min-height: 100vh;
+}
+
+@media (min-width: 768px) {
+    .full-height {
+      display: flex;
+    }
+  }
+
+.left-section {
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content:first baseline;
+    text-align: center;
+    padding: 1%;
+    padding-top: 4%;
+    box-sizing: border-box;
+}
+
+.heading-left {
+    font-family: 'Roboto', sans-serif;
+    font-size: 3vh;
+    font-weight: bold;
+    margin-bottom: 1.5%;
+    padding-bottom: 3%;
+}
+
+.date-text {
+    font-size: 2vh;
+    margin-bottom: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.white-button {
+    border: 2;
+    border-color: #051C2C;
+    background-color: white;
+    color: black;
+    font-size: 2.5vh;
+    font-family: Arial, sans-serif;
+    padding: 3% 5%;
+    margin: 2% 0;
+    width: 75%;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+}
+
+.white-button:hover {
+    background-color: black;
+}
+
+.right-section {
+    background-color: #F8F8F8;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: stretch;
+    min-height: 100vh;
+}
+
+.orange-button {
+    background-color: black;
+    color: white;
+    font-size: 2.5vh;
+    padding: 3% 5%;
+    border: none;
+    margin: 6% 0;
+    width: 60%;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.pink-button {
+    background-color: black;
+    color: white;
+    font-size: 2.5vh;
+    padding: 3% 5%;
+    border: none;
+    margin: 6% 0;
+    width: 60%;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.purple-button {
+    background-color: black;
+    color: white;
+    font-size: 2.5vh;
+    padding: 3% 5%;
+    border: none;
+    margin: 6% 0;
+    width: 60%;
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    font-family: 'Roboto', sans-serif;
+    font-weight: bold;
+}
+
+.orange-button:hover {
+    background-color: #E64B38;
+}
+
+.pink-button:hover {
+    background-color: #E64B38;
+}
+
+.purple-button:hover {
+    background-color: #E64B38;
+}
+
+.purple-button a {
+    color: white !important;
+    text-decoration: none !important;
+    display: block; 
+    width: 100%;
+    height: 100%;
+}
+
+h2 {
+    font-size: 2vh;
+    font-family: 'Roboto', sans-serif;
+    color:#F8F8F8 !important;
+    background-color: #051C2C;
+}
+
+.grey-bg {
+    background-color: lightgrey !important;
+    border: 1px dotted !important;
+}
+
+.green-type {
+    background-color: lightgreen !important;
+    border: 1px solid black !important;
+    border-right: none !important;
+}
+
+.green-input {
+    background-color: lightgreen !important;
+    border: 1px solid black !important;
+    min-width: 7vh;
+    border-left: none !important;
+}
+
+.bold {
+    font-weight: bolder;
+}
+
+.bottom-border {
+    border-bottom: 1px solid !important;
+}
+
+.underline {
+    text-decoration: underline 1px solid black;
+}
+
+.font {
+    font-size: 1.5vh;
+}
+
+.title {
+    background-color:#051C2C !important;
+    font-size:smaller;
+    color:#F8F8F8 !important;
+}
+
+.button {
+    font-size: 1.5vh !important;
+}
+
+.left {
+    text-align: left;
+}
+
+.right {
+    text-align: right;
+    font-style: italic;
+}
+
+.dashboard {
+    padding-top: 25px;
+}
+
+.checkboxes {
+    align-content: center;
+}
+
+@media (max-width: 768px) {
+    h3 {
+      padding: 0 5%;
+    }
+  }
+
+  
