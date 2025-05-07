@@ -14,10 +14,9 @@ const AuditedDataTable = async () => {
       // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
-  // const owner = (session && session.user && session.user.email) || '';
   const ForecastData = await prisma.financialCompilation.findMany({
     orderBy: {
-      year: 'asc', // or 'desc' for descending
+      year: 'asc',
     },
   });
   return (
