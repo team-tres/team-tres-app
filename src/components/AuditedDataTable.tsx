@@ -14,9 +14,11 @@ const AuditedDataTable = async () => {
       // eslint-disable-next-line @typescript-eslint/comma-dangle
     } | null,
   );
-  // const owner = (session && session.user && session.user.email) || '';
-  const ForecastData = await prisma.financialCompilation.findMany();
-
+  const ForecastData = await prisma.financialCompilation.findMany({
+    orderBy: {
+      year: 'asc',
+    },
+  });
   return (
     <main>
       <Container id="list" fluid className="py-3">
