@@ -30,7 +30,7 @@ const AuditedDataTable = async () => {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th style={{ width: '250px' }}>{/* Placeholder or content */}</th>
+                  <th style={{ width: '250px' }}>{}</th>
                   {ForecastData.map((item) => (
                     <th key={item.id}>{item.year}</th>
                   ))}
