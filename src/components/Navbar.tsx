@@ -78,6 +78,7 @@ const NavBar: React.FC = () => {
                 </>
               )}
               {role === 'ANALYST' && (
+              <>
                 <Nav.Link
                   id="analyst-stuff-nav"
                   href="/analyst"
@@ -86,6 +87,16 @@ const NavBar: React.FC = () => {
                 >
                   ANALYST
                 </Nav.Link>
+                <Nav.Link
+                  id="stress-test-input-nav"
+                  href="/stressTestInput"
+                  active={pathName === '/stressTestInput'}
+                  className="font-nav"
+                >
+                  STRESS TEST INPUT
+                </Nav.Link>
+
+              </>
               )}
               {role === 'ADMIN' && (
                 <Nav.Link
