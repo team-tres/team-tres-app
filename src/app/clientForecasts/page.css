@@ -87,5 +87,15 @@ th {
 }
 
 .custom_dropdown {
-    width: 150%;
+    width: auto;
+    text-align: center;
 }
+
+.dropdown, .dropdown-menu {
+    margin-right: 0;
+    padding-right: 0;
+}
+
+body {
+    overflow-x: hidden;
+  }
