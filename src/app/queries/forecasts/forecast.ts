@@ -30,10 +30,36 @@ export type FinancialData = {
 };
 
 type ForecastMethod = 'average' | 'multiplier';
-
 type ForecastSettings = Record<keyof Omit<FinancialData, 'year'>, ForecastMethod>;
-
 type ForecastResult = FinancialData[];
+
+const FORECAST_FIELDS: (keyof Omit<FinancialData, 'year'>)[] = [
+  'revenue',
+  'costOfContracting',
+  'overhead',
+  'salariesAndBenefits',
+  'rentAndOverhead',
+  'depreciationAndAmortization',
+  'interest',
+  'profitFromOperations',
+  'interestIncome',
+  'interestExpense',
+  'gainOnDisposalOfAssets',
+  'otherIncome',
+  'incomeTaxes',
+  'cashAndCashEquivalents',
+  'accountsReceivable',
+  'inventory',
+  'propertyPlantAndEquipment',
+  'investment',
+  'accountsPayable',
+  'taxesPayable',
+  'currentDebtService',
+  'loansPayable',
+  'longDebtService',
+  'equityCapital',
+  'retainedEarnings',
+];
 
 export function generateForecast(
   pastData: FinancialData[],
@@ -47,25 +73,24 @@ export function generateForecast(
     const year = lastYear + i;
     const forecastEntry: FinancialData = { year } as FinancialData;
 
-    // rolling window
     const currentData = [...pastData, ...forecast];
 
-    for (const field of Object.keys(settings) as (keyof Omit<FinancialData, 'year'>)[]) {
+    for (const field of FORECAST_FIELDS) {
       const method = settings[field];
+      if (method) {
+        const pastValues = currentData
+          .map(entry => entry[field])
+          .slice(-3);
 
-      // last 3 years
-      const pastValues = currentData
-        .map(entry => entry[field])
-        .slice(-3);
-
-      forecastEntry[field] = method === 'average'
-        ? calculateAverageForecast(pastValues)
-        : calculateMultiplierForecast(pastValues, multiplierValues[field]);
+        forecastEntry[field] = method === 'average'
+          ? calculateAverageForecast(pastValues)
+          : calculateMultiplierForecast(pastValues, multiplierValues[field]);
+      }
     }
 
     forecast.push(forecastEntry);
   }
-  console.log(forecast);
+
   return forecast;
 }
 
