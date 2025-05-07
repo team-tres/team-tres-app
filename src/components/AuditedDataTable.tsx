@@ -15,8 +15,11 @@ const AuditedDataTable = async () => {
     } | null,
   );
   // const owner = (session && session.user && session.user.email) || '';
-  const ForecastData = await prisma.financialCompilation.findMany();
-
+  const ForecastData = await prisma.financialCompilation.findMany({
+    orderBy: {
+      year: 'asc', // or 'desc' for descending
+    },
+  });
   return (
     <main>
       <Container id="list" fluid className="py-3">
@@ -27,7 +30,7 @@ const AuditedDataTable = async () => {
             <Table striped bordered hover>
               <thead>
                 <tr>
-                  <th style={{ width: '250px' }}>{}</th>
+                  <th style={{ width: '250px' }}>{/* Placeholder or content */}</th>
                   {ForecastData.map((item) => (
                     <th key={item.id}>{item.year}</th>
                   ))}

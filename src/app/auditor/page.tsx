@@ -2,6 +2,7 @@ import { getServerSession } from 'next-auth';
 import authOptions from '@/lib/authOptions';
 import { loggedInProtectedPage } from '@/lib/page-protection';
 import AuditedDataTable from '@/components/AuditedDataTable';
+import { Container } from 'react-bootstrap';
 
 const AuditedDataPage = async () => {
   // Protect the page, only logged in users can access it.
@@ -13,7 +14,9 @@ const AuditedDataPage = async () => {
   );
   return (
     <main>
-      <AuditedDataTable />
+      <Container>
+        <AuditedDataTable />
+      </Container>
     </main>
   );
 };
