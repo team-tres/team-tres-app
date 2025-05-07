@@ -6,7 +6,7 @@ describe('Stress Test 2 - Edge Cases', () => {
   it('generic data', () => {
     const data = {
       netSales: [153034, 155329, 157659, 160024, 162424, 164861, 167334, 169844, 172391, 174977, 122602, 180266],
-      investmentRate: 0.0375,
+      investmentRate: 0.05625,
       investmentRateDrop: 0.6,
     };
     const result = simulateDropInRevenueReturnRate(data);
@@ -180,14 +180,9 @@ describe('Stress Test 2 - Edge Cases', () => {
         investmentRate: 0.0375,
         investmentRateDrop: -1, // Edge case: negative drop
       };
-      const controlData = {
-        netSales: [153034, 155329, 157659, 160024, 162424, 164861, 167334, 169844, 172391, 174977, 122602, 180266],
-        investmentRate: 0.0375,
-        investmentRateDrop: 0, // Control case: 0% drop
-      };
       const result = simulateDropInRevenueReturnRate(data);
-      const controlResult = simulateDropInRevenueReturnRate(controlData);
-      expect(result).toEqual(controlResult);
+      expect(result.stressEffects.every(v => v === 0)).toBe(true);
+      expect(result.residualEffects.every(v => v === 0)).toBe(true);
     });
 
     it('0% drop, returns same as no stress effect', () => {

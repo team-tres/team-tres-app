@@ -32,7 +32,9 @@ const simulateDropInRevenueReturnRate = ({
   investmentRate,
   investmentRateDrop,
 }: StressData2) => {
-  if (netSales.length === 0 || investmentRate === 0) {
+  const clampedInvestmentRateDrop = validateAndClampPercentage(investmentRateDrop);
+
+  if (netSales.length === 0 || investmentRate === 0 || clampedInvestmentRateDrop === 0) {
     return {
       stressEffects: Array(MAX_FORECAST_SIZE).fill(0),
       residualEffects: Array(MAX_FORECAST_SIZE).fill(0),
@@ -42,7 +44,6 @@ const simulateDropInRevenueReturnRate = ({
   const stressEffects: number[] = [];
 
   validateValue(investmentRate, 'interestRate');
-  const clampedInvestmentRateDrop = validateAndClampPercentage(investmentRateDrop);
   // The effective drop in return rate per a year
   const reducedInvestmentRate = investmentRate * (1 - clampedInvestmentRateDrop);
 
