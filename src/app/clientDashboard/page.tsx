@@ -28,11 +28,13 @@ const ClientDashboard = () => {
           <Col xs={12} md={6} className="left-section">
             <h1 className="heading-left">
               Welcome
-              {' '}
-              {session?.user?.email }
+              <br />
+              {session?.user?.email}
             </h1>
             <p className="date-text">{currentDate}</p>
-            <Button className="white-button">Manage Account</Button>
+            <Link href="/auth/account-settings" passHref legacyBehavior>
+              <Button className="white-button">Manage Account</Button>
+            </Link>
             <br />
             <Button className="white-button">Account Summary</Button>
           </Col>

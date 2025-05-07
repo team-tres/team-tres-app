@@ -1,55 +1,54 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { useSession } from 'next-auth/react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import swal from 'sweetalert';
 import { Card, Col, Container, Button, Form, Row } from 'react-bootstrap';
-import { changePassword } from '@/lib/dbActions';
-import LoadingSpinner from '@/components/LoadingSpinner';
+import { useSession } from 'next-auth/react';
+import './page.css';
 
-type ChangePasswordForm = {
-  oldpassword: string;
-  password: string;
-  confirmPassword: string;
-  // acceptTerms: boolean;
-};
-
-/** The change password page. */
 const ChangePassword = () => {
-  const { data: session, status } = useSession();
+  const { data: session } = useSession();
   const email = session?.user?.email || '';
+
   const validationSchema = Yup.object().shape({
-    oldpassword: Yup.string().required('Password is required'),
+    oldpassword: Yup.string().required('Old password is required'),
     password: Yup.string()
-      .required('Password is required')
+      .required('New password is required')
       .min(6, 'Password must be at least 6 characters')
       .max(40, 'Password must not exceed 40 characters'),
     confirmPassword: Yup.string()
-      .required('Confirm Password is required')
-      .oneOf([Yup.ref('password'), ''], 'Confirm Password does not match'),
+      .required('Confirm new password is required')
+      .oneOf([Yup.ref('password'), null], 'Passwords must match'),
   });
 
   const {
     register,
     handleSubmit,
-    reset,
     formState: { errors },
-  } = useForm<ChangePasswordForm>({
-    resolver: yupResolver(validationSchema),
-  });
+  } = useForm({ resolver: yupResolver(validationSchema) });
 
-  const onSubmit = async (data: ChangePasswordForm) => {
-    // console.log(JSON.stringify(data, null, 2));
-    await changePassword({ email, ...data });
-    await swal('Password Changed', 'Your password has been changed', 'success', { timer: 2000 });
-    reset();
+  const onSubmit = async (data) => {
+    const response = await fetch('/api/change-password', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email,
+        password: data.password,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      await swal('Success!', 'Your password has been updated.', 'success');
+    } else {
+      await swal('Error!', result.error || 'Something went wrong.', 'error');
+    }
   };
-
-  if (status === 'loading') {
-    return <LoadingSpinner />;
-  }
 
   return (
     <main>
@@ -60,7 +59,7 @@ const ChangePassword = () => {
             <Card>
               <Card.Body>
                 <Form onSubmit={handleSubmit(onSubmit)}>
-                  <Form.Group className="form-group">
+                  <Form.Group>
                     <Form.Label>Old Password</Form.Label>
                     <input
                       type="password"
@@ -70,7 +69,7 @@ const ChangePassword = () => {
                     <div className="invalid-feedback">{errors.oldpassword?.message}</div>
                   </Form.Group>
 
-                  <Form.Group className="form-group">
+                  <Form.Group>
                     <Form.Label>New Password</Form.Label>
                     <input
                       type="password"
@@ -79,8 +78,9 @@ const ChangePassword = () => {
                     />
                     <div className="invalid-feedback">{errors.password?.message}</div>
                   </Form.Group>
-                  <Form.Group className="form-group">
-                    <Form.Label>Confirm Password</Form.Label>
+
+                  <Form.Group>
+                    <Form.Label>Confirm New Password</Form.Label>
                     <input
                       type="password"
                       {...register('confirmPassword')}
@@ -88,17 +88,11 @@ const ChangePassword = () => {
                     />
                     <div className="invalid-feedback">{errors.confirmPassword?.message}</div>
                   </Form.Group>
-                  <Form.Group className="form-group py-3">
+
+                  <Form.Group className="py-3">
                     <Row>
                       <Col>
-                        <Button type="submit" className="btn btn-primary">
-                          Change
-                        </Button>
-                      </Col>
-                      <Col>
-                        <Button type="button" onClick={() => reset()} className="btn btn-warning float-right">
-                          Reset
-                        </Button>
+                        <Button type="submit">Change Password</Button>
                       </Col>
                     </Row>
                   </Form.Group>
