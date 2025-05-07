@@ -383,7 +383,9 @@ const FinancialInputForm: React.FC = () => {
           <ul>
             {Object.entries(errors).map(([fieldName, error]) => (
               <li key={fieldName}>
-                {fieldName}: {error.message}
+                {fieldName}
+                :
+                {error.message}
               </li>
             ))}
           </ul>
