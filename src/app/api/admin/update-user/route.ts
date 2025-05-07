@@ -1,6 +1,4 @@
 /* eslint-disable import/prefer-default-export */
-/* eslint-disable max-len */
-
 import { NextRequest, NextResponse } from 'next/server';
 import { PrismaClient, Role } from '@prisma/client';
 
@@ -19,30 +17,24 @@ export async function POST(req: NextRequest) {
     }
 
     if (action === 'pending form') {
-      // Update user status and assign company if necessary
       await Promise.all(
         data.map(async (item) => {
-          // Update user status
           const user = await prisma.user.update({
             where: { id: item.userId },
-            data: { status: item.action },
+            data: { status: item.status },
           });
 
-          // If approved and user has `companyIni`, process company assignment
           if (item.action && user.companyIni) {
-            // Check if company already exists
             let company = await prisma.company.findFirst({
               where: { name: user.companyIni },
             });
 
-            // If company doesn't exist, create a new one
             if (!company) {
               company = await prisma.company.create({
                 data: { name: user.companyIni },
               });
             }
 
-            // Assign the company ID to the user
             await prisma.user.update({
               where: { id: item.userId },
               data: { companyId: company.id },
@@ -51,18 +43,72 @@ export async function POST(req: NextRequest) {
         }),
       );
     } else if (action === 'manage form') {
-      // Handle role updates or user deletion
       await Promise.all(
         data.map(async (item) => {
           if (item.delete) {
-            // Delete user
             await prisma.user.delete({ where: { id: item.userId } });
           } else if (item.role) {
-            // Update role
             await prisma.user.update({
               where: { id: item.userId },
-              data: { role: item.role as Role }, // Ensure role matches Prisma `Role` type
+              data: { role: item.role as Role },
             });
+          }
+        }),
+      );
+    } else if (action === 'update client') {
+      await Promise.all(
+        data.map(async (item) => {
+          if (item.companyId) {
+            await prisma.user.update({
+              where: { id: item.userId },
+              data: { companyId: item.companyId },
+            });
+          }
+        }),
+      );
+    } else if (action === 'create company') {
+      await Promise.all(
+        data.map(async (item) => {
+          const existing = await prisma.company.findFirst({
+            where: { name: item.name },
+          });
+
+          if (!existing) {
+            await prisma.company.create({
+              data: { name: item.name },
+            });
+          }
+        }),
+      );
+    } else if (action === 'update company') {
+      await Promise.all(
+        data.map(async (item) => {
+          if (item.delete) {
+            // Set all related users' companyId to null
+            await prisma.user.updateMany({
+              where: { companyId: item.companyId },
+              data: { companyId: null },
+            });
+
+            // Delete the company
+            await prisma.company.delete({
+              where: { id: item.companyId },
+            });
+          } else if (item.name && item.companyId) {
+            // Check if the name is already taken by another company
+            const existing = await prisma.company.findFirst({
+              where: {
+                name: item.name,
+                NOT: { id: item.companyId },
+              },
+            });
+
+            if (!existing) {
+              await prisma.company.update({
+                where: { id: item.companyId },
+                data: { name: item.name },
+              });
+            }
           }
         }),
       );
