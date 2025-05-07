@@ -8,8 +8,8 @@ import './page.css';
 const ClientDashboard = () => {
   const { data: session } = useSession();
   const [currentDate, setCurrentDate] = useState('');
-  const [showIncomeStatement, setShowIncomeStatement] = useState(false);
-  const [showBalanceSheet, setShowBalanceSheet] = useState(false);
+  const [showIncomeStatement, setShowIncomeStatement] = useState(true);
+  const [showBalanceSheet, setShowBalanceSheet] = useState(true);
   useEffect(() => {
     const today = new Date();
     const formattedDate = today.toLocaleDateString('en-US', {
@@ -239,6 +239,14 @@ const ClientDashboard = () => {
                     </th>
                   </tr>
                 </thead>
+                <colgroup>
+                  <col style={{ width: '11%' }} />
+                  <col style={{ width: '6.3%' }} />
+                  <col style={{ width: '7%' }} />
+                  {forecast.map(() => (
+                    <col style={{ width: '6.3%' }} />
+                  ))}
+                </colgroup>
                 <tbody className="font">
                   <tr>
                     <td className="bold">
@@ -272,11 +280,11 @@ const ClientDashboard = () => {
                   </tr>
                 </thead>
                 <colgroup>
-                  <col style={{ width: '27%' }} />
-                  <col style={{ width: '6%' }} />
-                  <col style={{ width: '6%' }} />
+                  <col style={{ width: '11%' }} />
+                  <col style={{ width: '6.3%' }} />
+                  <col style={{ width: '7%' }} />
                   {forecast.map(() => (
-                    <col style={{ width: '6%' }} />
+                    <col style={{ width: '6.3%' }} />
                   ))}
                 </colgroup>
                 <tbody className="font">
@@ -1039,6 +1047,14 @@ const ClientDashboard = () => {
                     </th>
                   </tr>
                 </thead>
+                <colgroup>
+                  <col style={{ width: '11%' }} />
+                  <col style={{ width: '6.3%' }} />
+                  <col style={{ width: '7%' }} />
+                  {forecast.map(() => (
+                    <col style={{ width: '6.3%' }} />
+                  ))}
+                </colgroup>
                 <tbody className="font">
                   <tr className="bold left">
                     <td>Current Assets</td>
