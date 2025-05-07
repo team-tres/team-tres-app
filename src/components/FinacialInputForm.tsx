@@ -32,7 +32,6 @@ const FinancialInputForm: React.FC = () => {
   const { data: session, status } = useSession();
   const currentUserId = session?.user?.id || '';
   console.log('This is user Id', currentUserId);
-  console.log('This is compId', currentUserId);
 
   const {
     register,
@@ -75,7 +74,7 @@ const FinancialInputForm: React.FC = () => {
                   <input
                     type="text"
                     {...register('revenue')}
-                    className={`form-control pb-3 ${errors.revenue ? 'is-invalid' : ''}`}
+                    className={`form-control ${errors.revenue ? 'is-invalid' : ''}`}
                   />
                   <div className="invalid-feedback">{errors.revenue?.message}</div>
                 </Form.Group>
@@ -379,19 +378,16 @@ const FinancialInputForm: React.FC = () => {
         </Col>
       </Row>
       {Object.keys(errors).length > 0 && (
-      <div className="alert alert-danger mt-3">
-        <h5>Form Errors:</h5>
-        <ul>
-          {Object.entries(errors).map(([fieldName, error]) => (
-            <li key={fieldName}>
-              {fieldName}
-              :
-              {' '}
-              {error.message}
-            </li>
-          ))}
-        </ul>
-      </div>
+        <div className="alert alert-danger mt-3">
+          <h5>Form Errors:</h5>
+          <ul>
+            {Object.entries(errors).map(([fieldName, error]) => (
+              <li key={fieldName}>
+                {fieldName}: {error.message}
+              </li>
+            ))}
+          </ul>
+        </div>
       )}
     </Container>
   );
