@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 import { NextResponse } from 'next/server';
 import { hash } from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
