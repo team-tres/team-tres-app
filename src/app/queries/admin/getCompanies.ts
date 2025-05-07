@@ -1,4 +1,4 @@
-// app/api/admin/getCompanies.ts
+// app/queries/admin/getCompanies.ts
 import { prisma } from '@/lib/prisma';
 
 export default async function getCompanies() {

@@ -135,6 +135,18 @@ h2 {
     border: 1px dotted !important;
 }
 
+.fixed {
+    table-layout: fixed;
+    width: 100%;
+    overflow: hidden;
+    text-overflow:clip;
+    white-space: nowrap;
+}
+.darkgrey {
+    background-color: darkgray !important;
+    border: 1px dotted !important;
+}
+
 .green-type {
     background-color: lightgreen !important;
     border: 1px solid black !important;
@@ -161,7 +173,7 @@ h2 {
 }
 
 .font {
-    font-size: 1.5vh;
+    font-size: 1.7vh;
 }
 
 .title {
